@@ -31,5 +31,6 @@ public class ModelViewer : MonoBehaviour
     {
         angles *= rotationSpeed;
         yRotateRoot.Rotate(Vector3.up, angles.x);
+        xRotateRoot.Rotate(Vector3.right, -angles.y, minAngle, maxAngle);
     }
 }

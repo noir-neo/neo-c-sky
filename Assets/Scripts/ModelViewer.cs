@@ -4,6 +4,11 @@ using System.Collections;
 public class ModelViewer : MonoBehaviour
 {
     private Vector2? prevPosition;
+    [SerializeField] Transform xRotateRoot;
+    [SerializeField] Transform yRotateRoot;
+    [SerializeField] private float rotationSpeed;
+    [SerializeField] private float maxAngle;
+    [SerializeField] private float minAngle;
 
     void Update()
     {

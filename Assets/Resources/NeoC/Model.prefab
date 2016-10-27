@@ -214,7 +214,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000011149700772}
-  - 114: {fileID: 114000011629708074}
   - 95: {fileID: 95000013542507340}
   m_Layer: 0
   m_Name: Model

@@ -78,7 +78,7 @@ Material:
       second: 0.5
     - first:
         name: _DepthOffset
-      second: -0.01
+      second: -0.1
     - first:
         name: _DetailNormalMapScale
       second: 1

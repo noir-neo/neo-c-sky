@@ -12,12 +12,10 @@ namespace NeoC
                 .Subscribe(x => Move(x));
         }
 
-        private void Move(Vector3 move)
+        private void Move(Vector2 move)
         {
-            move = move.X0Y() * 0.1f;
-
-            transform.position -= move;
-            transform.LookToward(move);
+            transform.position -= move.X0Y() * 0.1f;
+            transform.LookToward(move/*.LimitDirection(8)*/.X0Y());
         }
     }
 }

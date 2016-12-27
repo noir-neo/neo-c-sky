@@ -21,4 +21,11 @@ public static class ObservableExtensions
             .Where(x => x.Count == 2)
             .Select(x => x.First() - x.Last());
     }
+
+    public static IObservable<Vector3> OnPositionChangeAsObservable(this Transform target)
+    {
+        return target.UpdateAsObservable()
+            .Select(_ => target.position)
+            .DistinctUntilChanged();
+    }
 }

@@ -92,6 +92,74 @@ NavMeshSettings:
     cellSize: 0.16666667
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &5417922
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 5417923}
+  - component: {fileID: 5417925}
+  - component: {fileID: 5417924}
+  m_Layer: 5
+  m_Name: Cylinder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5417923
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 5417922}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.3, z: 0}
+  m_LocalScale: {x: 4, y: 0.1, z: 4}
+  m_Children: []
+  m_Father: {fileID: 793524911}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &5417924
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 5417922}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!33 &5417925
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 5417922}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &145110311
 Prefab:
   m_ObjectHideFlags: 0
@@ -134,11 +202,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5825f50c37810462093d5b72c21aee16, type: 2}
   m_IsPrefabParent: 0
---- !u!95 &640930715 stripped
-Animator:
-  m_PrefabParentObject: {fileID: 95000013542507340, guid: 055e5e2d7ae4f44a184440197255fdac,
-    type: 2}
-  m_PrefabInternal: {fileID: 793524910}
 --- !u!1001 &793524910
 Prefab:
   m_ObjectHideFlags: 0
@@ -178,14 +241,14 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 114366912592162476, guid: 055e5e2d7ae4f44a184440197255fdac,
-        type: 2}
-      propertyPath: _animator
-      value: 
-      objectReference: {fileID: 640930715}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 055e5e2d7ae4f44a184440197255fdac, type: 2}
   m_IsPrefabParent: 0
+--- !u!4 &793524911 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4929948071750090, guid: 055e5e2d7ae4f44a184440197255fdac,
+    type: 2}
+  m_PrefabInternal: {fileID: 793524910}
 --- !u!4 &869918798 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4000011149700772, guid: 055e5e2d7ae4f44a184440197255fdac,

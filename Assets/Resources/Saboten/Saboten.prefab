@@ -38,10 +38,11 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4709686584795634}
-  - component: {fileID: 95068814825437170}
+  - component: {fileID: 114406252821252116}
+  - component: {fileID: 136282917440179770}
   m_Layer: 0
   m_Name: Saboten
-  m_TagString: Untagged
+  m_TagString: Saboten
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -95,7 +96,6 @@ GameObject:
   - component: {fileID: 33717431477439798}
   - component: {fileID: 23020064382291250}
   - component: {fileID: 64589241684567068}
-  - component: {fileID: 54850058258969928}
   m_Layer: 0
   m_Name: Matrix
   m_TagString: Untagged
@@ -440,21 +440,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!54 &54850058258969928
-Rigidbody:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1945700687877310}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!54 &54990061131777112
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -540,20 +525,33 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300002, guid: e193ebf21748344589a742af2db28db1, type: 3}
---- !u!95 &95068814825437170
-Animator:
-  serializedVersion: 3
+--- !u!114 &114406252821252116
+MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1260019213999956}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: e193ebf21748344589a742af2db28db1, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eba5e92ef375d4be78ef30e571117132, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerCollider: {fileID: 136282917440179770}
+  childrenRigidbodies:
+  - {fileID: 54619896412450522}
+  - {fileID: 54372731771515828}
+  - {fileID: 54990061131777112}
+  - {fileID: 54201700043772800}
+--- !u!136 &136282917440179770
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1260019213999956}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1.5
+  m_Height: 4
+  m_Direction: 1
+  m_Center: {x: 0, y: 2, z: 0}

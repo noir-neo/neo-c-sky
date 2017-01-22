@@ -639,6 +639,7 @@ GameObject:
   m_Component:
   - component: {fileID: 469466}
   - component: {fileID: 9536436}
+  - component: {fileID: 114359499200566236}
   m_Layer: 0
   m_Name: PronamaChan
   m_TagString: Untagged
@@ -8057,8 +8058,8 @@ Animator:
   m_GameObject: {fileID: 116178}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 6f27f043029304d41addec8ad52e46a6, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 1
+  m_Controller: {fileID: 9100000, guid: 2601742d1af3348cbaeb439fcedf493e, type: 2}
+  m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
@@ -8365,3 +8366,21 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 116178}
   m_IsPrefabParent: 1
+--- !u!114 &114359499200566236
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 116178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cc223d6ec08346a0bfc9b2db5d02429, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 9536436}
+  target: {fileID: 0}
+  weight: 1
+  bodyWeight: 0.1
+  headWeight: 0.5
+  eyesWeight: 1
+  clampWeight: 0.5

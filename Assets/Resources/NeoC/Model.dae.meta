@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: a0d773bd2e0f345bfa005d875d2537fe
-timeCreated: 1474974264
+guid: 9e6342c47f4e144dfa57b45bef66d7a6
+timeCreated: 1482831340
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -8,41 +8,45 @@ ModelImporter:
     100000: Arm_left
     100002: Arm_right
     100004: Body
-    100006: Eye
-    100008: Head
-    100010: Leg_left
-    100012: Leg_right
-    100014: //RootNode
-    100016: Twintail_left
-    100018: Twintail_right
+    100006: Face
+    100008: Face_Blink
+    100010: Head
+    100012: Leg_left
+    100014: Leg_right
+    100016: //RootNode
+    100018: Twintail_left
+    100020: Twintail_right
     400000: Arm_left
     400002: Arm_right
     400004: Body
-    400006: Eye
-    400008: Head
-    400010: Leg_left
-    400012: Leg_right
-    400014: //RootNode
-    400016: Twintail_left
-    400018: Twintail_right
+    400006: Face
+    400008: Face_Blink
+    400010: Head
+    400012: Leg_left
+    400014: Leg_right
+    400016: //RootNode
+    400018: Twintail_left
+    400020: Twintail_right
     2300000: Arm_left
     2300002: Arm_right
     2300004: Body
-    2300006: Eye
-    2300008: Head
-    2300010: Leg_left
-    2300012: Leg_right
-    2300014: Twintail_left
-    2300016: Twintail_right
+    2300006: Face
+    2300008: Face_Blink
+    2300010: Head
+    2300012: Leg_left
+    2300014: Leg_right
+    2300016: Twintail_left
+    2300018: Twintail_right
     3300000: Arm_left
     3300002: Arm_right
     3300004: Body
-    3300006: Eye
-    3300008: Head
-    3300010: Leg_left
-    3300012: Leg_right
-    3300014: Twintail_left
-    3300016: Twintail_right
+    3300006: Face
+    3300008: Face_Blink
+    3300010: Head
+    3300012: Leg_left
+    3300014: Leg_right
+    3300016: Twintail_left
+    3300018: Twintail_right
     4300000: Body
     4300002: Twintail_left
     4300004: Twintail_right
@@ -51,7 +55,8 @@ ModelImporter:
     4300010: Arm_right
     4300012: Leg_left
     4300014: Leg_right
-    4300016: Eye
+    4300016: Face
+    4300018: Face_Blink
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -99,6 +104,7 @@ ModelImporter:
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
+    serializedVersion: 2
     human: []
     skeleton: []
     armTwist: 0.5
@@ -109,9 +115,12 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

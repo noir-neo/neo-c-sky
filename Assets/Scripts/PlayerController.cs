@@ -10,17 +10,20 @@ namespace NeoC
 
         void Start()
         {
-            this.OnSwipeAsObservable()
-                .Subscribe(x => Move(x));
             this.OnTriggerEnterAsObservable()
                 .Where(collider => collider.gameObject.tag == "Saboten")
                 .Subscribe(collider => Attack(collider));
         }
 
-        private void Move(Vector2 move)
+        public void Move(Vector2 move)
         {
-            transform.position -= move.X0Y() * 0.1f;
-            transform.LookToward(move/*.LimitDirection(8)*/.X0Y());
+            Move(move.X0Y());
+        }
+
+        public void Move(Vector3 move)
+        {
+            transform.position += move;
+            transform.LookToward(-move);
             _animator.SetFloat("velocity", move.sqrMagnitude);
         }
 

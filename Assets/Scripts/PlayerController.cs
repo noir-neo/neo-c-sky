@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
-using Zenject;
 
 namespace NeoC
 {
@@ -9,25 +8,22 @@ namespace NeoC
     {
         [SerializeField] private Animator _animator;
 
-        [Inject] private UIDragHandler dragHandler;
-
         void Start()
         {
-            dragHandler.OnDragAsObservable()
-                .TakeUntil(dragHandler.OnEndDragAsObservable())
-                .RepeatUntilDestroy(this)
-                .Select(x => x.delta)
-                .Subscribe(x => Move(-x));
-
             this.OnTriggerEnterAsObservable()
                 .Where(collider => collider.gameObject.tag == "Saboten")
                 .Subscribe(collider => Attack(collider));
         }
 
-        private void Move(Vector2 move)
+        public void Move(Vector2 move)
         {
-            transform.position -= move.X0Y() * 0.1f;
-            transform.LookToward(move/*.LimitDirection(8)*/.X0Y());
+            Move(move.X0Y());
+        }
+
+        public void Move(Vector3 move)
+        {
+            transform.position += move;
+            transform.LookToward(-move);
             _animator.SetFloat("velocity", move.sqrMagnitude);
         }
 

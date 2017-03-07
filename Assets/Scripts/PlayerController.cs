@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
+using Zenject;
 
 namespace NeoC
 {
@@ -8,10 +9,16 @@ namespace NeoC
     {
         [SerializeField] private Animator _animator;
 
+        [Inject] private UIDragHandler dragHandler;
+
         void Start()
         {
-            this.OnSwipeAsObservable()
-                .Subscribe(x => Move(x));
+            dragHandler.OnDragAsObservable()
+                .TakeUntil(dragHandler.OnEndDragAsObservable())
+                .RepeatUntilDestroy(this)
+                .Select(x => x.delta)
+                .Subscribe(x => Move(-x));
+
             this.OnTriggerEnterAsObservable()
                 .Where(collider => collider.gameObject.tag == "Saboten")
                 .Subscribe(collider => Attack(collider));

@@ -4,22 +4,33 @@ public static class TransformExtensions
 {
     public static void Rotate(this Transform transform, Vector3 axis, float angle, float minAngle, float maxAngle, Space space = Space.Self)
     {
-        var currentAngle = Vector3.Scale(transform.eulerAngles, axis.normalized).magnitude;
+        var currentAngle = transform.EulerAngle(axis);
 
-        minAngle += 180;
-        maxAngle += 180;
-        currentAngle += 180;
-        angle += currentAngle;
-
-        while (angle < 0) {
-            angle += 360;
-        }
-        angle = Mathf.Repeat(angle, 360);
-
-        angle = Mathf.Clamp(angle, minAngle, maxAngle);
-        angle -= currentAngle;
-
+        var newAngle = ClampAngle(currentAngle + angle, minAngle, maxAngle);
+        angle = newAngle - currentAngle;
         transform.Rotate(axis, angle, space);
+    }
+
+    public static float EulerAngle(this Transform transform, Vector3 axis)
+    {
+        return Vector3.Scale(transform.eulerAngles, axis.normalized).magnitude;
+    }
+
+    public static float ClampAngle(float angle, float min, float max)
+    {
+        angle += 180;
+        angle = Wrap(angle, 360);
+        angle -= 180;
+        angle = Mathf.Clamp(angle, min, max);
+
+        return angle;
+    }
+
+    public static float Wrap(float t, float length)
+    {
+        while (t < 0)
+            t += length;
+        return Mathf.Repeat(t, length);
     }
 
     public static void LookToward(this Transform transform, Vector3 move)

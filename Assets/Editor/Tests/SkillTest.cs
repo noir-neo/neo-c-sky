@@ -13,6 +13,15 @@ public class SkillTest
         );
     }
 
+    [Test]
+    public void SkillCountDictinaryGroupBy()
+    {
+        CollectionAssert.AreEquivalent(
+            Skill.SkillCountDictinaryGroupBy(Skills()),
+            Expect()
+        );
+    }
+
     private List<Skill> Skills()
     {
         var skills = new List<Skill>();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class Skill : IEquatable<Skill>
 {
@@ -40,5 +41,11 @@ public class Skill : IEquatable<Skill>
             testCountDictionary[skill]++;
         }
         return testCountDictionary;
+    }
+
+    public static IDictionary<Skill, int> SkillCountDictinaryGroupBy(List<Skill> skills)
+    {
+        return skills.GroupBy(s => new {s.Code, s.Level})
+            .ToDictionary(g => g.First(), g => g.Count());
     }
 }

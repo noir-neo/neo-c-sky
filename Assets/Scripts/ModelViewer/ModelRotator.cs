@@ -2,7 +2,7 @@
 using UniRx;
 using Zenject;
 
-public class ModelViewer : MonoBehaviour
+public class ModelRotator : MonoBehaviour
 {
     [SerializeField] Transform xRotateRoot;
     [SerializeField] Transform yRotateRoot;

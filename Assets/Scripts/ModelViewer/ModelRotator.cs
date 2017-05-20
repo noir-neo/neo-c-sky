@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 using UniRx;
 using Zenject;
 
@@ -16,11 +17,11 @@ namespace NeoC.ModelViewer
 
         void Start()
         {
-            dragHandler.OnDragAsObservable()
+            dragHandler.OnDragsAsObservable(1)
                 .TakeUntil(dragHandler.OnEndDragAsObservable())
-                .Select(x => x.delta)
                 .RepeatUntilDestroy(this)
-                .Subscribe(x => Rotate(x));
+                .Select(x => x.Single().delta)
+                .Subscribe(Rotate);
         }
 
         private void Rotate(Vector2 angles)

@@ -56,6 +56,13 @@ public static class TransformExtensions
         return new Vector3(vector2.x, 0, vector2.y);
     }
 
+    public static void Move(this Transform transform, Vector3 delta)
+    {
+        var pos = transform.position;
+        pos += delta;
+        transform.position = pos;
+    }
+
     public static void PositionLerp(this Transform transform, Vector3 target, float t)
     {
         transform.position = Vector3.Lerp(transform.position, target, t);
@@ -90,5 +97,24 @@ public static class TransformExtensions
     public static Vector2 DegreeToVector2(this float degree)
     {
         return RadianToVector2(degree * Mathf.Deg2Rad);
+    }
+
+    public static Vector2 Clamp(this Vector2 value, Vector4 leftTopRightBottom)
+    {
+        return Clamp(value, leftTopRightBottom.x, leftTopRightBottom.y, leftTopRightBottom.z, leftTopRightBottom.w);
+    }
+
+    public static Vector2 Clamp(this Vector3 value, Vector4 leftTopRightBottom)
+    {
+        return Clamp(value, leftTopRightBottom.x, leftTopRightBottom.y, leftTopRightBottom.z, leftTopRightBottom.w);
+    }
+
+    public static Vector2 Clamp(Vector2 value, float left, float top, float right, float bottom)
+    {
+        if (value.x < left) value.x = left;
+        if (top < value.y) value.y = top;
+        if (right < value.x) value.x = right;
+        if (value.y < bottom) value.y = bottom;
+        return value;
     }
 }

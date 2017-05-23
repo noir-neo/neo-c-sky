@@ -7,5 +7,7 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/Proto.unity
+    guid: 38fd7808913054bf0b18d6d8ddef5fbb
   - enabled: 1
     path: Assets/Scenes/ModelViewer.unity
+    guid: 41ffb9ebd2ba94630bc84182676fd038

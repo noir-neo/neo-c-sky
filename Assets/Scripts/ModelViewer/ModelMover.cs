@@ -10,7 +10,7 @@ namespace NeoC.ModelViewer
     {
         [SerializeField] Transform moveRoot;
         [SerializeField] private float speed;
-        [SerializeField] private Vector4 movableRageRect;
+        [SerializeField] private Vector4 movableRage;
 
         [Inject] private UIDragHandler dragHandler;
 
@@ -27,7 +27,7 @@ namespace NeoC.ModelViewer
         private void Move(Vector2 delta)
         {
             moveRoot.Move(delta * speed);
-            moveRoot.position = moveRoot.position.Clamp(movableRageRect);
+            moveRoot.position = moveRoot.position.Clamp(movableRage);
         }
     }
 }

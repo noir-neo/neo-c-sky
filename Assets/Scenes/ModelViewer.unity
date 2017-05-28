@@ -484,9 +484,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xRotateRoot: {fileID: 916189814}
   yRotateRoot: {fileID: 439572936}
-  rotationSpeed: 0.5
-  maxAngle: 30
-  minAngle: -60
+  speed: 0.5
+  minXAngle: -60
+  maxXAngle: 30
 --- !u!4 &916189814
 Transform:
   m_ObjectHideFlags: 0
@@ -514,7 +514,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveRoot: {fileID: 916189814}
   speed: 0.01
-  movableRageRect: {x: -1, y: 3, z: 1, w: 0.5}
+  movableRage: {x: -1, y: 4, z: 1, w: -0.5}
 --- !u!114 &916189816
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,9 +9,9 @@ namespace NeoC.ModelViewer
     {
         [SerializeField] Transform xRotateRoot;
         [SerializeField] Transform yRotateRoot;
-        [SerializeField] private float rotationSpeed;
-        [SerializeField] private float maxAngle;
-        [SerializeField] private float minAngle;
+        [SerializeField] private float speed;
+        [SerializeField] private float minXAngle;
+        [SerializeField] private float maxXAngle;
 
         [Inject] private UIDragHandler dragHandler;
 
@@ -26,9 +26,9 @@ namespace NeoC.ModelViewer
 
         private void Rotate(Vector2 angles)
         {
-            angles *= rotationSpeed;
+            angles *= speed;
             yRotateRoot.Rotate(Vector3.up, -angles.x);
-            xRotateRoot.Rotate(Vector3.right, angles.y, minAngle, maxAngle);
+            xRotateRoot.Rotate(Vector3.right, angles.y, minXAngle, maxXAngle);
         }
     }
 }

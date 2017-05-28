@@ -69,4 +69,50 @@ public class TransformExtensionsTest
         Assert.AreEqual(TransformExtensions.Wrap(-90f, 360f), 270f);
         Assert.AreEqual(TransformExtensions.Wrap(400f, 360f), 40f);
     }
+
+    [Test]
+    public void ScaleValue()
+    {
+        TestScale(new GameObject().transform, 1, 2);
+        TestScale(new GameObject().transform, -1, 0);
+        
+        var transform = new GameObject().transform;
+        TestScale(transform, 0.1f, 1.1f);
+        TestScale(transform, 0.1f, 1.2f);
+        TestScale(transform, 0.2f, 1.4f);
+    }
+    
+    public void TestScale(Transform transform, float value, float actual)
+    {
+        transform.Scale(value);
+        AreEqual(transform.localScale, new Vector3(actual, actual, actual));
+    }
+
+    [Test]
+    public void ScaleValueMinMax()
+    {
+        TestScale(new GameObject().transform, 0.1f, 0, 2, 1.1f);
+        TestScale(new GameObject().transform, 3, 0, 2, 2f);
+        TestScale(new GameObject().transform, -1, 0.5f, 2, 0.5f);
+
+        var transform = new GameObject().transform;
+        TestScale(transform, 0.1f, 0.5f, 2, 1.1f);
+        TestScale(transform, 0.1f, 0.5f, 2, 1.2f);
+        TestScale(transform, 0.2f, 0.5f, 2, 1.4f);
+    }
+    
+    public void TestScale(Transform transform, float value, float min, float max, float actual)
+    {
+        transform.Scale(value, min, max);
+        AreEqual(transform.localScale, new Vector3(actual, actual, actual));
+    }
+
+    public static void AreEqual(Vector3 expected, Vector3 actual, float delta = 0.0001f)
+    {
+        var message = string.Format("Expected: Vector3({0}, {1}, {2})\nBut was:  Vector3({3}, {4}, {5})",
+            expected.x, expected.y, expected.z,
+            actual.x, actual.y, actual.z);
+        float sqrMagnitude = Vector3.SqrMagnitude(expected - actual);
+        Assert.LessOrEqual(sqrMagnitude, delta, message);
+    }
 }

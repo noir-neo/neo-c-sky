@@ -62,6 +62,21 @@ public static class TransformExtensions
         pos += delta;
         transform.position = pos;
     }
+    
+    public static void Scale(this Transform transform, float value)
+    {
+        transform.localScale += Vector3.one * value; 
+    }
+    
+    public static void Scale(this Transform transform, float value, float min, float max)
+    {
+        var scale = transform.localScale;
+        for (int i = 0; i < 3; i++)
+        {
+            scale[i] = Mathf.Clamp(scale[i] + value, min, max);
+        }
+        transform.localScale = scale;
+    }
 
     public static void PositionLerp(this Transform transform, Vector3 target, float t)
     {

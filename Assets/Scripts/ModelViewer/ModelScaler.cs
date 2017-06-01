@@ -47,7 +47,7 @@ namespace NeoC.ModelViewer
             float prevPointerDeltaMagnitude = (pointerZeroPrevPosition - pointerOnePrevPosition).magnitude;
             float pointerDeltaMagnitude = (pointerZeroPosition - pointerOnePosition).magnitude;
 
-            return  pointerDeltaMagnitude - prevPointerDeltaMagnitude;
+            return pointerDeltaMagnitude - prevPointerDeltaMagnitude;
         }
 
         private void Scale(float magnitude)

@@ -13,6 +13,7 @@ namespace NeoC.ModelViewer
         [SerializeField] private float speed;
         [SerializeField] private float minScale;
         [SerializeField] private float maxScale;
+        [SerializeField] private float ignoreAngleThreshold;
 
         [Inject] private UIDragHandler dragHandler;
 
@@ -21,8 +22,14 @@ namespace NeoC.ModelViewer
             dragHandler.OnDragsAsObservable(2)
                 .TakeUntil(dragHandler.OnEndDragAsObservable())
                 .RepeatUntilDestroy(this)
+                .Where(x => IsDeltasAngleBiggerThan(x.First(), x.Last(), ignoreAngleThreshold))
                 .Select(x => DeltaMagnitudeDiff(x.First(), x.Last()))
                 .Subscribe(Scale);
+        }
+
+        private static bool IsDeltasAngleBiggerThan(PointerEventData pointerEventZero, PointerEventData pointerEventOne, float angle)
+        {
+            return Vector2.Angle(pointerEventZero.delta, pointerEventOne.delta) > angle;
         }
 
         private static float DeltaMagnitudeDiff(PointerEventData pointerEventZero, PointerEventData pointerEventOne)
@@ -40,7 +47,7 @@ namespace NeoC.ModelViewer
             float prevPointerDeltaMagnitude = (pointerZeroPrevPosition - pointerOnePrevPosition).magnitude;
             float pointerDeltaMagnitude = (pointerZeroPosition - pointerOnePosition).magnitude;
 
-            return  pointerDeltaMagnitude - prevPointerDeltaMagnitude;
+            return pointerDeltaMagnitude - prevPointerDeltaMagnitude;
         }
 
         private void Scale(float magnitude)

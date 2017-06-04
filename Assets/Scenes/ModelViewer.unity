@@ -530,6 +530,7 @@ MonoBehaviour:
   speed: 0.01
   minScale: 0.5
   maxScale: 2
+  ignoreAngleThreshold: 45
 --- !u!1 &1091782254
 GameObject:
   m_ObjectHideFlags: 0

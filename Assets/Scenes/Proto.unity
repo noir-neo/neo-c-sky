@@ -118,7 +118,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4709686584795634, guid: 5825f50c37810462093d5b72c21aee16, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4709686584795634, guid: 5825f50c37810462093d5b72c21aee16, type: 2}
       propertyPath: m_LocalPosition.y
@@ -126,7 +126,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4709686584795634, guid: 5825f50c37810462093d5b72c21aee16, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 5
+      value: 17.5
       objectReference: {fileID: 0}
     - target: {fileID: 4709686584795634, guid: 5825f50c37810462093d5b72c21aee16, type: 2}
       propertyPath: m_LocalRotation.x
@@ -877,7 +877,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 50
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 8
   m_Depth: -1
   m_CullingMask:
@@ -900,13 +900,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2091375914}
-  m_LocalRotation: {x: 0.17364816, y: 0, z: 0, w: 0.9848078}
-  m_LocalPosition: {x: 0, y: 8.9, z: -17.5}
+  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: 0, y: 14.4, z: -12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 20, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
 --- !u!114 &2091375923
 MonoBehaviour:
   m_ObjectHideFlags: 0

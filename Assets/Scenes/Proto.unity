@@ -957,4 +957,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 869918798}
-  smooth: 0.04
+  smooth: 1

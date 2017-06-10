@@ -32,17 +32,11 @@ namespace NeoC
         private void Attack(Collider collider)
         {
             Saboten saboten;
-            if (Saboten(collider, out saboten))
+            if (collider.TryGetComponent(out saboten))
             {
                 _animator.SetTrigger("Attack");
                 saboten.Break();
             }
-        }
-
-        private bool Saboten(Collider collider, out Saboten saboten)
-        {
-            saboten = collider.GetComponent<Saboten>();
-            return saboten != null;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using NeoC;
+﻿using System.Linq;
+using NeoC;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -11,11 +12,10 @@ public class GamePresenter : MonoBehaviour
 
     void Start()
     {
-        // FIXME: Fat presenter
-        dragHandler.OnDragAsObservable()
+        dragHandler.OnDragsAsObservable(1)
             .TakeUntil(dragHandler.OnEndDragAsObservable())
             .RepeatUntilDestroy(this)
-            .Select(x => x.delta)
-            .Subscribe(x => playerController.Move(x * 0.1f));
+            .Select(x => x.Single().delta)
+            .Subscribe(playerController.Move);
     }
 }

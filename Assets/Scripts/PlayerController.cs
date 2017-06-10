@@ -7,16 +7,18 @@ namespace NeoC
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private Animator _animator;
+        [SerializeField] private float speed;
 
         void Start()
         {
             this.OnTriggerEnterAsObservable()
                 .Where(collider => collider.gameObject.tag == "Saboten")
-                .Subscribe(collider => Attack(collider));
+                .Subscribe(Attack);
         }
 
         public void Move(Vector2 move)
         {
+            move *= speed;
             Move(move.X0Y());
         }
 

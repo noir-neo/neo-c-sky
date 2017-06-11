@@ -2,7 +2,7 @@
 using UniRx;
 using UniRx.Triggers;
 
-namespace NeoC
+namespace NeoC.Game
 {
     public class PlayerController : ObservableTriggerBase
     {

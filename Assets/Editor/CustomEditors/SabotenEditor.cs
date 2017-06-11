@@ -1,6 +1,6 @@
 ﻿using UnityEditor;
 using UnityEngine;
-using NeoC;
+using NeoC.Game;
 
 [CustomEditor(typeof(Saboten))]
 [CanEditMultipleObjects]

@@ -1062,6 +1062,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 95000013542507340}
+  _rigidbody: {fileID: 54606530159798840}
   speed: 0.1
 --- !u!114 &114337247030454140
 MonoBehaviour:

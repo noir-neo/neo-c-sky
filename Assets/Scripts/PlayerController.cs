@@ -4,16 +4,23 @@ using UniRx.Triggers;
 
 namespace NeoC
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : ObservableTriggerBase
     {
         [SerializeField] private Animator _animator;
         [SerializeField] private float speed;
+
+        private Subject<Saboten> onAttack;
 
         void Start()
         {
             this.OnTriggerEnterAsObservable()
                 .Where(collider => collider.gameObject.tag == "Saboten")
+                .Select(collider => collider.GetComponent<Saboten>())
+                .Where(saboten => saboten != null)
                 .Subscribe(Attack);
+
+            OnAttackAsObservable()
+                .Subscribe(_ => TriggerAnimator("Attack"));
         }
 
         public void Move(Vector2 move)
@@ -29,13 +36,28 @@ namespace NeoC
             _animator.SetFloat("velocity", move.sqrMagnitude);
         }
 
-        private void Attack(Collider collider)
+        private void TriggerAnimator(string name)
         {
-            Saboten saboten;
-            if (collider.TryGetComponent(out saboten))
+            if (_animator == null) return;
+            _animator.SetTrigger(name);
+        }
+
+        private void Attack(Saboten saboten)
+        {
+            if (onAttack == null) return;
+            onAttack.OnNext(saboten);
+        }
+
+        public IObservable<Saboten> OnAttackAsObservable()
+        {
+            return onAttack ?? (onAttack = new Subject<Saboten>());
+        }
+
+        protected override void RaiseOnCompletedOnDestroy()
+        {
+            if (onAttack != null)
             {
-                _animator.SetTrigger("Attack");
-                saboten.Break();
+                onAttack.OnCompleted();
             }
         }
     }

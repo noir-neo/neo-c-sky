@@ -17,5 +17,8 @@ public class GamePresenter : MonoBehaviour
             .RepeatUntilDestroy(this)
             .Select(x => x.Single().delta)
             .Subscribe(playerController.Move);
+
+        playerController.OnAttackAsObservable()
+            .Subscribe(saboten => saboten.Break());
     }
 }

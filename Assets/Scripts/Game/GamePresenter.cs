@@ -8,7 +8,8 @@ namespace NeoC.Game
     public class GamePresenter : MonoBehaviour
     {
         [Inject] private UIDragHandler dragHandler;
-        [Inject] private PlayerController playerController;
+        [Inject] private Attacker attacker;
+        [Inject] private PlayerMover playerMover;
 
         void Start()
         {
@@ -16,9 +17,9 @@ namespace NeoC.Game
                 .TakeUntil(dragHandler.OnEndDragAsObservable())
                 .RepeatUntilDestroy(this)
                 .Select(x => x.Single().delta)
-                .Subscribe(playerController.Move);
+                .Subscribe(playerMover.Move);
 
-            playerController.OnAttackAsObservable()
+            attacker.OnAttackAsObservable()
                 .Subscribe(saboten => saboten.Break());
         }
     }

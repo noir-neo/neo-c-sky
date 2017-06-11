@@ -62,7 +62,7 @@ public static class TransformExtensions
         pos += delta;
         transform.position = pos;
     }
-    
+
     public static void Scale(this Transform transform, float value)
     {
         transform.localScale += Vector3.one * value; 

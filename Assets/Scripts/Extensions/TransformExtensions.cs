@@ -43,6 +43,17 @@ public static class TransformExtensions
         transform.rotation = Quaternion.RotateTowards(transform.rotation,
             Quaternion.LookRotation(move), maxDegreesDelta);
     }
+    
+    public static void LookToward(this Rigidbody rigidbody, Vector3 move)
+    {
+        rigidbody.LookToward(move, 360.0f * Time.deltaTime);
+    }
+
+    public static void LookToward(this Rigidbody rigidbody, Vector3 move, float maxDegreesDelta)
+    {
+        rigidbody.rotation = Quaternion.RotateTowards(rigidbody.rotation,
+            Quaternion.LookRotation(move), maxDegreesDelta);
+    } 
 
     public static Vector3 X0Y(this Vector3 vector3)
     {
@@ -62,7 +73,7 @@ public static class TransformExtensions
         pos += delta;
         transform.position = pos;
     }
-    
+
     public static void Scale(this Transform transform, float value)
     {
         transform.localScale += Vector3.one * value; 

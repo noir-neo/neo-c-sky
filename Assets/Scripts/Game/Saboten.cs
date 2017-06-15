@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using System.Diagnostics;
 
-namespace NeoC
+namespace NeoC.Game
 {
     public class Saboten : MonoBehaviour
     {

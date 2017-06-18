@@ -13,22 +13,32 @@ namespace Zenject
     public interface ISignal<TParam1, TParam2, TParam3, TParam4> : ISignalBase
     {
         void Fire(TParam1 p1, TParam2 p2, TParam3 p3, TParam4 p4);
+
+        void Unlisten(Action<TParam1, TParam2, TParam3, TParam4> listener);
+        void Listen(Action<TParam1, TParam2, TParam3, TParam4> listener);
     }
 
     public abstract class Signal<TParam1, TParam2, TParam3, TParam4, TDerived> : SignalBase, ISignal<TParam1, TParam2, TParam3, TParam4>
         where TDerived : Signal<TParam1, TParam2, TParam3, TParam4, TDerived>
+#if ENABLE_IL2CPP
+        // See discussion here for why we do this: https://github.com/modesttree/Zenject/issues/219#issuecomment-284751679
+        where TParam1 : class
+        where TParam2 : class
+        where TParam3 : class
+        where TParam4 : class
+#endif
     {
         readonly List<Action<TParam1, TParam2, TParam3, TParam4>> _listeners = new List<Action<TParam1, TParam2, TParam3, TParam4>>();
 #if ZEN_SIGNALS_ADD_UNIRX
-        readonly Subject<ValuePair<TParam1, TParam2, TParam3, TParam4>> _stream = new Subject<ValuePair<TParam1, TParam2, TParam3, TParam4>>();
+        readonly Subject<Tuple<TParam1, TParam2, TParam3, TParam4>> _observable = new Subject<Tuple<TParam1, TParam2, TParam3, TParam4>>();
 #endif
 
 #if ZEN_SIGNALS_ADD_UNIRX
-        public IObservableRx<ValuePair<TParam1, TParam2, TParam3, TParam4>> Stream
+        public IObservable<Tuple<TParam1, TParam2, TParam3, TParam4>> AsObservable
         {
             get
             {
-                return _stream;
+                return _observable;
             }
         }
 #endif
@@ -88,12 +98,12 @@ namespace Zenject
                 }
 
 #if ZEN_SIGNALS_ADD_UNIRX
-                wasHandled |= _stream.HasObservers;
+                wasHandled |= _observable.HasObservers;
 #if UNITY_EDITOR
                 using (ProfileBlock.Start("UniRx Stream"))
 #endif
                 {
-                    _stream.OnNext(ValuePair.New(p1, p2, p3, p4));
+                    _observable.OnNext(Tuple.Create(p1, p2, p3, p4));
                 }
 #endif
 

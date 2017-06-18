@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-#if UNITY_5_6
+#if UNITY_5_6_OR_NEWER
 using NUnit.Framework.Interfaces;
 #endif
 using UnityEditor.SceneManagement;
@@ -72,7 +72,7 @@ namespace Zenject
         [TearDown]
         public void TearDown()
         {
-#if UNITY_5_6
+#if UNITY_5_6_OR_NEWER
             if (TestContext.CurrentContext.Result.Outcome == ResultState.Success)
             {
                 Assert.That(_hasStarted, "ZenjectIntegrationTestFixture.Initialize was not called by current test");

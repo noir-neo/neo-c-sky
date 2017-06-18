@@ -23,9 +23,48 @@ namespace Zenject.Internal
             return obj == null || obj.Equals(null);
         }
 
+#if UNITY_EDITOR
+        // This can be useful if you are running code outside unity
+        // since in that case you have to make sure to avoid calling anything
+        // inside Unity DLLs
+        public static bool IsOutsideUnity()
+        {
+            return AppDomain.CurrentDomain.FriendlyName != "Unity Child Domain";
+        }
+#endif
+
         public static bool AreFunctionsEqual(Delegate left, Delegate right)
         {
             return left.Target == right.Target && left.Method() == right.Method();
+        }
+
+        // Taken from here:
+        // http://stackoverflow.com/questions/28937324/in-c-how-could-i-get-a-classs-inheritance-distance-to-base-class/28937542#28937542
+        public static int GetInheritanceDelta(Type derived, Type parent)
+        {
+            Assert.That(derived.DerivesFromOrEqual(parent));
+
+            if (parent.IsInterface())
+            {
+                // Not sure if we can calculate this so just return 1
+                return 1;
+            }
+
+            if (derived == parent)
+            {
+                return 0;
+            }
+
+            int distance = 1;
+
+            Type child = derived;
+
+            while ((child = child.BaseType()) != parent)
+            {
+                distance++;
+            }
+
+            return distance;
         }
 
 #if !NOT_UNITY3D
@@ -51,7 +90,7 @@ namespace Zenject.Internal
         // NOTE: This method will not return components that are within a GameObjectContext
         public static List<MonoBehaviour> GetInjectableMonoBehaviours(GameObject gameObject)
         {
-            var childMonoBehaviours = gameObject.GetComponentsInChildren<MonoBehaviour>();
+            var childMonoBehaviours = gameObject.GetComponentsInChildren<MonoBehaviour>(true);
 
             var subContexts = childMonoBehaviours.OfType<GameObjectContext>().Select(x => x.transform).ToList();
 
@@ -85,7 +124,7 @@ namespace Zenject.Internal
         public static IEnumerable<MonoBehaviour> GetInjectableMonoBehaviours(Scene scene)
         {
             return GetRootGameObjects(scene)
-                .SelectMany(ZenUtilInternal.GetInjectableMonoBehaviours);
+                .SelectMany<GameObject, MonoBehaviour>(ZenUtilInternal.GetInjectableMonoBehaviours);
         }
 
         public static IEnumerable<GameObject> GetRootGameObjects(Scene scene)

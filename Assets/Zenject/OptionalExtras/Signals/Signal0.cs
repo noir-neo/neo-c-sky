@@ -13,6 +13,9 @@ namespace Zenject
     public interface ISignal : ISignalBase
     {
         void Fire();
+
+        void Listen(Action listener);
+        void Unlisten(Action listener);
     }
 
     public abstract class Signal<TDerived> : SignalBase, ISignal
@@ -20,15 +23,15 @@ namespace Zenject
     {
         readonly List<Action> _listeners = new List<Action>();
 #if ZEN_SIGNALS_ADD_UNIRX
-        readonly Subject<Unit> _stream = new Subject<Unit>();
+        readonly Subject<Unit> _observable = new Subject<Unit>();
 #endif
 
 #if ZEN_SIGNALS_ADD_UNIRX
-        public IObservableRx<Unit> Stream
+        public IObservable<Unit> AsObservable
         {
             get
             {
-                return _stream;
+                return _observable;
             }
         }
 #endif
@@ -89,12 +92,12 @@ namespace Zenject
                 }
 
 #if ZEN_SIGNALS_ADD_UNIRX
-                wasHandled |= _stream.HasObservers;
+                wasHandled |= _observable.HasObservers;
 #if UNITY_EDITOR
                 using (ProfileBlock.Start("UniRx Stream"))
 #endif
                 {
-                    _stream.OnNext();
+                    _observable.OnNext(Unit.Default);
                 }
 #endif
                 if (Settings.RequiresHandler && !wasHandled)

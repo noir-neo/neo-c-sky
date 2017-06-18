@@ -13,22 +13,31 @@ namespace Zenject
     public interface ISignal<TParam1, TParam2, TParam3> : ISignalBase
     {
         void Fire(TParam1 p1, TParam2 p2, TParam3 p3);
+
+        void Listen(Action<TParam1, TParam2, TParam3> listener);
+        void Unlisten(Action<TParam1, TParam2, TParam3> listener);
     }
 
     public abstract class Signal<TParam1, TParam2, TParam3, TDerived> : SignalBase, ISignal<TParam1, TParam2, TParam3>
         where TDerived : Signal<TParam1, TParam2, TParam3, TDerived>
+#if ENABLE_IL2CPP
+        // See discussion here for why we do this: https://github.com/modesttree/Zenject/issues/219#issuecomment-284751679
+        where TParam1 : class
+        where TParam2 : class
+        where TParam3 : class
+#endif
     {
         readonly List<Action<TParam1, TParam2, TParam3>> _listeners = new List<Action<TParam1, TParam2, TParam3>>();
 #if ZEN_SIGNALS_ADD_UNIRX
-        readonly Subject<ValuePair<TParam1, TParam2, TParam3>> _stream = new Subject<ValuePair<TParam1, TParam2, TParam3>>();
+        readonly Subject<Tuple<TParam1, TParam2, TParam3>> _observable = new Subject<Tuple<TParam1, TParam2, TParam3>>();
 #endif
 
 #if ZEN_SIGNALS_ADD_UNIRX
-        public IObservableRx<ValuePair<TParam1, TParam2, TParam3>> Stream
+        public IObservable<Tuple<TParam1, TParam2, TParam3>> AsObservable
         {
             get
             {
-                return _stream;
+                return _observable;
             }
         }
 #endif
@@ -88,12 +97,12 @@ namespace Zenject
                 }
 
 #if ZEN_SIGNALS_ADD_UNIRX
-                wasHandled |= _stream.HasObservers;
+                wasHandled |= _observable.HasObservers;
 #if UNITY_EDITOR
                 using (ProfileBlock.Start("UniRx Stream"))
 #endif
                 {
-                    _stream.OnNext(ValuePair.New(p1, p2, p3));
+                    _observable.OnNext(Tuple.Create(p1, p2, p3));
                 }
 #endif
 

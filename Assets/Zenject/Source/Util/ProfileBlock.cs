@@ -4,10 +4,13 @@ using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 using ModestTree;
+using Zenject.Internal;
 
 #if !NOT_UNITY3D
-using UnityEngine;
+
+#if UNITY_5_5
 using UnityEngine.Profiling;
+#endif
 #endif
 
 namespace Zenject
@@ -21,7 +24,7 @@ namespace Zenject
 
         ProfileBlock(string sampleName, bool rootBlock)
         {
-            Profiler.BeginSample(sampleName);
+            UnityEngine.Profiling.Profiler.BeginSample(sampleName);
             _rootBlock = rootBlock;
 
             if (rootBlock)
@@ -44,25 +47,37 @@ namespace Zenject
 
         public static ProfileBlock Start(string sampleNameFormat, object obj1, object obj2)
         {
-            if (!Profiler.enabled)
+            if (ZenUtilInternal.IsOutsideUnity())
             {
                 return null;
             }
-            return Start(string.Format(sampleNameFormat, obj1, obj2));
+
+            return StartInternal(string.Format(sampleNameFormat, obj1, obj2));
         }
 
         public static ProfileBlock Start(string sampleNameFormat, object obj)
         {
-            if (!Profiler.enabled)
+            if (ZenUtilInternal.IsOutsideUnity())
             {
                 return null;
             }
-            return Start(string.Format(sampleNameFormat, obj));
+
+            return StartInternal(string.Format(sampleNameFormat, obj));
         }
 
         public static ProfileBlock Start(string sampleName)
         {
-            if (!Profiler.enabled)
+            if (ZenUtilInternal.IsOutsideUnity())
+            {
+                return null;
+            }
+
+            return StartInternal(sampleName);
+        }
+
+        static ProfileBlock StartInternal(string sampleName)
+        {
+            if (!UnityEngine.Profiling.Profiler.enabled)
             {
                 return null;
             }
@@ -83,7 +98,7 @@ namespace Zenject
 
         public void Dispose()
         {
-            Profiler.EndSample();
+            UnityEngine.Profiling.Profiler.EndSample();
 
             if (_rootBlock)
             {

@@ -14,11 +14,7 @@ namespace NeoC.Game
 
         void Start()
         {
-            dragHandler.OnDragsAsObservable(1)
-                .TakeUntil(dragHandler.OnEndDragAsObservable())
-                .RepeatUntilDestroy(this)
-                .Select(x => x.Single().delta)
-                .Subscribe(playerMover.Move);
+            
 
             attacker.OnAttackAsObservable()
                 .Subscribe(OnAttack);

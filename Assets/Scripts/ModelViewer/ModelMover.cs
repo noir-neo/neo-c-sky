@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using UI;
 using UniRx;
+using UnityEngine;
 using Zenject;
 
-namespace NeoC.ModelViewer
+namespace ModelViewer
 {
     public class ModelMover : MonoBehaviour
     {

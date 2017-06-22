@@ -38,11 +38,11 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44845986, g: 0.49849737, b: 0.575637, a: 1}
+  m_IndirectSpecularColor: {r: 0.18170331, g: 0.22736335, b: 0.30741954, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 11
   m_GIWorkflowMode: 0
   m_GISettings:
     serializedVersion: 2
@@ -54,7 +54,7 @@ LightmapSettings:
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
-    serializedVersion: 8
+    serializedVersion: 9
     m_Resolution: 2
     m_BakeResolution: 40
     m_TextureWidth: 1024
@@ -87,7 +87,7 @@ LightmapSettings:
     m_PVRFilteringAtrousNormalSigma: 1
     m_PVRFilteringAtrousPositionSigma: 1
   m_LightingDataAsset: {fileID: 0}
-  m_ShadowMaskMode: 2
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -156,6 +156,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -462,7 +476,10 @@ GameObject:
   m_Component:
   - component: {fileID: 916189814}
   - component: {fileID: 916189813}
+  - component: {fileID: 916189817}
   - component: {fileID: 916189815}
+  - component: {fileID: 916189818}
+  - component: {fileID: 916189819}
   - component: {fileID: 916189816}
   m_Layer: 0
   m_Name: ModelViewer
@@ -482,11 +499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d0d725e655734153a7176d799cc7216, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xRotateRoot: {fileID: 916189814}
-  yRotateRoot: {fileID: 439572936}
-  speed: 0.5
-  minXAngle: -60
-  maxXAngle: 30
+  pointerCount: 1
 --- !u!4 &916189814
 Transform:
   m_ObjectHideFlags: 0
@@ -509,12 +522,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 916189812}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee61c8ab4ff8c4eebbf2b9a77a277b7f, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d0d725e655734153a7176d799cc7216, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveRoot: {fileID: 916189814}
-  speed: 0.01
-  movableRage: {x: -1, y: 4, z: 1, w: -0.5}
+  pointerCount: 2
 --- !u!114 &916189816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -530,6 +541,47 @@ MonoBehaviour:
   speed: 0.01
   minScale: 0.5
   maxScale: 2
+--- !u!114 &916189817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 916189812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 379e59e8ba59648d6a1ddf2d3d0350d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xRotateRoot: {fileID: 916189814}
+  yRotateRoot: {fileID: 439572936}
+  speed: 0.5
+  minXAngle: -60
+  maxXAngle: 30
+--- !u!114 &916189818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 916189812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd9e31d3985f3400d843013b1f9fea67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveRoot: {fileID: 916189814}
+  speed: 0.01
+  movableRage: {x: -1, y: 4, z: 1, w: 0.5}
+--- !u!114 &916189819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 916189812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f244480915db143558ea76a85447b81c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   ignoreAngleThreshold: 45
 --- !u!1 &1091782254
 GameObject:
@@ -579,6 +631,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -733,6 +799,20 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
+  m_FalloffTable:
+    m_Table[0]: 0
+    m_Table[1]: 0
+    m_Table[2]: 0
+    m_Table[3]: 0
+    m_Table[4]: 0
+    m_Table[5]: 0
+    m_Table[6]: 0
+    m_Table[7]: 0
+    m_Table[8]: 0
+    m_Table[9]: 0
+    m_Table[10]: 0
+    m_Table[11]: 0
+    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0

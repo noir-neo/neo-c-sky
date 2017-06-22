@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 using UniRx;
 using Zenject;
 
@@ -16,11 +14,7 @@ namespace NeoC.ModelViewer
 
         void Start()
         {
-            dragHandler.OnDragsAsObservable(2)
-                .TakeUntil(dragHandler.OnEndDragAsObservable())
-                .RepeatUntilDestroy(this)
-                .Select(x => x.Select(p => p.delta))
-                .Select(x => x.Aggregate((n, next) => Vector2.Lerp(n, next, 0.5f)))
+            dragHandler.OnDragsDeltaAsObservable(2)
                 .Subscribe(Move);
         }
 

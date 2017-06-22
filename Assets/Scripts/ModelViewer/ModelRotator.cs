@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 using UniRx;
 using Zenject;
 
@@ -17,10 +16,7 @@ namespace NeoC.ModelViewer
 
         void Start()
         {
-            dragHandler.OnDragsAsObservable(1)
-                .TakeUntil(dragHandler.OnEndDragAsObservable())
-                .RepeatUntilDestroy(this)
-                .Select(x => x.Single().delta)
+            dragHandler.OnDragDeltaAsObservable()
                 .Subscribe(Rotate);
         }
 

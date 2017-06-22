@@ -53,6 +53,11 @@ namespace ModelViewer.UI
 
         public IObservable<Vector2> OnDragsDeltaAsObservable(int pointerCount)
         {
+            if (pointerCount == 1)
+            {
+                return OnDragDeltaAsObservable();
+            }
+
             return OnDragsVector2AsObservable(pointerCount)
                 .Select(x => x.Aggregate((n, next) => Vector2.Lerp(n, next, 0.5f)));
         }

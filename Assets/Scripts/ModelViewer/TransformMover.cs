@@ -1,25 +1,15 @@
-﻿using UI;
-using UniRx;
+﻿using ModelViewer.Handler;
 using UnityEngine;
-using Zenject;
 
 namespace ModelViewer
 {
-    public class ModelMover : MonoBehaviour
+    public class TransformMover : MonoBehaviour, IDragHandler
     {
         [SerializeField] Transform moveRoot;
         [SerializeField] private float speed;
         [SerializeField] private Vector4 movableRage;
-
-        [Inject] private UIDragHandler dragHandler;
-
-        void Start()
-        {
-            dragHandler.OnDragsDeltaAsObservable(2)
-                .Subscribe(Move);
-        }
-
-        private void Move(Vector2 delta)
+        
+        public void OnDrag(Vector2 delta)
         {
             moveRoot.Move(delta * speed);
             moveRoot.position = moveRoot.position.Clamp(movableRage);

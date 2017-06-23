@@ -1,14 +1,12 @@
-﻿using ModelViewer.Handler;
-using ModelViewer.UI;
+﻿using ModelViewer.UI;
 using UniRx;
 using UnityEngine;
 using Zenject;
 
 namespace ModelViewer
 {
-    public class PinchObserver : MonoBehaviour
+    public abstract class PinchObserverBase : MonoBehaviour
     {
-        [SerializeField] private IPinchHandler handler;
         [SerializeField] private float ignoreAngleThreshold;
 
         [Inject] private UIDragHandler dragHandler;
@@ -16,7 +14,9 @@ namespace ModelViewer
         void Start()
         {
             dragHandler.OnPinchAsObservable(ignoreAngleThreshold)
-                .Subscribe(handler.OnPinch);
+                .Subscribe(OnPinch);
         }
+
+        protected abstract void OnPinch(float magnitude);
     }
 }

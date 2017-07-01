@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using ModelViewer.Handler;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -29,7 +30,7 @@ namespace NeoC.Game
             saboten.Break();
             var position = saboten.transform.position;
             sabotenGenerator.Generate(RandomVector3(
-                position.x - 30f, position.x + 30f, 
+                position.x - 30f, position.x + 30f,
                 0, 0,
                 position.z - 30f, position.z + 30f));
         }

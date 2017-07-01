@@ -143,4 +143,13 @@ public static class TransformExtensions
         if (value.y < bottom) value.y = bottom;
         return value;
     }
+
+    public static Vector3 Clamp(this Vector3 value, Vector3 min, Vector3 max)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            value[i] = Mathf.Clamp(value[i], min[i], max[i]);
+        }
+        return value;
+    }
 }

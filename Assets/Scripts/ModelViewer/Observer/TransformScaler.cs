@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ModelViewer
+namespace ModelViewer.Observer
 {
     public sealed class TransformScaler : PinchObserverBase
     {

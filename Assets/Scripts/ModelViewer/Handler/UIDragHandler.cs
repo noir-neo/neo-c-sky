@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace ModelViewer.UI
+namespace ModelViewer.Handler
 {
     [RequireComponent(typeof(Button))]
     public class UIDragHandler : MonoBehaviour

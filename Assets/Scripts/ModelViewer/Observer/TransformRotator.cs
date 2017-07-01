@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ModelViewer
+namespace ModelViewer.Observer
 {
     public sealed class TransformRotator : DragObserverBase
     {
@@ -9,7 +9,7 @@ namespace ModelViewer
         [SerializeField] private float speed;
         [SerializeField] private float minXAngle;
         [SerializeField] private float maxXAngle;
-        
+
         protected override void OnDrag(Vector2 delta)
         {
             delta *= speed;

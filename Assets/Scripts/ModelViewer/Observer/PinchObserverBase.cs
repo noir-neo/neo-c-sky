@@ -1,9 +1,9 @@
-﻿using ModelViewer.UI;
+﻿using ModelViewer.Handler;
 using UniRx;
 using UnityEngine;
 using Zenject;
 
-namespace ModelViewer
+namespace ModelViewer.Observer
 {
     public abstract class PinchObserverBase : MonoBehaviour
     {

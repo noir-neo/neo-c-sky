@@ -16,6 +16,19 @@ namespace NeoC.Game.Board
             squares = GetComponentsInChildren<Square>().ToList();
         }
 
-        
+        [Conditional("UNITY_EDITOR")]
+        public void CalculateBoardsCoordinate()
+        {
+            foreach (var zList in squares.BindOrderBy(s => s.transform.localPosition.z, s => s.transform.localPosition.x)
+                .Select((v, i) => new { v, i }))
+            {
+                foreach (var square in zList.v.Select((v, i) => new { v, i }))
+                {
+                    square.v.UpdateCoordinate(square.i, zList.i);
+                }
+            }
+        }
+
+
     }
 }

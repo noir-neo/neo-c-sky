@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using NeoC.Game.Model;
+using UniRx;
 using UnityEngine;
 
 namespace NeoC.Game.Board
@@ -9,6 +11,26 @@ namespace NeoC.Game.Board
     public class Board : MonoBehaviour
     {
         [SerializeField] private List<Square> squares;
+
+        private IObservable<BoardCoordinate> onClickSquareAsObservable;
+
+        void Start()
+        {
+            OnClickSquaresAsObservable()
+                .Subscribe(x => UnityEngine.Debug.Log(x));
+        }
+
+        public IObservable<BoardCoordinate> OnClickSquaresAsObservable()
+        {
+            if (onClickSquareAsObservable != null)
+            {
+                return onClickSquareAsObservable;
+            }
+
+            onClickSquareAsObservable = squares.Select(s => s.OnClickAsObservable()).Merge();
+            return onClickSquareAsObservable;
+        }
+
 
         [Conditional("UNITY_EDITOR")]
         public void SerializeSquaresInChildren()

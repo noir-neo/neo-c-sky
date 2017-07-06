@@ -1,25 +1,46 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using NeoC.Game.Model;
+using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace NeoC.Game.Board
 {
-    public class Square : MonoBehaviour
+    public class Square : ObservableTriggerBase, IPointerClickHandler
     {
-        [Serializable]
-        public struct BoardCoordinate
-        {
-            public int x;
-            public int y;
+        [SerializeField] private BoardCoordinate coordinate;
 
-            public void SetValue(int x, int y)
+        private Subject<BoardCoordinate> onClick;
+        private IObservable<BoardCoordinate> onClickAsObservable;
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (onClick != null)
             {
-                this.x = x;
-                this.y = y;
+                onClick.OnNext(coordinate);
             }
         }
 
-        [SerializeField] private BoardCoordinate coordinate;
+        public IObservable<BoardCoordinate> OnClickAsObservable()
+        {
+            if (onClickAsObservable != null)
+            {
+                return onClickAsObservable;
+            }
+
+            onClick = new Subject<BoardCoordinate>();
+            onClickAsObservable = onClick.AsObservable();
+            return onClickAsObservable;
+        }
+
+        protected override void RaiseOnCompletedOnDestroy()
+        {
+            if (onClick != null)
+            {
+                onClick.OnCompleted();
+            }
+        }
 
         [Conditional("UNITY_EDITOR")]
         public void UpdateCoordinate(int x, int y)

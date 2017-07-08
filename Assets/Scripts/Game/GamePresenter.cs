@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using ModelViewer.Handler;
 using NeoC.Game.Model;
 using UniRx;
@@ -31,7 +32,7 @@ namespace NeoC.Game
         private void InitObservers()
         {
             board.OnClickSquaresAsObservable()
-                .Where(s => boardMedel.IntersectedSquares(playerModel.MovableSquares()).Contains(s))
+                .Where(s => MovableSquares(playerModel).Contains(s))
                 .Subscribe(playerModel.UpdateCoordinate);
 
             playerModel.currentSquare
@@ -43,8 +44,19 @@ namespace NeoC.Game
             Vector2 xz;
             if (board.TryGetSquarePosition(coordinate, out xz))
             {
-                playerMover.MoveTo(xz);
+                playerMover.MoveTo(xz,
+                    UpdateSelectable);
             }
+        }
+
+        private void UpdateSelectable()
+        {
+            board.UpdateSelectable(MovableSquares(playerModel));
+        }
+
+        private IEnumerable<SquareModel> MovableSquares(PlayerModel playerModel)
+        {
+            return boardMedel.IntersectedSquares(playerModel.MovableSquares());
         }
     }
 }

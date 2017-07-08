@@ -27,7 +27,7 @@ namespace NeoC.Game
                 .TakeWhile(_ => Vector3.Distance(transform.position, targetPos) > 0.01f)
                 .Subscribe(
                     _ => transform.UpdatePositionLerp(startTime, smooth, journeyLength, startPos, targetPos),
-                    _ =>
+                    () =>
                     {
                         if (onCompleted != null) onCompleted();
                     });

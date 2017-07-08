@@ -31,16 +31,32 @@ namespace NeoC.Game.Board
             return onClickSquareAsObservable;
         }
 
-        public bool TryGetSquarePosition(SquareModel coordinate, out Vector2 position)
+        public bool TryGetSquarePosition(SquareModel model, out Vector2 position)
         {
-            var square = squares.SingleOrDefault(s => s.Model == coordinate);
-            if (square == null)
+            Square square;
+            if (TryGetSquare(model, out square))
             {
-                position = Vector2.zero;
-                return false;
+                position = square.Position();
+                return true;
             }
-            position = square.Position();
-            return true;
+            position = Vector2.zero;
+            return false;
+        }
+
+        public bool TryGetSquare(SquareModel model, out Square square)
+        {
+            square = squares.SingleOrDefault(s => s.Model == model);
+            return square != null;
+        }
+
+        public void UpdateSelectable(IEnumerable<SquareModel> selectable)
+        {
+            var selectableSquares = squares.Where(s => selectable.Contains(s.Model));
+
+            foreach (var square in squares)
+            {
+                square.AllowSelect(selectableSquares.Contains(square));
+            }
         }
 
 

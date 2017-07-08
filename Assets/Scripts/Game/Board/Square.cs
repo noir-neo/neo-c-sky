@@ -7,6 +7,9 @@ using UnityEngine.EventSystems;
 
 namespace NeoC.Game.Board
 {
+    [ExecuteInEditMode]
+    [RequireComponent(typeof(Renderer))]
+    [RequireComponent(typeof(Collider))]
     public class Square : ObservableTriggerBase, IPointerClickHandler
     {
         [SerializeField] private SquareModel model;
@@ -18,12 +21,23 @@ namespace NeoC.Game.Board
         [SerializeField] private Renderer renderer;
         [SerializeField] private Collider collider;
 
+        // ToDo: SerializeField (to be a prefab and runtime instancing by master data)
+        private static readonly Color defaultColor = new Color32(0, 128, 255, 44);
+        private static readonly Color selectableColor = new Color32(0, 128, 255, 88);
+        private static readonly Color selectingColor = new Color32(0, 128, 255, 130);
+
         private Subject<SquareModel> onClick;
         private IObservable<SquareModel> onClickAsObservable;
 
         public Vector2 Position()
         {
             return transform.position.XZ();
+        }
+
+        public void AllowSelect(bool selectable)
+        {
+            collider.enabled = selectable;
+            renderer.material.color = selectable ? selectableColor : defaultColor;
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -52,6 +66,13 @@ namespace NeoC.Game.Board
             {
                 onClick.OnCompleted();
             }
+        }
+
+        [Conditional("UNITY_EDITOR")]
+        void OnEnable()
+        {
+            renderer = GetComponent<Renderer>();
+            collider = GetComponent<Collider>();
         }
 
         [Conditional("UNITY_EDITOR")]

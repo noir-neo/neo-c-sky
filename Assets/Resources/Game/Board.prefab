@@ -811,6 +811,8 @@ MonoBehaviour:
   model:
     x: 0
     y: 2
+  renderer: {fileID: 23622987364015558}
+  collider: {fileID: 65949586476401912}
 --- !u!114 &114298793079029540
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -825,6 +827,8 @@ MonoBehaviour:
   model:
     x: 1
     y: 2
+  renderer: {fileID: 23855620207216142}
+  collider: {fileID: 65018652567224718}
 --- !u!114 &114353486253278804
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -839,6 +843,8 @@ MonoBehaviour:
   model:
     x: 2
     y: 1
+  renderer: {fileID: 23732268661131028}
+  collider: {fileID: 65424366246554864}
 --- !u!114 &114482028014513248
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -853,6 +859,8 @@ MonoBehaviour:
   model:
     x: 1
     y: 0
+  renderer: {fileID: 23197853895998526}
+  collider: {fileID: 65564286290498924}
 --- !u!114 &114607182719305844
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -867,6 +875,8 @@ MonoBehaviour:
   model:
     x: 0
     y: 0
+  renderer: {fileID: 23286566750399246}
+  collider: {fileID: 65068049491024902}
 --- !u!114 &114764909146586688
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -881,6 +891,8 @@ MonoBehaviour:
   model:
     x: 2
     y: 0
+  renderer: {fileID: 23900885066871044}
+  collider: {fileID: 65286110708502554}
 --- !u!114 &114782853948488500
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -916,6 +928,8 @@ MonoBehaviour:
   model:
     x: 2
     y: 2
+  renderer: {fileID: 23887886534032202}
+  collider: {fileID: 65607968792537504}
 --- !u!114 &114831261940288946
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -946,6 +960,8 @@ MonoBehaviour:
   model:
     x: 1
     y: 1
+  renderer: {fileID: 23763243006142244}
+  collider: {fileID: 65729886198703848}
 --- !u!114 &114930493287265048
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -960,3 +976,5 @@ MonoBehaviour:
   model:
     x: 0
     y: 1
+  renderer: {fileID: 23321167295641022}
+  collider: {fileID: 65118679119002162}

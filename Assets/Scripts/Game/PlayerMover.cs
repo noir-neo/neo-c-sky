@@ -1,24 +1,41 @@
-﻿using UnityEngine;
+﻿using System;
+using UniRx;
+using UniRx.Triggers;
+using UnityEngine;
 
 namespace NeoC.Game
 {
     public class PlayerMover : MonoBehaviour
     {
         [SerializeField] private Animator _animator;
-        [SerializeField] private Rigidbody _rigidbody;
         [SerializeField] private float speed;
 
-        public void Move(Vector2 move)
+        public void MoveTo(Vector2 target, Action onCompleted = null)
         {
-            move *= speed;
-            Move(move.X0Y());
+            MoveTo(target.X0Y(), speed, onCompleted);
         }
 
-        public void Move(Vector3 move)
+        private void MoveTo(Vector3 targetPos, float smooth, Action onCompleted = null)
         {
-            _rigidbody.position += move;
-            _rigidbody.LookToward(-move);
-            _animator.SetFloat("velocity", move.sqrMagnitude);
+            var startPos = transform.position;
+            float startTime = Time.time;
+            float journeyLength = Vector3.Distance(startPos, targetPos);
+
+            LookAt(targetPos);
+            this.UpdateAsObservable()
+                .RepeatUntilDestroy(gameObject)
+                .TakeWhile(_ => Vector3.Distance(transform.position, targetPos) > 0.01f)
+                .Subscribe(
+                    _ => transform.UpdatePositionLerp(startTime, smooth, journeyLength, startPos, targetPos),
+                    _ =>
+                    {
+                        if (onCompleted != null) onCompleted();
+                    });
+        }
+
+        public void LookAt(Vector3 target)
+        {
+            transform.LookAt(target);
         }
     }
 }

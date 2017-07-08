@@ -31,6 +31,18 @@ namespace NeoC.Game.Board
             return onClickSquareAsObservable;
         }
 
+        public bool TryGetSquarePosition(BoardCoordinate coordinate, out Vector2 position)
+        {
+            var square = squares.SingleOrDefault(s => s.Coordinate == coordinate);
+            if (square == null)
+            {
+                position = Vector2.zero;
+                return false;
+            }
+            position = square.Position();
+            return true;
+        }
+
 
         [Conditional("UNITY_EDITOR")]
         public void SerializeSquaresInChildren()

@@ -10,9 +10,18 @@ namespace NeoC.Game.Board
     public class Square : ObservableTriggerBase, IPointerClickHandler
     {
         [SerializeField] private BoardCoordinate coordinate;
+        public BoardCoordinate Coordinate
+        {
+            get { return coordinate; }
+        }
 
         private Subject<BoardCoordinate> onClick;
         private IObservable<BoardCoordinate> onClickAsObservable;
+
+        public Vector2 Position()
+        {
+            return transform.position.XZ();
+        }
 
         public void OnPointerClick(PointerEventData eventData)
         {

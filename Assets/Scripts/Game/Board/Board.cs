@@ -12,7 +12,7 @@ namespace NeoC.Game.Board
     {
         [SerializeField] private List<Square> squares;
 
-        private IObservable<BoardCoordinate> onClickSquareAsObservable;
+        private IObservable<SquareModel> onClickSquareAsObservable;
 
         void Start()
         {
@@ -20,7 +20,7 @@ namespace NeoC.Game.Board
                 .Subscribe(x => UnityEngine.Debug.Log(x));
         }
 
-        public IObservable<BoardCoordinate> OnClickSquaresAsObservable()
+        public IObservable<SquareModel> OnClickSquaresAsObservable()
         {
             if (onClickSquareAsObservable != null)
             {
@@ -31,9 +31,9 @@ namespace NeoC.Game.Board
             return onClickSquareAsObservable;
         }
 
-        public bool TryGetSquarePosition(BoardCoordinate coordinate, out Vector2 position)
+        public bool TryGetSquarePosition(SquareModel coordinate, out Vector2 position)
         {
-            var square = squares.SingleOrDefault(s => s.Coordinate == coordinate);
+            var square = squares.SingleOrDefault(s => s.Model == coordinate);
             if (square == null)
             {
                 position = Vector2.zero;

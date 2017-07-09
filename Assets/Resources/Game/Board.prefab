@@ -808,7 +808,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dec3bf3cf9da0461187907ad7ef5dd0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coordinate:
+  model:
     x: 0
     y: 2
 --- !u!114 &114298793079029540
@@ -822,7 +822,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dec3bf3cf9da0461187907ad7ef5dd0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coordinate:
+  model:
     x: 1
     y: 2
 --- !u!114 &114353486253278804
@@ -836,7 +836,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dec3bf3cf9da0461187907ad7ef5dd0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coordinate:
+  model:
     x: 2
     y: 1
 --- !u!114 &114482028014513248
@@ -850,7 +850,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dec3bf3cf9da0461187907ad7ef5dd0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coordinate:
+  model:
     x: 1
     y: 0
 --- !u!114 &114607182719305844
@@ -864,7 +864,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dec3bf3cf9da0461187907ad7ef5dd0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coordinate:
+  model:
     x: 0
     y: 0
 --- !u!114 &114764909146586688
@@ -878,7 +878,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dec3bf3cf9da0461187907ad7ef5dd0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coordinate:
+  model:
     x: 2
     y: 0
 --- !u!114 &114782853948488500
@@ -913,7 +913,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dec3bf3cf9da0461187907ad7ef5dd0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coordinate:
+  model:
     x: 2
     y: 2
 --- !u!114 &114831261940288946
@@ -943,7 +943,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dec3bf3cf9da0461187907ad7ef5dd0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coordinate:
+  model:
     x: 1
     y: 1
 --- !u!114 &114930493287265048
@@ -957,6 +957,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dec3bf3cf9da0461187907ad7ef5dd0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coordinate:
+  model:
     x: 0
     y: 1

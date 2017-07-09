@@ -9,7 +9,8 @@ namespace NeoC.Game
 {
     public class GamePresenter : MonoBehaviour
     {
-        private PlayerMedel playerModel;
+        private PlayerModel playerModel;
+        private BoardMedel boardMedel;
 
         [Inject] private PlayerMover playerMover;
         [Inject] private Board.Board board;
@@ -22,19 +23,22 @@ namespace NeoC.Game
 
         private void InitModels()
         {
-            playerModel = new PlayerMedel();
+            playerModel = new PlayerModel();
+            // TODO: MasterData
+            boardMedel = new BoardMedel(3, 3);
         }
 
         private void InitObservers()
         {
             board.OnClickSquaresAsObservable()
+                .Where(s => boardMedel.IntersectedSquares(playerModel.MovableSquares()).Contains(s))
                 .Subscribe(playerModel.UpdateCoordinate);
 
-            playerModel.currentCoordinate
+            playerModel.currentSquare
                 .Subscribe(OnPlayerCoordinateChanged);
         }
 
-        private void OnPlayerCoordinateChanged(BoardCoordinate coordinate)
+        private void OnPlayerCoordinateChanged(SquareModel coordinate)
         {
             Vector2 xz;
             if (board.TryGetSquarePosition(coordinate, out xz))

@@ -9,14 +9,17 @@ namespace NeoC.Game.Board
 {
     public class Square : ObservableTriggerBase, IPointerClickHandler
     {
-        [SerializeField] private BoardCoordinate coordinate;
-        public BoardCoordinate Coordinate
+        [SerializeField] private SquareModel model;
+        public SquareModel Model
         {
-            get { return coordinate; }
+            get { return model; }
         }
 
-        private Subject<BoardCoordinate> onClick;
-        private IObservable<BoardCoordinate> onClickAsObservable;
+        [SerializeField] private Renderer renderer;
+        [SerializeField] private Collider collider;
+
+        private Subject<SquareModel> onClick;
+        private IObservable<SquareModel> onClickAsObservable;
 
         public Vector2 Position()
         {
@@ -27,18 +30,18 @@ namespace NeoC.Game.Board
         {
             if (onClick != null)
             {
-                onClick.OnNext(coordinate);
+                onClick.OnNext(model);
             }
         }
 
-        public IObservable<BoardCoordinate> OnClickAsObservable()
+        public IObservable<SquareModel> OnClickAsObservable()
         {
             if (onClickAsObservable != null)
             {
                 return onClickAsObservable;
             }
 
-            onClick = new Subject<BoardCoordinate>();
+            onClick = new Subject<SquareModel>();
             onClickAsObservable = onClick.AsObservable();
             return onClickAsObservable;
         }
@@ -54,7 +57,7 @@ namespace NeoC.Game.Board
         [Conditional("UNITY_EDITOR")]
         public void UpdateCoordinate(int x, int y)
         {
-            coordinate.SetValue(x, y);
+            model = new SquareModel(x, y);
             gameObject.name = string.Format("{0:D2}_{1:D2}", x, y);
         }
     }

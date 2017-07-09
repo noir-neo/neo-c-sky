@@ -1,7 +1,7 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using NeoC.Game.Model;
 using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,8 +9,8 @@ namespace NeoC.Game.Board
 {
     [ExecuteInEditMode]
     [RequireComponent(typeof(Renderer))]
-    [RequireComponent(typeof(Collider))]
-    public class Square : ObservableTriggerBase, IPointerClickHandler
+    [RequireComponent(typeof(SquarePointerEventHandler))]
+    public class Square : MonoBehaviour
     {
         [SerializeField] private SquareModel model;
         public SquareModel Model
@@ -19,15 +19,32 @@ namespace NeoC.Game.Board
         }
 
         [SerializeField] private Renderer renderer;
-        [SerializeField] private Collider collider;
+        [SerializeField] private SquarePointerEventHandler pointerEventHandler;
 
+        enum SquareColors
+        {
+            Default,
+            Selectable,
+            Selecting
+        }
         // ToDo: SerializeField (to be a prefab and runtime instancing by master data)
-        private static readonly Color defaultColor = new Color32(0, 128, 255, 44);
-        private static readonly Color selectableColor = new Color32(0, 128, 255, 88);
-        private static readonly Color selectingColor = new Color32(0, 128, 255, 130);
+        private static readonly Dictionary<SquareColors, Color32> Colors = new Dictionary<SquareColors, Color32>
+        {
+            {SquareColors.Default, new Color32(0, 128, 255, 44)},
+            {SquareColors.Selectable, new Color32(0, 128, 255, 88)},
+            {SquareColors.Selecting, new Color32(0, 255, 55, 130)}
+        };
 
-        private Subject<SquareModel> onClick;
-        private IObservable<SquareModel> onClickAsObservable;
+        private Dictionary<EventTriggerType, Subject<SquareModel>> eventSubjects;
+        private Dictionary<EventTriggerType, IObservable<SquareModel>> eventAsObservables;
+
+        void Start()
+        {
+            pointerEventHandler.OnDownAsObservable()
+                .Subscribe(_ => UpdateMaterial(SquareColors.Selecting));
+            pointerEventHandler.OnExitAsObservable()
+                .Subscribe(_ => UpdateMaterial(SquareColors.Selectable));
+        }
 
         public Vector2 Position()
         {
@@ -36,43 +53,26 @@ namespace NeoC.Game.Board
 
         public void AllowSelect(bool selectable)
         {
-            collider.enabled = selectable;
-            renderer.material.color = selectable ? selectableColor : defaultColor;
+            pointerEventHandler.EnableCollider(selectable);
+            UpdateMaterial(selectable ? SquareColors.Selectable : SquareColors.Default);
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        private void UpdateMaterial(SquareColors color)
         {
-            if (onClick != null)
-            {
-                onClick.OnNext(model);
-            }
+            renderer.material.color = Colors[color];
         }
 
         public IObservable<SquareModel> OnClickAsObservable()
         {
-            if (onClickAsObservable != null)
-            {
-                return onClickAsObservable;
-            }
-
-            onClick = new Subject<SquareModel>();
-            onClickAsObservable = onClick.AsObservable();
-            return onClickAsObservable;
-        }
-
-        protected override void RaiseOnCompletedOnDestroy()
-        {
-            if (onClick != null)
-            {
-                onClick.OnCompleted();
-            }
+            return pointerEventHandler.OnClickAsObservable()
+                .Select(_ => Model);
         }
 
         [Conditional("UNITY_EDITOR")]
         void OnEnable()
         {
             renderer = GetComponent<Renderer>();
-            collider = GetComponent<Collider>();
+            pointerEventHandler = GetComponent<SquarePointerEventHandler>();
         }
 
         [Conditional("UNITY_EDITOR")]

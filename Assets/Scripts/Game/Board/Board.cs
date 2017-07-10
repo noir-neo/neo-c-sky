@@ -17,6 +17,11 @@ namespace NeoC.Game.Board
             return squares.Select(s => s.OnClickAsObservable()).Merge();
         }
 
+        public IObservable<SquareModel> OnDownSquaresAsObservable()
+        {
+            return squares.Select(s => s.OnDownAsObservable()).Merge();
+        }
+
         public bool TryGetSquarePosition(SquareModel model, out Vector2 position)
         {
             Square square;
@@ -31,8 +36,13 @@ namespace NeoC.Game.Board
 
         public bool TryGetSquare(SquareModel model, out Square square)
         {
-            square = squares.SingleOrDefault(s => s.Model == model);
+            square = GetSquare(model);
             return square != null;
+        }
+
+        public Square GetSquare(SquareModel model)
+        {
+            return squares.SingleOrDefault(s => s.Model == model);
         }
 
         public void UpdateSelectables(IEnumerable<SquareModel> selectables)

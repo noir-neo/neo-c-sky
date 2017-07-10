@@ -33,7 +33,12 @@ namespace NeoC.Game
                     });
         }
 
-        public void LookAt(Vector3 target)
+        public void LookAt(Vector2 target)
+        {
+            LookAt(target.X0Y());
+        }
+
+        private void LookAt(Vector3 target)
         {
             transform.LookAt(target);
         }

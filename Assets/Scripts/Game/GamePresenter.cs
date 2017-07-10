@@ -35,6 +35,13 @@ namespace NeoC.Game
                 .Where(s => MovableSquares(playerModel).Contains(s))
                 .Subscribe(playerModel.UpdateCoordinate);
 
+            board.OnDownSquaresAsObservable()
+                .Where(s => MovableSquares(playerModel).Contains(s))
+                .Select(s => board.GetSquare(s))
+                .Where(s => s != null)
+                .Select(s => s.Position())
+                .Subscribe(playerMover.LookAt);
+
             playerModel.currentSquare
                 .Subscribe(OnPlayerCoordinateChanged);
         }

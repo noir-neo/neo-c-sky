@@ -73,6 +73,12 @@ namespace NeoC.Game.Board
                 .Select(_ => Model);
         }
 
+        public IObservable<SquareModel> OnDownAsObservable()
+        {
+            return pointerEventHandler.OnDownAsObservable()
+                .Select(_ => Model);
+        }
+
         [Conditional("UNITY_EDITOR")]
         void OnEnable()
         {

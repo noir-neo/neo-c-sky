@@ -49,9 +49,9 @@ namespace NeoC.Game.Board
             return square != null;
         }
 
-        public void UpdateSelectable(IEnumerable<SquareModel> selectable)
+        public void UpdateSelectables(IEnumerable<SquareModel> selectables)
         {
-            var selectableSquares = squares.Where(s => selectable.Contains(s.Model));
+            var selectableSquares = squares.Where(s => selectables.Contains(s.Model));
 
             foreach (var square in squares)
             {
@@ -59,6 +59,22 @@ namespace NeoC.Game.Board
             }
         }
 
+        public void UpdateSelectables(bool selectableAll = false)
+        {
+            foreach (var square in squares)
+            {
+                square.AllowSelect(selectableAll);
+            }
+        }
+
+        public void Highlight(SquareModel model)
+        {
+            Square square;
+            if (TryGetSquare(model, out square))
+            {
+                square.Highlight();
+            }
+        }
 
         [Conditional("UNITY_EDITOR")]
         public void SerializeSquaresInChildren()

@@ -57,6 +57,11 @@ namespace NeoC.Game.Board
             UpdateMaterial(selectable ? SquareColors.Selectable : SquareColors.Default);
         }
 
+        public void Highlight()
+        {
+            UpdateMaterial(SquareColors.Selecting);
+        }
+
         private void UpdateMaterial(SquareColors color)
         {
             renderer.material.color = Colors[color];

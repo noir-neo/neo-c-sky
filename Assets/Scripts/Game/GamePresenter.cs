@@ -41,17 +41,19 @@ namespace NeoC.Game
 
         private void OnPlayerCoordinateChanged(SquareModel coordinate)
         {
+            board.UpdateSelectables();
+            board.Highlight(coordinate);
+
             Vector2 xz;
             if (board.TryGetSquarePosition(coordinate, out xz))
             {
-                playerMover.MoveTo(xz,
-                    UpdateSelectable);
+                playerMover.MoveTo(xz, UpdateSelectable);
             }
         }
 
         private void UpdateSelectable()
         {
-            board.UpdateSelectable(MovableSquares(playerModel));
+            board.UpdateSelectables(MovableSquares(playerModel));
         }
 
         private IEnumerable<SquareModel> MovableSquares(PlayerModel playerModel)

@@ -11,14 +11,14 @@ namespace NeoC.Game.Board
     [RequireComponent(typeof(Collider))]
     public class SquarePointerEventHandler : ObservableTriggerBase, IPointerClickHandler, IPointerDownHandler, IPointerExitHandler
     {
-        [SerializeField] private Collider collider;
+        [SerializeField] private Collider _collider;
 
         private Dictionary<EventTriggerType, Subject<PointerEventData>> eventSubjects;
         private Dictionary<EventTriggerType, IObservable<PointerEventData>> eventAsObservables;
 
         public void EnableCollider(bool selectable)
         {
-            collider.enabled = selectable;
+            _collider.enabled = selectable;
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -112,7 +112,7 @@ namespace NeoC.Game.Board
         [Conditional("UNITY_EDITOR")]
         void OnEnable()
         {
-            collider = GetComponent<Collider>();
+            _collider = GetComponent<Collider>();
         }
     }
 }

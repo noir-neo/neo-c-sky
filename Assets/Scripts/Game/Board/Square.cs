@@ -18,7 +18,7 @@ namespace NeoC.Game.Board
             get { return model; }
         }
 
-        [SerializeField] private Renderer renderer;
+        [SerializeField] private Renderer _renderer;
         [SerializeField] private SquarePointerEventHandler pointerEventHandler;
 
         enum SquareColors
@@ -64,7 +64,7 @@ namespace NeoC.Game.Board
 
         private void UpdateMaterial(SquareColors color)
         {
-            renderer.material.color = Colors[color];
+            _renderer.material.color = Colors[color];
         }
 
         public IObservable<SquareModel> OnClickAsObservable()
@@ -82,7 +82,7 @@ namespace NeoC.Game.Board
         [Conditional("UNITY_EDITOR")]
         void OnEnable()
         {
-            renderer = GetComponent<Renderer>();
+            _renderer = GetComponent<Renderer>();
             pointerEventHandler = GetComponent<SquarePointerEventHandler>();
         }
 

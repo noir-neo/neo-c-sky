@@ -12,23 +12,9 @@ namespace NeoC.Game.Board
     {
         [SerializeField] private List<Square> squares;
 
-        private IObservable<SquareModel> onClickSquareAsObservable;
-
-        void Start()
-        {
-            OnClickSquaresAsObservable()
-                .Subscribe(x => UnityEngine.Debug.Log(x));
-        }
-
         public IObservable<SquareModel> OnClickSquaresAsObservable()
         {
-            if (onClickSquareAsObservable != null)
-            {
-                return onClickSquareAsObservable;
-            }
-
-            onClickSquareAsObservable = squares.Select(s => s.OnClickAsObservable()).Merge();
-            return onClickSquareAsObservable;
+            return squares.Select(s => s.OnClickAsObservable()).Merge();
         }
 
         public bool TryGetSquarePosition(SquareModel model, out Vector2 position)

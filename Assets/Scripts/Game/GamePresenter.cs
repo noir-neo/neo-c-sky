@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using ModelViewer.Handler;
+using NeoC.Game.Model;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -8,39 +10,62 @@ namespace NeoC.Game
 {
     public class GamePresenter : MonoBehaviour
     {
-        [Inject] private UIDragHandler dragHandler;
-        [Inject] private Attacker attacker;
+        private PlayerModel playerModel;
+        private BoardMedel boardMedel;
+
         [Inject] private PlayerMover playerMover;
-        [Inject] private SabotenGenerator sabotenGenerator;
+        [Inject] private Board.Board board;
 
         void Start()
         {
-            dragHandler.OnDragsAsObservable(1)
-                .TakeUntil(dragHandler.OnEndDragAsObservable())
-                .RepeatUntilDestroy(this)
-                .Select(x => x.Single().delta)
-                .Subscribe(playerMover.Move);
-
-            attacker.OnAttackAsObservable()
-                .Subscribe(OnAttack);
+            InitModels();
+            InitObservers();
         }
 
-        private void OnAttack(Saboten saboten)
+        private void InitModels()
         {
-            saboten.Break();
-            var position = saboten.transform.position;
-            sabotenGenerator.Generate(RandomVector3(
-                position.x - 30f, position.x + 30f,
-                0, 0,
-                position.z - 30f, position.z + 30f));
+            playerModel = new PlayerModel();
+            // TODO: MasterData
+            boardMedel = new BoardMedel(3, 3);
         }
 
-        private static Vector3 RandomVector3(float xFrom, float xTo, float yFrom, float yTo, float zFrom, float zTo)
+        private void InitObservers()
         {
-            return new Vector3(
-                Random.Range(xFrom, xTo),
-                Random.Range(yFrom, yTo),
-                Random.Range(zFrom, zTo));
+            board.OnClickSquaresAsObservable()
+                .Where(s => MovableSquares(playerModel).Contains(s))
+                .Subscribe(playerModel.UpdateCoordinate);
+
+            board.OnDownSquaresAsObservable()
+                .Where(s => MovableSquares(playerModel).Contains(s))
+                .Select(s => board.GetSquare(s))
+                .Where(s => s != null)
+                .Select(s => s.Position())
+                .Subscribe(playerMover.LookAt);
+
+            playerModel.currentSquare
+                .Subscribe(OnPlayerCoordinateChanged);
+        }
+
+        private void OnPlayerCoordinateChanged(SquareModel coordinate)
+        {
+            board.UpdateSelectables();
+            board.Highlight(coordinate);
+
+            Vector2 xz;
+            if (board.TryGetSquarePosition(coordinate, out xz))
+            {
+                playerMover.MoveTo(xz, UpdateSelectable);
+            }
+        }
+
+        private void UpdateSelectable()
+        {
+            board.UpdateSelectables(MovableSquares(playerModel));
+        }
+
+        private IEnumerable<SquareModel> MovableSquares(PlayerModel playerModel)
+        {
+            return boardMedel.IntersectedSquares(playerModel.MovableSquares());
         }
     }
 }

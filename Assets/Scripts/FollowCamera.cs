@@ -14,6 +14,6 @@ public class FollowCamera : MonoBehaviour
 
     void LateUpdate()
     {
-        transform.PositionLerp(target.position + offset, smooth * Time.deltaTime);
+        transform.position = target.position + offset;
     }
 }

@@ -43,7 +43,7 @@ public static class TransformExtensions
         transform.rotation = Quaternion.RotateTowards(transform.rotation,
             Quaternion.LookRotation(move), maxDegreesDelta);
     }
-    
+
     public static void LookToward(this Rigidbody rigidbody, Vector3 move)
     {
         rigidbody.LookToward(move, 360.0f * Time.deltaTime);
@@ -53,7 +53,7 @@ public static class TransformExtensions
     {
         rigidbody.rotation = Quaternion.RotateTowards(rigidbody.rotation,
             Quaternion.LookRotation(move), maxDegreesDelta);
-    } 
+    }
 
     public static Vector3 X0Y(this Vector3 vector3)
     {
@@ -67,6 +67,11 @@ public static class TransformExtensions
         return new Vector3(vector2.x, 0, vector2.y);
     }
 
+    public static Vector2 XZ(this Vector3 vector3)
+    {
+        return new Vector2(vector3.x, vector3.z);
+    }
+
     public static void Move(this Transform transform, Vector3 delta)
     {
         var pos = transform.position;
@@ -76,9 +81,9 @@ public static class TransformExtensions
 
     public static void Scale(this Transform transform, float value)
     {
-        transform.localScale += Vector3.one * value; 
+        transform.localScale += Vector3.one * value;
     }
-    
+
     public static void Scale(this Transform transform, float value, float min, float max)
     {
         var scale = transform.localScale;
@@ -92,6 +97,13 @@ public static class TransformExtensions
     public static void PositionLerp(this Transform transform, Vector3 target, float t)
     {
         transform.position = Vector3.Lerp(transform.position, target, t);
+    }
+
+    public static void UpdatePositionLerp(this Transform transform, float startTime, float speed, float journeyLength, Vector3 startPos, Vector3 endPos)
+    {
+        float distCovered = (Time.time - startTime) * speed;
+        float fracJourney = distCovered / journeyLength;
+        transform.position = Vector3.Lerp(startPos, endPos, fracJourney);
     }
 
     public static float LimitDirection(this float source, int limit)

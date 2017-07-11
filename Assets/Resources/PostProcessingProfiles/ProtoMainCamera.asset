@@ -77,7 +77,7 @@ MonoBehaviour:
       useCameraFov: 0
       kernelSize: 1
   motionBlur:
-    m_Enabled: 1
+    m_Enabled: 0
     m_Settings:
       shutterAngle: 270
       sampleCount: 4
@@ -281,7 +281,7 @@ MonoBehaviour:
       lut: {fileID: 0}
       contribution: 1
   chromaticAberration:
-    m_Enabled: 1
+    m_Enabled: 0
     m_Settings:
       spectralTexture: {fileID: 2800000, guid: 42183971d24cfe443a346e7ec6e83bbb, type: 3}
       intensity: 0.187

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: Level_001
   m_EditorClassIdentifier: 
   boardSize:
-    x: 3
-    y: 3
+    x: 5
+    y: 5

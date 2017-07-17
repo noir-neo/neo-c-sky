@@ -10,6 +10,7 @@ namespace NeoC.Game.Board
     [ExecuteInEditMode]
     public class Board : MonoBehaviour
     {
+        [SerializeField] private GameObject squarePrefab;
         [SerializeField] private List<Square> squares;
 
         public IObservable<SquareModel> OnClickSquaresAsObservable()

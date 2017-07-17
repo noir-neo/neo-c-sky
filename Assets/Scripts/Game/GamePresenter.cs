@@ -16,17 +16,24 @@ namespace NeoC.Game
         [Inject] private PlayerMover playerMover;
         [Inject] private Board.Board board;
 
+        [SerializeField] private MasterLevel level;
+
         void Start()
         {
             InitModels();
+            InitViews();
             InitObservers();
         }
 
         private void InitModels()
         {
             playerModel = new PlayerModel();
-            // TODO: MasterData
-            boardMedel = new BoardMedel(3, 3);
+            boardMedel = new BoardMedel(level.boardSize);
+        }
+
+        private void InitViews()
+        {
+            board.CreateSquares(boardMedel.SquareModels);
         }
 
         private void InitObservers()

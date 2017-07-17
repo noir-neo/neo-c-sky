@@ -11,7 +11,17 @@ namespace NeoC.Game.Board
     public class Board : MonoBehaviour
     {
         [SerializeField] private GameObject squarePrefab;
+        [SerializeField] private Vector2 squaresInterval;
         [SerializeField] private List<Square> squares;
+
+
+        public void CreateSquares(List<SquareModel> models)
+        {
+            foreach (var model in models)
+            {
+                squares.Add(InstanciateSquare(squarePrefab, model, squaresInterval, transform));
+            }
+        }
 
         public IObservable<SquareModel> OnClickSquaresAsObservable()
         {
@@ -73,6 +83,14 @@ namespace NeoC.Game.Board
             }
         }
 
+        private static Square InstanciateSquare(GameObject prefab, SquareModel model, Vector2 interval, Transform transform)
+        {
+            var gameObject = Instantiate(prefab, Vector2.Scale(interval, model).X0Y(), Quaternion.identity, transform);
+            var square = gameObject.GetComponent<Square>();
+            square.Model = model;
+            return square;
+        }
+
         [Conditional("UNITY_EDITOR")]
         public void SerializeSquaresInChildren()
         {
@@ -91,7 +109,5 @@ namespace NeoC.Game.Board
                 }
             }
         }
-
-
     }
 }

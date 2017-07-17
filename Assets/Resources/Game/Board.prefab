@@ -54,6 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   squarePrefab: {fileID: 1846575292928384, guid: fc035e913ceeb4b96889091eca2a24c5,
     type: 2}
+  squaresInterval: {x: 3, y: 3}
   squares: []
 --- !u!114 &114831261940288946
 MonoBehaviour:

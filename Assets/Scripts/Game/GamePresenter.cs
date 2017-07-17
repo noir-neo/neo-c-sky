@@ -21,6 +21,7 @@ namespace NeoC.Game
         void Start()
         {
             InitModels();
+            InitViews();
             InitObservers();
         }
 
@@ -28,6 +29,11 @@ namespace NeoC.Game
         {
             playerModel = new PlayerModel();
             boardMedel = new BoardMedel(level.boardSize);
+        }
+
+        private void InitViews()
+        {
+            board.CreateSquares(boardMedel.SquareModels);
         }
 
         private void InitObservers()

@@ -60,5 +60,10 @@ namespace NeoC.Game.Model
         {
             return new SquareModel(lhs.X - rhs.X, lhs.Y - rhs.Y);
         }
+
+        public static implicit operator Vector2(SquareModel val)
+        {
+            return new Vector2(val.X, val.Y);
+        }
     }
 }

@@ -6,6 +6,10 @@ namespace NeoC.Game.Model
     public class BoardMedel
     {
         private readonly List<SquareModel> squareModels;
+        public List<SquareModel> SquareModels
+        {
+            get { return squareModels; }
+        }
 
         public BoardMedel(SquareModel boardSize) : this(boardSize.X, boardSize.Y)
         {

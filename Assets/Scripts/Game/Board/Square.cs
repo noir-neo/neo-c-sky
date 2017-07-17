@@ -16,6 +16,7 @@ namespace NeoC.Game.Board
         public SquareModel Model
         {
             get { return model; }
+            set { model = value; }
         }
 
         [SerializeField] private Renderer _renderer;

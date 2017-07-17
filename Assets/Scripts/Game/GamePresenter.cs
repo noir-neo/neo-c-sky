@@ -11,7 +11,7 @@ namespace NeoC.Game
     public class GamePresenter : MonoBehaviour
     {
         private PlayerModel playerModel;
-        private BoardMedel boardMedel;
+        private BoardMedel boardModel;
 
         [Inject] private PlayerMover playerMover;
         [Inject] private Board.Board board;
@@ -28,12 +28,12 @@ namespace NeoC.Game
         private void InitModels()
         {
             playerModel = new PlayerModel();
-            boardMedel = new BoardMedel(level.boardSize);
+            boardModel = new BoardMedel(level.boardSize);
         }
 
         private void InitViews()
         {
-            board.CreateSquares(boardMedel.SquareModels);
+            board.CreateSquares(boardModel.SquareModels);
         }
 
         private void InitObservers()
@@ -72,7 +72,7 @@ namespace NeoC.Game
 
         private IEnumerable<SquareModel> MovableSquares(PlayerModel playerModel)
         {
-            return boardMedel.IntersectedSquares(playerModel.MovableSquares());
+            return boardModel.IntersectedSquares(playerModel.MovableSquares());
         }
     }
 }

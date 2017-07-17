@@ -39,7 +39,7 @@ namespace NeoC.Game
         {
             board.OnClickSquaresAsObservable()
                 .Where(s => MovableSquares(playerModel).Contains(s))
-                .Subscribe(playerModel.Move);
+                .Subscribe(playerModel.MoveTo);
 
             board.OnDownSquaresAsObservable()
                 .Where(s => MovableSquares(playerModel).Contains(s))

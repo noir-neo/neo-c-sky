@@ -9,12 +9,8 @@ namespace NeoC.Game.Model
     {
         [SerializeField] private int x;
         [SerializeField] private int y;
-        public int X {
-            get { return x; }
-        }
-        public int Y {
-            get { return y; }
-        }
+        public int X => x;
+        public int Y => y;
 
         public SquareModel(int x, int y)
         {
@@ -65,5 +61,15 @@ namespace NeoC.Game.Model
         {
             return new Vector2(val.X, val.Y);
         }
+
+        public static SquareModel zero => new SquareModel(0, 0);
+        public static SquareModel up => new SquareModel(0, 1);
+        public static SquareModel upRight => new SquareModel(1, 1);
+        public static SquareModel right => new SquareModel(1, 0);
+        public static SquareModel bottomRight => new SquareModel(1, -1);
+        public static SquareModel bottom => new SquareModel(0, -1);
+        public static SquareModel bottomLeft => new SquareModel(-1, -1);
+        public static SquareModel left => new SquareModel(-1, 0);
+        public static SquareModel upLeft => new SquareModel(-1, 1);
     }
 }

@@ -15,10 +15,9 @@ namespace NeoC.Game.Model
             currentSquare = new ReactiveProperty<SquareModel>(initialSquare);
         }
 
-        public virtual void Move(SquareModel squareModel)
+        public virtual void MoveTo(SquareModel square)
         {
-            currentSquare.Value = squareModel;
+            currentSquare.Value = square;
         }
-
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ModelViewer.Handler;
 using NeoC.Game.Model;
 using UniRx;
 using UnityEngine;
@@ -27,7 +26,7 @@ namespace NeoC.Game
 
         private void InitModels()
         {
-            playerModel = new PlayerModel();
+            playerModel = new PlayerModel(level.playerInitialSquare, level.PlayerMovableRange);
             boardModel = new BoardMedel(level.boardSize);
         }
 
@@ -40,7 +39,7 @@ namespace NeoC.Game
         {
             board.OnClickSquaresAsObservable()
                 .Where(s => MovableSquares(playerModel).Contains(s))
-                .Subscribe(playerModel.UpdateCoordinate);
+                .Subscribe(playerModel.Move);
 
             board.OnDownSquaresAsObservable()
                 .Where(s => MovableSquares(playerModel).Contains(s))

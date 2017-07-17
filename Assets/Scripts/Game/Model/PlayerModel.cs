@@ -1,33 +1,19 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using UniRx;
 
 namespace NeoC.Game.Model
 {
-    public class PlayerModel
+    public class PlayerModel : PieceModelBase
     {
-        private readonly IList<SquareModel> movableRange = new List<SquareModel>
-        {
-            new SquareModel(-1, 1),  new SquareModel(0, 1),  new SquareModel(1, 1),
-            new SquareModel(-1, 0),                          new SquareModel(1, 0),
-            new SquareModel(-1, -1), new SquareModel(0, -1), new SquareModel(1, -1)
-        };
+        private readonly MasterMovableRange masterMovableRange;
 
-        public ReactiveProperty<SquareModel> currentSquare { get; private set; }
-
-        public PlayerModel()
+        public PlayerModel(SquareModel initialSquare, MasterMovableRange masterMovableRange) : base(initialSquare)
         {
-            currentSquare = new ReactiveProperty<SquareModel>();
-        }
-
-        public void UpdateCoordinate(SquareModel squareModel)
-        {
-            currentSquare.Value = squareModel;
+            this.masterMovableRange = masterMovableRange;
         }
 
         public IEnumerable<SquareModel> MovableSquares()
         {
-            return movableRange.Select(s => s + currentSquare.Value);
+            return masterMovableRange.MovableSquares(currentSquare.Value);
         }
     }
 }

@@ -1,16 +1,15 @@
-﻿
-using UnityEngine;
-
-namespace NeoC.Game.Model
+﻿namespace NeoC.Game.Model
 {
     public class EnemyModel : PieceModelBase
     {
         private readonly MasterEnemy masterEnemy;
         private SquareModel rotation;
 
-        public EnemyModel(SquareModel initialSquare, MasterEnemy masterEnemy) : base(initialSquare)
+        public EnemyModel(MasterEnemy masterEnemy, SquareModel initialSquare, SquareModel initialRotation)
+            : base(initialSquare)
         {
             this.masterEnemy = masterEnemy;
+            rotation = initialRotation;
         }
 
         public void Move()

@@ -10,6 +10,7 @@ namespace NeoC.Game
     public class GamePresenter : MonoBehaviour
     {
         private PlayerModel playerModel;
+        private List<EnemyModel> enemyModels;
         private BoardMedel boardModel;
 
         [Inject] private PlayerMover playerMover;
@@ -26,8 +27,9 @@ namespace NeoC.Game
 
         private void InitModels()
         {
-            playerModel = new PlayerModel(level.playerInitialSquare, level.PlayerMovableRange);
-            boardModel = new BoardMedel(level.boardSize);
+            playerModel = level.PlayerModel();
+            enemyModels = level.EnemyModels();
+            boardModel = level.BoardMedel();
         }
 
         private void InitViews()

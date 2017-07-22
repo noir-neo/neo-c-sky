@@ -6,7 +6,7 @@ namespace NeoC.Game.Model
     {
         private readonly MasterMovableRange masterMovableRange;
 
-        public PlayerModel(SquareModel initialSquare, MasterMovableRange masterMovableRange) : base(initialSquare)
+        public PlayerModel(MasterMovableRange masterMovableRange, SquareModel initialSquare) : base(initialSquare)
         {
             this.masterMovableRange = masterMovableRange;
         }

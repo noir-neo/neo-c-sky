@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace NeoC.Game
 {
-    public class PlayerMover : MonoBehaviour
+    public class PieceMover : MonoBehaviour
     {
         [SerializeField] private Animator _animator;
         [SerializeField] private float speed;

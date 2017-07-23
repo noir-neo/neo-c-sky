@@ -13,7 +13,7 @@ namespace NeoC.Game
         private List<EnemyModel> enemyModels;
         private BoardMedel boardModel;
 
-        [Inject] private PlayerMover playerMover;
+        [Inject] private PieceMover playerMover;
         [Inject] private Board.Board board;
 
         [SerializeField] private MasterLevel level;

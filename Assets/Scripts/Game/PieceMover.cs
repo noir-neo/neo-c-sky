@@ -29,7 +29,7 @@ namespace NeoC.Game
                     _ => transform.UpdatePositionLerp(startTime, smooth, journeyLength, startPos, targetPos),
                     () =>
                     {
-                        if (onCompleted != null) onCompleted();
+                        onCompleted?.Invoke();
                     });
         }
 

@@ -11,6 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a9406121446c4aca90f1bdf8c72a2c0, type: 3}
   m_Name: Enemy_001
   m_EditorClassIdentifier: 
+  piecePrefab: {fileID: 1786031279303272, guid: 1b0985adaed294d05a3a0c5ef5d8264e,
+    type: 2}
   behaviours:
   - {fileID: 11400000, guid: 7ebad0eb71682411bb6f83836f592e5e, type: 2}
-  - {fileID: 11400000, guid: fdd11701011ac4e77a55f7859366ebca, type: 2}
+  - {fileID: 11400000, guid: 87c026882cf974acea47152ede540b18, type: 2}

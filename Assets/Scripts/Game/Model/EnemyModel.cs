@@ -1,30 +1,33 @@
-﻿namespace NeoC.Game.Model
+﻿using UniRx;
+
+namespace NeoC.Game.Model
 {
     public class EnemyModel : PieceModelBase
     {
         private readonly MasterEnemy masterEnemy;
-        private SquareModel rotation;
+        public ReactiveProperty<SquareModel> CurrentRotation { get; }
 
         public EnemyModel(MasterEnemy masterEnemy, SquareModel initialSquare, SquareModel initialRotation)
             : base(initialSquare)
         {
             this.masterEnemy = masterEnemy;
-            rotation = initialRotation;
+            CurrentRotation = new ReactiveProperty<SquareModel>(initialRotation);
         }
 
-        public void Move()
+        public void Move(int index)
         {
-            masterEnemy.Move(0, Move, Rotate);
+            masterEnemy.Move(index, Move, Rotate);
         }
 
         public void Move(SquareModel delta)
         {
-            currentSquare.Value += delta.Rotate(rotation);
+            delta = delta.Rotate(CurrentRotation.Value);
+            CurrentSquare.Value += delta;
         }
 
         private void Rotate(SquareModel delta)
         {
-            rotation.Rotate(delta);
+            CurrentRotation.Value = CurrentRotation.Value.Rotate(delta);
         }
     }
 }

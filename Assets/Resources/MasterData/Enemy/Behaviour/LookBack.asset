@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: LookBack
   m_EditorClassIdentifier: 
   rotateDelta:
-    x: 0
-    y: -1
+    x: -1
+    y: 0

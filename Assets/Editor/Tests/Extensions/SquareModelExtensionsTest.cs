@@ -23,5 +23,4 @@ public class SquareModelExtensionsTest
         model = model.Rotate(rotation);
         Assert.AreEqual(expected, model, $"Expected: ({expected.X}, {expected.Y})\nBut was:  SquareModel({model.X}, {model.Y})");
     }
-
 }

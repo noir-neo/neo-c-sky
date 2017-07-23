@@ -4,7 +4,7 @@ namespace NeoC.Game.Model
 {
     public abstract class PieceModelBase
     {
-        public ReactiveProperty<SquareModel> currentSquare { get; private set; }
+        public ReactiveProperty<SquareModel> CurrentSquare { get; }
 
         protected PieceModelBase() : this(new SquareModel())
         {
@@ -12,12 +12,12 @@ namespace NeoC.Game.Model
 
         protected PieceModelBase(SquareModel initialSquare)
         {
-            currentSquare = new ReactiveProperty<SquareModel>(initialSquare);
+            CurrentSquare = new ReactiveProperty<SquareModel>(initialSquare);
         }
 
         public virtual void MoveTo(SquareModel square)
         {
-            currentSquare.Value = square;
+            CurrentSquare.Value = square;
         }
     }
 }

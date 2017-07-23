@@ -11,9 +11,4 @@ public static class SquareModelExtensions
         return new SquareModel(Mathf.RoundToInt(cos * squareModel.X - sin * squareModel.Y),
             Mathf.RoundToInt(sin * squareModel.X + cos * squareModel.Y));
     }
-
-    public static float EulerAngles(this SquareModel squareModel)
-    {
-        return Vector2.Angle(Vector2.right, squareModel);
-    }
 }

@@ -21,7 +21,7 @@ MonoBehaviour:
   enemies:
   - {fileID: 11400000, guid: fbc5f06a896ef434788b5546fcb4c095, type: 2}
   enemyInitialSquares:
-  - x: 4
+  - x: 3
     y: 3
   enemyInitialRotation:
   - x: -1

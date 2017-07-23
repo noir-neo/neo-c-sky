@@ -10,7 +10,7 @@ namespace NeoC.Game
     public class GamePresenter : MonoBehaviour
     {
         private PlayerModel playerModel;
-        private List<EnemyModel> enemyModels;
+        private Dictionary<EnemyModel, PieceMover> enemyModelMovers;
         private BoardMedel boardModel;
 
         [Inject] private PieceMover playerMover;
@@ -28,7 +28,7 @@ namespace NeoC.Game
         private void InitModels()
         {
             playerModel = level.PlayerModel();
-            enemyModels = level.EnemyModels();
+            enemyModelMovers = level.EnemyModelMovers();
             boardModel = level.BoardMedel();
         }
 
@@ -50,19 +50,35 @@ namespace NeoC.Game
                 .Select(s => s.Position())
                 .Subscribe(playerMover.LookAt);
 
-            playerModel.currentSquare
+            playerModel.CurrentSquare
                 .Subscribe(OnPlayerCoordinateChanged);
+
+            playerModel.MoveCount
+                .Subscribe(MoveEnemies);
+
+            foreach (var enemyModelMoverPair in enemyModelMovers)
+            {
+                enemyModelMoverPair.Key.CurrentSquare
+                    .Subscribe(s => MoveTo(enemyModelMoverPair.Value, s));
+                enemyModelMoverPair.Key.CurrentRotation
+                    .Subscribe(s => enemyModelMoverPair.Value.LookRotation(s));
+            }
         }
 
-        private void OnPlayerCoordinateChanged(SquareModel coordinate)
+        private void OnPlayerCoordinateChanged(SquareModel position)
         {
             board.UpdateSelectables();
-            board.Highlight(coordinate);
+            board.Highlight(position);
 
+            MoveTo(playerMover, position);
+        }
+
+        private void MoveTo(PieceMover mover, SquareModel position)
+        {
             Vector2 xz;
-            if (board.TryGetSquarePosition(coordinate, out xz))
+            if (board.TryGetSquarePosition(position, out xz))
             {
-                playerMover.MoveTo(xz, UpdateSelectable);
+                mover.MoveTo(xz, UpdateSelectable);
             }
         }
 
@@ -74,6 +90,14 @@ namespace NeoC.Game
         private IEnumerable<SquareModel> MovableSquares(PlayerModel playerModel)
         {
             return boardModel.IntersectedSquares(playerModel.MovableSquares());
+        }
+
+        private void MoveEnemies(int index)
+        {
+            foreach (var enemyModel in enemyModelMovers.Keys)
+            {
+                enemyModel.Move(index);
+            }
         }
     }
 }

@@ -42,5 +42,15 @@ namespace NeoC.Game
         {
             transform.LookAt(target);
         }
+
+        public void LookRotation(Vector2 direction)
+        {
+            LookRotation(direction.X0Y());
+        }
+
+        public void LookRotation(Vector3 direction)
+        {
+            transform.localRotation = Quaternion.LookRotation(direction);
+        }
     }
 }

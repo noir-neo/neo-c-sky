@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using NeoC.Game;
 using NeoC.Game.Model;
 using UnityEngine;
@@ -25,32 +25,18 @@ public class MasterLevel : ScriptableObject
         return new PlayerModel(PlayerMovableRange, playerInitialSquare);
     }
 
-    public Dictionary<EnemyModel, PieceMover> EnemyModelMovers()
+    public IReadOnlyDictionary<EnemyModel, PieceMover> EnemyModelMovers(Func<SquareModel, Vector3> getSquarePositionFunc)
     {
         var enemyModelMovers = new Dictionary<EnemyModel, PieceMover>();
         for (int i = 0; i < enemies.Count; i++)
         {
-            enemyModelMovers.Add(new EnemyModel(enemies[i], enemyInitialSquares[i], enemyInitialRotation[i]),
-                enemies[i].PieceMover());
+            var model = new EnemyModel(enemies[i], enemyInitialSquares[i], enemyInitialRotation[i]);
+            var position = getSquarePositionFunc(enemyInitialSquares[i]);
+            var gameObject = enemies[i].InstantiatePiece(position, enemyInitialRotation[i].LookRotation());
+            var mover = gameObject.GetComponent<PieceMover>();
+            enemyModelMovers.Add(model, mover);
         }
         return enemyModelMovers;
-    }
-
-    public List<EnemyModel> EnemyModels()
-    {
-        var enemyModels = new List<EnemyModel>();
-        for (int i = 0; i < enemies.Count; i++)
-        {
-            enemyModels.Add(new EnemyModel(enemies[i], enemyInitialSquares[i], enemyInitialRotation[i]));
-        }
-        return enemyModels;
-    }
-
-    public List<PieceMover> EnemyMovers()
-    {
-        return enemies.Select(e => e.InstantiatePiece())
-            .Select(g => g.GetComponent<PieceMover>())
-            .ToList();
     }
 
     void OnValidate()

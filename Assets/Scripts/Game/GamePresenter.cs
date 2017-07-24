@@ -10,7 +10,7 @@ namespace NeoC.Game
     public class GamePresenter : MonoBehaviour
     {
         private PlayerModel playerModel;
-        private Dictionary<EnemyModel, PieceMover> enemyModelMovers;
+        private IReadOnlyDictionary<EnemyModel, PieceMover> enemyModelMovers;
         private BoardMedel boardModel;
 
         [Inject] private PieceMover playerMover;
@@ -20,24 +20,29 @@ namespace NeoC.Game
 
         void Start()
         {
-            InitModels();
-            InitViews();
-            InitObservers();
+            InitBoard();
+            InitPlayer();
+            InitEnemies();
+            InitObserver();
         }
 
-        private void InitModels()
+        private void InitBoard()
         {
-            playerModel = level.PlayerModel();
-            enemyModelMovers = level.EnemyModelMovers();
             boardModel = level.BoardMedel();
-        }
-
-        private void InitViews()
-        {
             board.CreateSquares(boardModel.SquareModels);
         }
 
-        private void InitObservers()
+        private void InitPlayer()
+        {
+            playerModel = level.PlayerModel();
+        }
+
+        private void InitEnemies()
+        {
+            enemyModelMovers = level.EnemyModelMovers(GetSquarePosition);
+        }
+
+        private void InitObserver()
         {
             board.OnClickSquaresAsObservable()
                 .Where(s => MovableSquares(playerModel).Contains(s))
@@ -59,9 +64,9 @@ namespace NeoC.Game
             foreach (var enemyModelMoverPair in enemyModelMovers)
             {
                 enemyModelMoverPair.Key.CurrentSquare
-                    .Subscribe(s => MoveTo(enemyModelMoverPair.Value, s));
+                    .Subscribe(s => enemyModelMoverPair.Value.MoveTo(GetSquarePosition(s)));
                 enemyModelMoverPair.Key.CurrentRotation
-                    .Subscribe(s => enemyModelMoverPair.Value.LookRotation(s));
+                    .Subscribe(s => enemyModelMoverPair.Value.LookRotation(s.LookRotation()));
             }
         }
 
@@ -70,16 +75,12 @@ namespace NeoC.Game
             board.UpdateSelectables();
             board.Highlight(position);
 
-            MoveTo(playerMover, position);
+            playerMover.MoveTo(GetSquarePosition(position), UpdateSelectable);
         }
 
-        private void MoveTo(PieceMover mover, SquareModel position)
+        private Vector3 GetSquarePosition(SquareModel squareModel)
         {
-            Vector2 xz;
-            if (board.TryGetSquarePosition(position, out xz))
-            {
-                mover.MoveTo(xz, UpdateSelectable);
-            }
+            return board.GetSquarePosition(squareModel);
         }
 
         private void UpdateSelectable()

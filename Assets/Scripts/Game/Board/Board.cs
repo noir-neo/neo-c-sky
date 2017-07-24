@@ -33,6 +33,16 @@ namespace NeoC.Game.Board
             return squares.Select(s => s.OnDownAsObservable()).Merge();
         }
 
+        public Vector3 GetSquarePosition(SquareModel model)
+        {
+            var square = GetSquare(model);
+            if (square != null)
+            {
+                return square.Position().X0Y();
+            }
+            return Vector3.zero;
+        }
+
         public bool TryGetSquarePosition(SquareModel model, out Vector2 position)
         {
             Square square;

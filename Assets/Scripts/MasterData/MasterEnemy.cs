@@ -11,14 +11,14 @@ public class MasterEnemy : ScriptableObject
     public GameObject piecePrefab;
     public List<MasterEnemyBehaviourBase> behaviours;
 
-    public GameObject InstantiatePiece()
+    public GameObject InstantiatePiece(Vector3 position, Quaternion rotation)
     {
-        return Instantiate(piecePrefab);
+        return Instantiate(piecePrefab, position, rotation);
     }
 
-    public PieceMover PieceMover()
+    public GameObject InstantiatePiece()
     {
-        return InstantiatePiece().GetComponent<PieceMover>();
+        return Instantiate(piecePrefab, Vector3.zero, Quaternion.identity);
     }
 
     public void Move(int index, Action<SquareModel> move, Action<SquareModel> rotate)

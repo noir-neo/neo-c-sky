@@ -11,4 +11,9 @@ public static class SquareModelExtensions
         return new SquareModel(Mathf.RoundToInt(cos * squareModel.X - sin * squareModel.Y),
             Mathf.RoundToInt(sin * squareModel.X + cos * squareModel.Y));
     }
+
+    public static Quaternion LookRotation(this SquareModel squareModel)
+    {
+        return ((Vector2)squareModel).LookRotation();
+    }
 }

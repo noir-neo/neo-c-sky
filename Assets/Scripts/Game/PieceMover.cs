@@ -10,9 +10,9 @@ namespace NeoC.Game
         [SerializeField] private Animator _animator;
         [SerializeField] private float speed;
 
-        public void MoveTo(Vector2 target, Action onCompleted = null)
+        public void MoveTo(Vector3 targetPos, Action onCompleted = null)
         {
-            MoveTo(target.X0Y(), speed, onCompleted);
+            MoveTo(targetPos, speed, onCompleted);
         }
 
         private void MoveTo(Vector3 targetPos, float smooth, Action onCompleted = null)
@@ -43,14 +43,9 @@ namespace NeoC.Game
             transform.LookAt(target);
         }
 
-        public void LookRotation(Vector2 direction, Action onCompleted = null)
+        public void LookRotation(Quaternion targetRotation, Action onCompleted = null)
         {
-            LookRotation(Quaternion.LookRotation(direction.X0Y()), speed * 100, onCompleted);
-        }
-
-        private void LookRotation(Quaternion rotation)
-        {
-            transform.localRotation = rotation;
+            LookRotation(targetRotation, speed * 100, onCompleted);
         }
 
         private void LookRotation(Quaternion targetRotation, float smooth, Action onCompleted = null)

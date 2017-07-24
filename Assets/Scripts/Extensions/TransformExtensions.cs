@@ -106,6 +106,13 @@ public static class TransformExtensions
         transform.position = Vector3.Lerp(startPos, endPos, fracJourney);
     }
 
+    public static void UpdateRotationLerp(this Transform transform, float startTime, float speed, float journeyAngle, Quaternion startRotation, Quaternion endRotation)
+    {
+        float distCovered = (Time.time - startTime) * speed;
+        float fracJourney = distCovered / journeyAngle;
+        transform.rotation = Quaternion.Lerp(startRotation, endRotation, fracJourney);
+    }
+
     public static float LimitDirection(this float source, int limit)
     {
         float unit =  360.0f / limit;

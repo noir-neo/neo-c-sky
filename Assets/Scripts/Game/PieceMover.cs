@@ -43,14 +43,31 @@ namespace NeoC.Game
             transform.LookAt(target);
         }
 
-        public void LookRotation(Vector2 direction)
+        public void LookRotation(Vector2 direction, Action onCompleted = null)
         {
-            LookRotation(direction.X0Y());
+            LookRotation(Quaternion.LookRotation(direction.X0Y()), speed * 100, onCompleted);
         }
 
-        public void LookRotation(Vector3 direction)
+        private void LookRotation(Quaternion rotation)
         {
-            transform.localRotation = Quaternion.LookRotation(direction);
+            transform.localRotation = rotation;
+        }
+
+        private void LookRotation(Quaternion targetRotation, float smooth, Action onCompleted = null)
+        {
+            var startRotation = transform.rotation;
+            float startTime = Time.time;
+            float journeyAngle = Quaternion.Angle(startRotation, targetRotation);
+
+            this.UpdateAsObservable()
+                .RepeatUntilDestroy(gameObject)
+                .TakeWhile(_ => Quaternion.Angle(transform.rotation, targetRotation) > 0.01f)
+                .Subscribe(
+                    _ => transform.UpdateRotationLerp(startTime, smooth, journeyAngle, startRotation, targetRotation),
+                    () =>
+                    {
+                        onCompleted?.Invoke();
+                    });
         }
     }
 }

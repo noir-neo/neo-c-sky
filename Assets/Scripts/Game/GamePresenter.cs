@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ModelViewer.Handler;
 using NeoC.Game.Model;
 using UniRx;
 using UnityEngine;
@@ -11,36 +10,43 @@ namespace NeoC.Game
     public class GamePresenter : MonoBehaviour
     {
         private PlayerModel playerModel;
-        private BoardMedel boardMedel;
+        private IReadOnlyDictionary<EnemyModel, PieceMover> enemyModelMovers;
+        private BoardMedel boardModel;
 
-        [Inject] private PlayerMover playerMover;
+        [Inject] private PieceMover playerMover;
         [Inject] private Board.Board board;
 
         [SerializeField] private MasterLevel level;
 
         void Start()
         {
-            InitModels();
-            InitViews();
-            InitObservers();
+            InitBoard();
+            InitPlayer();
+            InitEnemies();
+            InitObserver();
         }
 
-        private void InitModels()
+        private void InitBoard()
         {
-            playerModel = new PlayerModel();
-            boardMedel = new BoardMedel(level.boardSize);
+            boardModel = level.BoardMedel();
+            board.CreateSquares(boardModel.SquareModels);
         }
 
-        private void InitViews()
+        private void InitPlayer()
         {
-            board.CreateSquares(boardMedel.SquareModels);
+            playerModel = level.PlayerModel();
         }
 
-        private void InitObservers()
+        private void InitEnemies()
+        {
+            enemyModelMovers = level.EnemyModelMovers(GetSquarePosition);
+        }
+
+        private void InitObserver()
         {
             board.OnClickSquaresAsObservable()
                 .Where(s => MovableSquares(playerModel).Contains(s))
-                .Subscribe(playerModel.UpdateCoordinate);
+                .Subscribe(playerModel.MoveTo);
 
             board.OnDownSquaresAsObservable()
                 .Where(s => MovableSquares(playerModel).Contains(s))
@@ -49,20 +55,32 @@ namespace NeoC.Game
                 .Select(s => s.Position())
                 .Subscribe(playerMover.LookAt);
 
-            playerModel.currentSquare
+            playerModel.CurrentSquare
                 .Subscribe(OnPlayerCoordinateChanged);
+
+            playerModel.MoveCount
+                .Subscribe(MoveEnemies);
+
+            foreach (var enemyModelMoverPair in enemyModelMovers)
+            {
+                enemyModelMoverPair.Key.CurrentSquare
+                    .Subscribe(s => enemyModelMoverPair.Value.MoveTo(GetSquarePosition(s)));
+                enemyModelMoverPair.Key.CurrentRotation
+                    .Subscribe(s => enemyModelMoverPair.Value.LookRotation(s.LookRotation()));
+            }
         }
 
-        private void OnPlayerCoordinateChanged(SquareModel coordinate)
+        private void OnPlayerCoordinateChanged(SquareModel position)
         {
             board.UpdateSelectables();
-            board.Highlight(coordinate);
+            board.Highlight(position);
 
-            Vector2 xz;
-            if (board.TryGetSquarePosition(coordinate, out xz))
-            {
-                playerMover.MoveTo(xz, UpdateSelectable);
-            }
+            playerMover.MoveTo(GetSquarePosition(position), UpdateSelectable);
+        }
+
+        private Vector3 GetSquarePosition(SquareModel squareModel)
+        {
+            return board.GetSquarePosition(squareModel);
         }
 
         private void UpdateSelectable()
@@ -72,7 +90,15 @@ namespace NeoC.Game
 
         private IEnumerable<SquareModel> MovableSquares(PlayerModel playerModel)
         {
-            return boardMedel.IntersectedSquares(playerModel.MovableSquares());
+            return boardModel.IntersectedSquares(playerModel.MovableSquares());
+        }
+
+        private void MoveEnemies(int index)
+        {
+            foreach (var enemyModel in enemyModelMovers.Keys)
+            {
+                enemyModel.Move(index);
+            }
         }
     }
 }

@@ -14,3 +14,15 @@ MonoBehaviour:
   boardSize:
     x: 5
     y: 5
+  PlayerMovableRange: {fileID: 11400000, guid: 5562ac23424c14b6d992545a103eee13, type: 2}
+  playerInitialSquare:
+    x: 1
+    y: 1
+  enemies:
+  - {fileID: 11400000, guid: fbc5f06a896ef434788b5546fcb4c095, type: 2}
+  enemyInitialSquares:
+  - x: 3
+    y: 3
+  enemyInitialRotation:
+  - x: -1
+    y: 0

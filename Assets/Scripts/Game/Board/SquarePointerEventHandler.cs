@@ -41,10 +41,7 @@ namespace NeoC.Game.Board
             Subject<PointerEventData> subject;
             if (eventSubjects != null && eventSubjects.TryGetValue(eventTriggerType, out subject))
             {
-                if (subject != null)
-                {
-                    subject.OnNext(eventData);
-                }
+                subject?.OnNext(eventData);
             }
         }
 
@@ -102,10 +99,7 @@ namespace NeoC.Game.Board
 
             foreach (var subject in eventSubjects.Values)
             {
-                if (subject != null)
-                {
-                    subject.OnCompleted();
-                }
+                subject?.OnCompleted();
             }
         }
 

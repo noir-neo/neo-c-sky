@@ -91,7 +91,7 @@ namespace NeoC.Game.Board
         public void UpdateCoordinate(int x, int y)
         {
             model = new SquareModel(x, y);
-            gameObject.name = string.Format("{0:D2}_{1:D2}", x, y);
+            gameObject.name = $"{x:D2}_{y:D2}";
         }
     }
 }

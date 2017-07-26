@@ -62,11 +62,6 @@ public static class TransformExtensions
         return vector3;
     }
 
-    public static Vector3 X0Y(this Vector2 vector2)
-    {
-        return new Vector3(vector2.x, 0, vector2.y);
-    }
-
     public static Vector2 XZ(this Vector3 vector3)
     {
         return new Vector2(vector3.x, vector3.z);
@@ -104,6 +99,13 @@ public static class TransformExtensions
         float distCovered = (Time.time - startTime) * speed;
         float fracJourney = distCovered / journeyLength;
         transform.position = Vector3.Lerp(startPos, endPos, fracJourney);
+    }
+
+    public static void UpdateRotationLerp(this Transform transform, float startTime, float speed, float journeyAngle, Quaternion startRotation, Quaternion endRotation)
+    {
+        float distCovered = (Time.time - startTime) * speed;
+        float fracJourney = distCovered / journeyAngle;
+        transform.rotation = Quaternion.Lerp(startRotation, endRotation, fracJourney);
     }
 
     public static float LimitDirection(this float source, int limit)

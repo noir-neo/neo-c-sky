@@ -72,9 +72,7 @@ namespace NeoC.Game
 
         private void OnPlayerCoordinateChanged(SquareModel position)
         {
-            board.UpdateSelectables();
-            board.Highlight(position);
-
+            board.UpdateSelectables(position);
             playerMover.MoveTo(GetSquarePosition(position), UpdateSelectable);
         }
 

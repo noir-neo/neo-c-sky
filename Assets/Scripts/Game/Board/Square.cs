@@ -4,6 +4,7 @@ using NeoC.Game.Model;
 using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace NeoC.Game.Board
 {
@@ -26,14 +27,16 @@ namespace NeoC.Game.Board
         {
             Default,
             Selectable,
-            Selecting
+            Selected,
+            Occupied
         }
         // ToDo: SerializeField (to be a prefab and runtime instancing by master data)
         private static readonly Dictionary<SquareColors, Color32> Colors = new Dictionary<SquareColors, Color32>
         {
             {SquareColors.Default, new Color32(0, 128, 255, 44)},
             {SquareColors.Selectable, new Color32(0, 128, 255, 88)},
-            {SquareColors.Selecting, new Color32(0, 255, 55, 130)}
+            {SquareColors.Selected, new Color32(0, 255, 55, 130)},
+            {SquareColors.Occupied, new Color32(255, 0, 32, 130)}
         };
 
         private Dictionary<EventTriggerType, Subject<SquareModel>> eventSubjects;
@@ -42,9 +45,9 @@ namespace NeoC.Game.Board
         void Start()
         {
             pointerEventHandler.OnDownAsObservable()
-                .Subscribe(_ => UpdateMaterial(SquareColors.Selecting));
+                .Subscribe(_ => Highlight());
             pointerEventHandler.OnExitAsObservable()
-                .Subscribe(_ => UpdateMaterial(SquareColors.Selectable));
+                .Subscribe(_ => AllowSelect());
         }
 
         public Vector2 Position()
@@ -52,15 +55,27 @@ namespace NeoC.Game.Board
             return transform.position.XZ();
         }
 
-        public void AllowSelect(bool selectable)
+        public void Default()
         {
-            pointerEventHandler.EnableCollider(selectable);
-            UpdateMaterial(selectable ? SquareColors.Selectable : SquareColors.Default);
+            pointerEventHandler.EnableCollider(false);
+            UpdateMaterial(SquareColors.Default);
+        }
+
+        public void AllowSelect()
+        {
+            pointerEventHandler.EnableCollider(true);
+            UpdateMaterial(SquareColors.Selectable);
+        }
+
+        public void Occupy()
+        {
+            pointerEventHandler.EnableCollider(false);
+            UpdateMaterial(SquareColors.Occupied);
         }
 
         public void Highlight()
         {
-            UpdateMaterial(SquareColors.Selecting);
+            UpdateMaterial(SquareColors.Selected);
         }
 
         private void UpdateMaterial(SquareColors color)

@@ -66,31 +66,33 @@ namespace NeoC.Game.Board
             return squares.SingleOrDefault(s => s.Model == model);
         }
 
-        public void UpdateSelectables(IEnumerable<SquareModel> selectables)
-        {
-            var selectableSquares = squares.Where(s => selectables.Contains(s.Model));
-
-            foreach (var square in squares)
-            {
-                square.AllowSelect(selectableSquares.Contains(square));
-            }
-        }
-
-        public void UpdateSelectables(bool selectableAll = false)
+        public void UpdateSelectables(IEnumerable<SquareModel> selectableSquares = null, IEnumerable<SquareModel> highlightSquares = null, IEnumerable<SquareModel> occupiedSquares = null)
         {
             foreach (var square in squares)
             {
-                square.AllowSelect(selectableAll);
+                var model = square.Model;
+                if (highlightSquares != null && highlightSquares.Contains(model))
+                {
+                    square.Highlight();
+                }
+                else if (occupiedSquares != null && occupiedSquares.Contains(model))
+                {
+                    square.Occupy();
+                }
+                else if (selectableSquares != null && selectableSquares.Contains(model))
+                {
+                    square.AllowSelect();
+                }
+                else
+                {
+                    square.Default();
+                }
             }
         }
 
-        public void Highlight(SquareModel model)
+        public void UpdateSelectables(SquareModel highlightSquares)
         {
-            Square square;
-            if (TryGetSquare(model, out square))
-            {
-                square.Highlight();
-            }
+            UpdateSelectables(highlightSquares: new [] {highlightSquares});
         }
 
         private static Square InstanciateSquare(GameObject prefab, SquareModel model, Vector2 interval, Transform transform)

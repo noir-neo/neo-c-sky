@@ -4,7 +4,6 @@ using NeoC.Game.Model;
 using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace NeoC.Game.Board
 {
@@ -23,64 +22,18 @@ namespace NeoC.Game.Board
         [SerializeField] private Renderer _renderer;
         [SerializeField] private SquarePointerEventHandler pointerEventHandler;
 
-        enum SquareColors
-        {
-            Default,
-            Selectable,
-            Selected,
-            Occupied
-        }
-        // ToDo: SerializeField (to be a prefab and runtime instancing by master data)
-        private static readonly Dictionary<SquareColors, Color32> Colors = new Dictionary<SquareColors, Color32>
-        {
-            {SquareColors.Default, new Color32(0, 128, 255, 44)},
-            {SquareColors.Selectable, new Color32(0, 128, 255, 88)},
-            {SquareColors.Selected, new Color32(0, 255, 55, 130)},
-            {SquareColors.Occupied, new Color32(255, 0, 32, 130)}
-        };
-
         private Dictionary<EventTriggerType, Subject<SquareModel>> eventSubjects;
         private Dictionary<EventTriggerType, IObservable<SquareModel>> eventAsObservables;
-
-        void Start()
-        {
-            pointerEventHandler.OnDownAsObservable()
-                .Subscribe(_ => Highlight());
-            pointerEventHandler.OnExitAsObservable()
-                .Subscribe(_ => AllowSelect());
-        }
 
         public Vector2 Position()
         {
             return transform.position.XZ();
         }
 
-        public void Default()
+        public void UpdateState(bool selectable, Color32 color)
         {
-            pointerEventHandler.EnableCollider(false);
-            UpdateMaterial(SquareColors.Default);
-        }
-
-        public void AllowSelect()
-        {
-            pointerEventHandler.EnableCollider(true);
-            UpdateMaterial(SquareColors.Selectable);
-        }
-
-        public void Occupy()
-        {
-            pointerEventHandler.EnableCollider(false);
-            UpdateMaterial(SquareColors.Occupied);
-        }
-
-        public void Highlight()
-        {
-            UpdateMaterial(SquareColors.Selected);
-        }
-
-        private void UpdateMaterial(SquareColors color)
-        {
-            _renderer.material.color = Colors[color];
+            pointerEventHandler.EnableCollider(selectable);
+            _renderer.material.color = color;
         }
 
         public IObservable<SquareModel> OnClickAsObservable()
@@ -92,6 +45,12 @@ namespace NeoC.Game.Board
         public IObservable<SquareModel> OnDownAsObservable()
         {
             return pointerEventHandler.OnDownAsObservable()
+                .Select(_ => Model);
+        }
+
+        public IObservable<SquareModel> OnExitAsObservable()
+        {
+            return pointerEventHandler.OnExitAsObservable()
                 .Select(_ => Model);
         }
 

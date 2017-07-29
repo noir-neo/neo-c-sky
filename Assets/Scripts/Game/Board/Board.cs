@@ -13,7 +13,18 @@ namespace NeoC.Game.Board
         [SerializeField] private GameObject squarePrefab;
         [SerializeField] private Vector2 squaresInterval;
         [SerializeField] private List<Square> squares;
+        [SerializeField] private List<SquareState> squareStates;
 
+        void Start()
+        {
+            foreach (var square in squares)
+            {
+                square.OnDownAsObservable()
+                    .Subscribe(_ => UpdateState(square, SquareState.SquareStates.Selected));
+                square.OnExitAsObservable()
+                    .Subscribe(_ => UpdateState(square, SquareState.SquareStates.Selectable));
+            }
+        }
 
         public void CreateSquares(List<SquareModel> models)
         {
@@ -31,6 +42,11 @@ namespace NeoC.Game.Board
         public IObservable<SquareModel> OnDownSquaresAsObservable()
         {
             return squares.Select(s => s.OnDownAsObservable()).Merge();
+        }
+
+        public IObservable<SquareModel> OnExitSquaresAsObservable()
+        {
+            return squares.Select(s => s.OnExitAsObservable()).Merge();
         }
 
         public Vector3 GetSquarePosition(SquareModel model)
@@ -66,33 +82,43 @@ namespace NeoC.Game.Board
             return squares.SingleOrDefault(s => s.Model == model);
         }
 
-        public void UpdateSelectables(IEnumerable<SquareModel> selectableSquares = null, IEnumerable<SquareModel> highlightSquares = null, IEnumerable<SquareModel> occupiedSquares = null)
+        public void UpdateStates(SquareState.SquareStates state = SquareState.SquareStates.Default)
+        {
+            UpdateStates(squares, state);
+        }
+
+        public void UpdateStates(IEnumerable<Square> squares, SquareState.SquareStates state = SquareState.SquareStates.Default)
         {
             foreach (var square in squares)
             {
-                var model = square.Model;
-                if (highlightSquares != null && highlightSquares.Contains(model))
-                {
-                    square.Highlight();
-                }
-                else if (occupiedSquares != null && occupiedSquares.Contains(model))
-                {
-                    square.Occupy();
-                }
-                else if (selectableSquares != null && selectableSquares.Contains(model))
-                {
-                    square.AllowSelect();
-                }
-                else
-                {
-                    square.Default();
-                }
+                UpdateState(square, state);
             }
         }
 
-        public void UpdateSelectables(SquareModel highlightSquares)
+        public void UpdateStates(IEnumerable<SquareModel> squareModels, SquareState.SquareStates state)
         {
-            UpdateSelectables(highlightSquares: new [] {highlightSquares});
+            foreach (var squareModel in squareModels)
+            {
+                UpdateState(squareModel, state);
+            }
+        }
+
+        public void UpdateState(Square square, SquareState.SquareStates state)
+        {
+            var squareState = squareStates.SingleOrDefault(s => s.State == state);
+            if (squareState != null)
+            {
+                squareState.UpdateState(square);
+            }
+        }
+
+        public void UpdateState(SquareModel squareModel, SquareState.SquareStates state)
+        {
+            Square square;
+            if (TryGetSquare(squareModel, out square))
+            {
+                UpdateState(square, state);
+            }
         }
 
         private static Square InstanciateSquare(GameObject prefab, SquareModel model, Vector2 interval, Transform transform)

@@ -72,8 +72,9 @@ namespace NeoC.Game
 
         private void OnPlayerCoordinateChanged(SquareModel position)
         {
-            board.UpdateSelectables(position);
-            playerMover.MoveTo(GetSquarePosition(position), UpdateSelectable);
+            board.UpdateStates();
+            board.UpdateState(position, SquareState.SquareStates.Selected);
+            playerMover.MoveTo(GetSquarePosition(position), UpdateStates);
         }
 
         private Vector3 GetSquarePosition(SquareModel squareModel)
@@ -81,9 +82,10 @@ namespace NeoC.Game
             return board.GetSquarePosition(squareModel);
         }
 
-        private void UpdateSelectable()
+        private void UpdateStates()
         {
-            board.UpdateSelectables(MovableSquares(playerModel));
+            board.UpdateStates();
+            board.UpdateStates(MovableSquares(playerModel), SquareState.SquareStates.Selectable);
         }
 
         private IEnumerable<SquareModel> MovableSquares(PlayerModel playerModel)

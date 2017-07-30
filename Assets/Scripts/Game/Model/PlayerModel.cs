@@ -5,12 +5,12 @@ namespace NeoC.Game.Model
 {
     public class PlayerModel : PieceModelBase
     {
-        private readonly MasterMovableRange masterMovableRange;
+        private readonly MasterOccupiedRange masterOccupiedRange;
         public IntReactiveProperty MoveCount { get; }
 
-        public PlayerModel(MasterMovableRange masterMovableRange, SquareModel initialSquare) : base(initialSquare)
+        public PlayerModel(MasterOccupiedRange masterOccupiedRange, SquareModel initialSquare) : base(initialSquare)
         {
-            this.masterMovableRange = masterMovableRange;
+            this.masterOccupiedRange = masterOccupiedRange;
             MoveCount = new IntReactiveProperty(-1);
         }
 
@@ -22,7 +22,7 @@ namespace NeoC.Game.Model
 
         public IEnumerable<SquareModel> MovableSquares()
         {
-            return masterMovableRange.MovableSquares(CurrentSquare.Value);
+            return masterOccupiedRange.MovableSquares(CurrentSquare.Value);
         }
     }
 }

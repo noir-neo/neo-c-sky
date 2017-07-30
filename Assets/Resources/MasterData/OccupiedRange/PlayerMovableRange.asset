@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d18ab60da834446849b9f14fdc498ac3, type: 3}
   m_Name: PlayerMovableRange
   m_EditorClassIdentifier: 
-  movableRange:
+  occupiedRange:
   - x: -1
     y: -1
   - x: 0

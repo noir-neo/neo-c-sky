@@ -9,7 +9,7 @@ using Taple = UniRx.Tuple;
 public class MasterLevel : ScriptableObject
 {
     public SquareModel boardSize;
-    public MasterMovableRange PlayerMovableRange;
+    public MasterOccupiedRange PlayerOccupiedRange;
     public SquareModel playerInitialSquare;
     public List<MasterEnemy> enemies;
     public List<SquareModel> enemyInitialSquares;
@@ -22,7 +22,7 @@ public class MasterLevel : ScriptableObject
 
     public PlayerModel PlayerModel()
     {
-        return new PlayerModel(PlayerMovableRange, playerInitialSquare);
+        return new PlayerModel(PlayerOccupiedRange, playerInitialSquare);
     }
 
     public IReadOnlyDictionary<EnemyModel, PieceMover> EnemyModelMovers(Func<SquareModel, Vector3> getSquarePositionFunc)

@@ -4,13 +4,13 @@ using NeoC.Game.Model;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class MasterMovableRange : ScriptableObject
+public class MasterOccupiedRange : ScriptableObject
 {
-    public List<SquareModel> movableRange;
+    public List<SquareModel> occupiedRange;
 
     public IEnumerable<SquareModel> MovableSquares(SquareModel offset)
     {
-        return movableRange.Select(s => s + offset);
+        return occupiedRange.Select(s => s + offset);
     }
 
 }

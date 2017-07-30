@@ -1,4 +1,5 @@
-﻿using UniRx;
+﻿using System.Collections.Generic;
+using UniRx;
 
 namespace NeoC.Game.Model
 {
@@ -8,7 +9,7 @@ namespace NeoC.Game.Model
         public ReactiveProperty<SquareModel> CurrentRotation { get; }
 
         public EnemyModel(MasterEnemy masterEnemy, SquareModel initialSquare, SquareModel initialRotation)
-            : base(initialSquare)
+            : base(initialSquare, masterEnemy.occupiedRange)
         {
             this.masterEnemy = masterEnemy;
             CurrentRotation = new ReactiveProperty<SquareModel>(initialRotation);
@@ -28,6 +29,11 @@ namespace NeoC.Game.Model
         private void Rotate(SquareModel delta)
         {
             CurrentRotation.Value = CurrentRotation.Value.Rotate(delta);
+        }
+
+        public override IEnumerable<SquareModel> OccupiedSquares()
+        {
+            return masterOccupiedRange.OccupiedSquares(CurrentSquare.Value, CurrentRotation.Value);
         }
     }
 }

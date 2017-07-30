@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using NeoC.Game;
 using NeoC.Game.Model;
 using UnityEngine;
 
@@ -10,6 +9,7 @@ public class MasterEnemy : ScriptableObject
 {
     public GameObject piecePrefab;
     public List<MasterEnemyBehaviourBase> behaviours;
+    public MasterOccupiedRange occupiedRange;
 
     public GameObject InstantiatePiece(Vector3 position, Quaternion rotation)
     {

@@ -22,7 +22,7 @@ public class MasterLevel : ScriptableObject
 
     public PlayerModel PlayerModel()
     {
-        return new PlayerModel(PlayerOccupiedRange, playerInitialSquare);
+        return new PlayerModel(playerInitialSquare, PlayerOccupiedRange);
     }
 
     public IReadOnlyDictionary<EnemyModel, PieceMover> EnemyModelMovers(Func<SquareModel, Vector3> getSquarePositionFunc)

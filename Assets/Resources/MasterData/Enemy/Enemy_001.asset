@@ -16,3 +16,4 @@ MonoBehaviour:
   behaviours:
   - {fileID: 11400000, guid: 7ebad0eb71682411bb6f83836f592e5e, type: 2}
   - {fileID: 11400000, guid: 87c026882cf974acea47152ede540b18, type: 2}
+  occupiedRange: {fileID: 11400000, guid: b40d2ef2c35f54ecab11c3643696065e, type: 2}

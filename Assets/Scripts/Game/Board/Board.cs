@@ -14,6 +14,7 @@ namespace NeoC.Game.Board
         [SerializeField] private Vector2 squaresInterval;
         [SerializeField] private List<Square> squares;
         [SerializeField] private List<SquareState> squareStates;
+        [SerializeField] private GameObject goalPrefab;
 
         void Start()
         {
@@ -32,6 +33,11 @@ namespace NeoC.Game.Board
             {
                 squares.Add(InstanciateSquare(squarePrefab, model, squaresInterval, transform));
             }
+        }
+
+        public void CreateGoal(SquareModel model)
+        {
+            Instantiate(goalPrefab, GetSquarePosition(model), Quaternion.identity);
         }
 
         public IObservable<SquareModel> OnClickSquaresAsObservable()

@@ -9,15 +9,16 @@ using Taple = UniRx.Tuple;
 public class MasterLevel : ScriptableObject
 {
     public SquareModel boardSize;
+    public SquareModel goalSquare;
     public MasterOccupiedRange PlayerOccupiedRange;
     public SquareModel playerInitialSquare;
     public List<MasterEnemy> enemies;
     public List<SquareModel> enemyInitialSquares;
     public List<SquareModel> enemyInitialRotation;
 
-    public BoardMedel BoardMedel()
+    public BoardMedel BoardMedel(Func<SquareModel, Vector3> getSquarePositionFunc)
     {
-        return new BoardMedel(boardSize);
+        return new BoardMedel(boardSize, goalSquare);
     }
 
     public PlayerModel PlayerModel()

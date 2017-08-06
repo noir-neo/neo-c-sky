@@ -1,5 +1,4 @@
 ﻿using System;
-using NeoC.Game.Board;
 using UnityEngine;
 
 namespace NeoC.Game.Model

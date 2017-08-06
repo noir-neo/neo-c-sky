@@ -1,16 +1,15 @@
-﻿using System.Collections.Generic;
-using UniRx;
+﻿using UniRx;
 
 namespace NeoC.Game.Model
 {
     public class PlayerModel : PieceModelBase
     {
-        private readonly MasterMovableRange masterMovableRange;
+
         public IntReactiveProperty MoveCount { get; }
 
-        public PlayerModel(MasterMovableRange masterMovableRange, SquareModel initialSquare) : base(initialSquare)
+        public PlayerModel(SquareModel initialSquare, MasterOccupiedRange masterOccupiedRange)
+            : base(initialSquare, masterOccupiedRange)
         {
-            this.masterMovableRange = masterMovableRange;
             MoveCount = new IntReactiveProperty(-1);
         }
 
@@ -18,11 +17,6 @@ namespace NeoC.Game.Model
         {
             base.MoveTo(square);
             MoveCount.Value++;
-        }
-
-        public IEnumerable<SquareModel> MovableSquares()
-        {
-            return masterMovableRange.MovableSquares(CurrentSquare.Value);
         }
     }
 }

@@ -45,11 +45,11 @@ namespace NeoC.Game
         private void InitObserver()
         {
             board.OnClickSquaresAsObservable()
-                .Where(s => MovableSquares(playerModel).Contains(s))
+                .Where(s => OccupiedSquares(playerModel).Contains(s))
                 .Subscribe(playerModel.MoveTo);
 
             board.OnDownSquaresAsObservable()
-                .Where(s => MovableSquares(playerModel).Contains(s))
+                .Where(s => OccupiedSquares(playerModel).Contains(s))
                 .Select(s => board.GetSquare(s))
                 .Where(s => s != null)
                 .Select(s => s.Position())
@@ -72,10 +72,9 @@ namespace NeoC.Game
 
         private void OnPlayerCoordinateChanged(SquareModel position)
         {
-            board.UpdateSelectables();
-            board.Highlight(position);
-
-            playerMover.MoveTo(GetSquarePosition(position), UpdateSelectable);
+            board.UpdateStates();
+            board.UpdateState(position, SquareState.SquareStates.Selected);
+            playerMover.MoveTo(GetSquarePosition(position), UpdateStates);
         }
 
         private Vector3 GetSquarePosition(SquareModel squareModel)
@@ -83,14 +82,23 @@ namespace NeoC.Game
             return board.GetSquarePosition(squareModel);
         }
 
-        private void UpdateSelectable()
+        private void UpdateStates()
         {
-            board.UpdateSelectables(MovableSquares(playerModel));
+            board.UpdateStates();
+            board.UpdateStates(OccupiedSquares(playerModel), SquareState.SquareStates.Selectable);
+            board.UpdateStates(OccupiedSquares(enemyModelMovers.Keys), SquareState.SquareStates.Occupied);
         }
 
-        private IEnumerable<SquareModel> MovableSquares(PlayerModel playerModel)
+        private IEnumerable<SquareModel> OccupiedSquares(IEnumerable<PieceModelBase> pieceModels)
         {
-            return boardModel.IntersectedSquares(playerModel.MovableSquares());
+            return boardModel.IntersectedSquares(
+                pieceModels.SelectMany(p => p.OccupiedSquares())
+                    .Distinct());
+        }
+
+        private IEnumerable<SquareModel> OccupiedSquares(PieceModelBase pieceModel)
+        {
+            return boardModel.IntersectedSquares(pieceModel.OccupiedSquares());
         }
 
         private void MoveEnemies(int index)

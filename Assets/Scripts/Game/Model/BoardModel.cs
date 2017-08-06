@@ -7,9 +7,12 @@ namespace NeoC.Game.Model
     {
         private readonly List<SquareModel> squareModels;
         public List<SquareModel> SquareModels => squareModels;
+        private readonly SquareModel goalSquare;
+        public SquareModel GoalSquare => goalSquare;
 
-        public BoardMedel(SquareModel boardSize) : this(boardSize.X, boardSize.Y)
+        public BoardMedel(SquareModel boardSize, SquareModel goalSquare) : this(boardSize.X, boardSize.Y)
         {
+            this.goalSquare = goalSquare;
         }
 
         public BoardMedel(int x, int y)
@@ -29,5 +32,9 @@ namespace NeoC.Game.Model
             return squareModels.Intersect(squares);
         }
 
+        public bool IsGoal(SquareModel squareModel)
+        {
+            return squareModel == goalSquare;
+        }
     }
 }

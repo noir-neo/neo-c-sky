@@ -14,6 +14,10 @@ MonoBehaviour:
   boardSize:
     x: 5
     y: 5
+  goalSquare:
+    x: 1
+    y: 4
+  goalPrefab: {fileID: 1260019213999956, guid: 5825f50c37810462093d5b72c21aee16, type: 2}
   PlayerOccupiedRange: {fileID: 11400000, guid: 5562ac23424c14b6d992545a103eee13,
     type: 2}
   playerInitialSquare:

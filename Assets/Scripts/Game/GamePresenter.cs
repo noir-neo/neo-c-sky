@@ -86,8 +86,12 @@ namespace NeoC.Game
         private void UpdateStates()
         {
             board.UpdateStates();
-            board.UpdateStates(OccupiedSquares(playerModel), SquareState.SquareStates.Selectable);
-            board.UpdateStates(OccupiedSquares(enemyModelMovers.Keys), SquareState.SquareStates.Occupied);
+            var playerOccupied = OccupiedSquares(playerModel);
+            var enemyOccupied = OccupiedSquares(enemyModelMovers.Keys);
+            board.UpdateStates(playerOccupied, SquareState.SquareStates.Selectable);
+            board.UpdateStates(enemyOccupied, SquareState.SquareStates.Occupied);
+            var intersected = playerOccupied.Intersect(enemyOccupied);
+            board.UpdateStates(intersected, SquareState.SquareStates.Intersected);
         }
 
         private IEnumerable<SquareModel> OccupiedSquares(IEnumerable<PieceModelBase> pieceModels)

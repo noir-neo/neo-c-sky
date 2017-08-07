@@ -11,7 +11,8 @@ public class SquareState : ScriptableObject
         Default,
         Selectable,
         Selected,
-        Occupied
+        Occupied,
+        Intersected
     }
 
     [SerializeField] private bool selectable;

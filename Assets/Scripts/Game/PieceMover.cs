@@ -38,7 +38,7 @@ namespace NeoC.Game
             LookAt(target.X0Y());
         }
 
-        private void LookAt(Vector3 target)
+        public void LookAt(Vector3 target)
         {
             transform.LookAt(target);
         }

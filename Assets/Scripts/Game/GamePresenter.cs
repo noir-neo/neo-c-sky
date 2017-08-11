@@ -51,10 +51,10 @@ namespace NeoC.Game
 
             board.OnDownSquaresAsObservable()
                 .Where(s => OccupiedSquares(playerModel).Contains(s))
-                .Select(s => board.GetSquare(s))
-                .Where(s => s != null)
-                .Select(s => s.Position())
-                .Subscribe(playerMover.LookAt);
+                .Subscribe(OnPreselected);
+
+            board.OnExitSquaresAsObservable()
+                .Subscribe(_ => UpdateStates());
 
             playerModel.CurrentSquare
                 .Subscribe(OnPlayerCoordinateChanged);
@@ -71,10 +71,16 @@ namespace NeoC.Game
             }
         }
 
+        private void OnPreselected(SquareModel position)
+        {
+            board.UpdateState(position, SquareState.SquareStates.Selected);
+            playerMover.LookAt(GetSquarePosition(position));
+        }
+
         private void OnPlayerCoordinateChanged(SquareModel position)
         {
-            board.UpdateStates();
             board.UpdateState(position, SquareState.SquareStates.Selected);
+            board.UpdateStatesExcept(new []{ position });
             playerMover.MoveTo(GetSquarePosition(position), UpdateStates);
         }
 
@@ -85,13 +91,13 @@ namespace NeoC.Game
 
         private void UpdateStates()
         {
-            board.UpdateStates();
             var playerOccupied = OccupiedSquares(playerModel);
             var enemyOccupied = OccupiedSquares(enemyModelMovers.Keys);
             board.UpdateStates(playerOccupied, SquareState.SquareStates.Selectable);
             board.UpdateStates(enemyOccupied, SquareState.SquareStates.Occupied);
             var intersected = playerOccupied.Intersect(enemyOccupied);
             board.UpdateStates(intersected, SquareState.SquareStates.Intersected);
+            board.UpdateStatesExcept(playerOccupied.Union(enemyOccupied));
         }
 
         private IEnumerable<SquareModel> OccupiedSquares(IEnumerable<PieceModelBase> pieceModels)

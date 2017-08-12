@@ -64,5 +64,10 @@ namespace NeoC.Game
                         onCompleted?.Invoke();
                     });
         }
+
+        public void Kill()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

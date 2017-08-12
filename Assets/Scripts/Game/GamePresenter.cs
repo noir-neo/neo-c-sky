@@ -65,6 +65,9 @@ namespace NeoC.Game
                     .Subscribe(s => enemyModelMoverPair.Value.MoveTo(GetSquarePosition(s)));
                 enemyModelMoverPair.Key.CurrentRotation
                     .Subscribe(s => enemyModelMoverPair.Value.LookRotation(s.LookRotation()));
+                enemyModelMoverPair.Key.Dead
+                    .Where(d => d)
+                    .Subscribe(s => enemyModelMoverPair.Value.Kill());
             }
         }
 
@@ -76,11 +79,17 @@ namespace NeoC.Game
 
         private void OnPlayerCoordinateChanged(Tuple<SquareModel, int> positionIndex)
         {
-            OnPlayerCoordinateChanged(positionIndex.Item1);
+            var dyingEnemies = enemyModelMovers.Keys.Where(m => m.CurrentSquare.Value == positionIndex.Item1);
+            foreach (var dyingEnemy in dyingEnemies)
+            {
+                dyingEnemy.Kill();
+            }
+
+            MovePlayer(positionIndex.Item1, dyingEnemies.Any());
             MoveEnemies(positionIndex.Item2);
         }
 
-        private void OnPlayerCoordinateChanged(SquareModel position)
+        private void MovePlayer(SquareModel position, bool killing)
         {
             board.UpdateState(position, SquareState.SquareStates.Selected);
             board.UpdateStatesExcept(new []{ position });

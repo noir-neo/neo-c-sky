@@ -7,6 +7,7 @@ namespace NeoC.Game.Model
     {
         private readonly MasterEnemy masterEnemy;
         public ReactiveProperty<SquareModel> CurrentRotation { get; }
+        public BoolReactiveProperty Dead { get; } = new BoolReactiveProperty(false);
 
         public EnemyModel(MasterEnemy masterEnemy, SquareModel initialSquare, SquareModel initialRotation)
             : base(initialSquare, masterEnemy.occupiedRange)
@@ -17,10 +18,14 @@ namespace NeoC.Game.Model
 
         public void Move(int index)
         {
+            if (Dead.Value)
+            {
+                return;
+            }
             masterEnemy.Move(index, Move, Rotate);
         }
 
-        public void Move(SquareModel delta)
+        private void Move(SquareModel delta)
         {
             delta = delta.Rotate(CurrentRotation.Value);
             CurrentSquare.Value += delta;
@@ -31,8 +36,17 @@ namespace NeoC.Game.Model
             CurrentRotation.Value = CurrentRotation.Value.Rotate(delta);
         }
 
+        public void Kill()
+        {
+            Dead.Value = true;
+        }
+
         public override IEnumerable<SquareModel> OccupiedSquares()
         {
+            if (Dead.Value)
+            {
+                return new SquareModel[] { };
+            }
             return masterOccupiedRange.OccupiedSquares(CurrentSquare.Value, CurrentRotation.Value);
         }
     }

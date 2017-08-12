@@ -56,11 +56,8 @@ namespace NeoC.Game
             board.OnExitSquaresAsObservable()
                 .Subscribe(_ => UpdateStates());
 
-            playerModel.CurrentSquare
+            playerModel.OnMoveAsObservable()
                 .Subscribe(OnPlayerCoordinateChanged);
-
-            playerModel.MoveCount
-                .Subscribe(MoveEnemies);
 
             foreach (var enemyModelMoverPair in enemyModelMovers)
             {
@@ -77,11 +74,25 @@ namespace NeoC.Game
             playerMover.LookAt(GetSquarePosition(position));
         }
 
+        private void OnPlayerCoordinateChanged(Tuple<SquareModel, int> positionIndex)
+        {
+            OnPlayerCoordinateChanged(positionIndex.Item1);
+            MoveEnemies(positionIndex.Item2);
+        }
+
         private void OnPlayerCoordinateChanged(SquareModel position)
         {
             board.UpdateState(position, SquareState.SquareStates.Selected);
             board.UpdateStatesExcept(new []{ position });
             playerMover.MoveTo(GetSquarePosition(position), UpdateStates);
+        }
+
+        private void MoveEnemies(int index)
+        {
+            foreach (var enemyModel in enemyModelMovers.Keys)
+            {
+                enemyModel.Move(index);
+            }
         }
 
         private Vector3 GetSquarePosition(SquareModel squareModel)
@@ -110,14 +121,6 @@ namespace NeoC.Game
         private IEnumerable<SquareModel> OccupiedSquares(PieceModelBase pieceModel)
         {
             return boardModel.IntersectedSquares(pieceModel.OccupiedSquares());
-        }
-
-        private void MoveEnemies(int index)
-        {
-            foreach (var enemyModel in enemyModelMovers.Keys)
-            {
-                enemyModel.Move(index);
-            }
         }
     }
 }

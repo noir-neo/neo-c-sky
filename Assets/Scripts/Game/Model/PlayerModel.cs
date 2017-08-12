@@ -5,7 +5,7 @@ namespace NeoC.Game.Model
     public class PlayerModel : PieceModelBase
     {
 
-        public IntReactiveProperty MoveCount { get; }
+        private IntReactiveProperty MoveCount { get; }
 
         public PlayerModel(SquareModel initialSquare, MasterOccupiedRange masterOccupiedRange)
             : base(initialSquare, masterOccupiedRange)
@@ -17,6 +17,11 @@ namespace NeoC.Game.Model
         {
             base.MoveTo(square);
             MoveCount.Value++;
+        }
+
+        public IObservable<Tuple<SquareModel, int>> OnMoveAsObservable()
+        {
+            return CurrentSquare.Zip(MoveCount, (square, count) => new Tuple<SquareModel, int>(square, count));
         }
     }
 }

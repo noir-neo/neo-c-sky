@@ -16,17 +16,6 @@ namespace NeoC.Game.Board
         [SerializeField] private List<SquareState> squareStates;
         [SerializeField] private GameObject goalPrefab;
 
-        void Start()
-        {
-            foreach (var square in squares)
-            {
-                square.OnDownAsObservable()
-                    .Subscribe(_ => UpdateState(square, SquareState.SquareStates.Selected));
-                square.OnExitAsObservable()
-                    .Subscribe(_ => UpdateState(square, SquareState.SquareStates.Selectable));
-            }
-        }
-
         public void CreateSquares(List<SquareModel> models)
         {
             foreach (var model in models)
@@ -101,12 +90,22 @@ namespace NeoC.Game.Board
             }
         }
 
-        public void UpdateStates(IEnumerable<SquareModel> squareModels, SquareState.SquareStates state)
+        public void UpdateStates(IEnumerable<SquareModel> squareModels, SquareState.SquareStates state = SquareState.SquareStates.Default)
         {
             foreach (var squareModel in squareModels)
             {
                 UpdateState(squareModel, state);
             }
+        }
+
+        public void UpdateStatesExcept(IEnumerable<SquareModel> squareModels, SquareState.SquareStates state = SquareState.SquareStates.Default)
+        {
+            UpdateStates(squares.Except(squareModels.Select(GetSquare)), state);
+        }
+
+        public void UpdateStatesExcept(SquareModel squareModel, SquareState.SquareStates state = SquareState.SquareStates.Default)
+        {
+            UpdateStatesExcept(new [] { squareModel });
         }
 
         public void UpdateState(Square square, SquareState.SquareStates state)

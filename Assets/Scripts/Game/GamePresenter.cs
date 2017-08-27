@@ -51,16 +51,13 @@ namespace NeoC.Game
 
             board.OnDownSquaresAsObservable()
                 .Where(s => OccupiedSquares(playerModel).Contains(s))
-                .Select(s => board.GetSquare(s))
-                .Where(s => s != null)
-                .Select(s => s.Position())
-                .Subscribe(playerMover.LookAt);
+                .Subscribe(OnPreselected);
 
-            playerModel.CurrentSquare
+            board.OnExitSquaresAsObservable()
+                .Subscribe(_ => UpdateStates());
+
+            playerModel.OnMoveAsObservable()
                 .Subscribe(OnPlayerCoordinateChanged);
-
-            playerModel.MoveCount
-                .Subscribe(MoveEnemies);
 
             foreach (var enemyModelMoverPair in enemyModelMovers)
             {
@@ -68,14 +65,43 @@ namespace NeoC.Game
                     .Subscribe(s => enemyModelMoverPair.Value.MoveTo(GetSquarePosition(s)));
                 enemyModelMoverPair.Key.CurrentRotation
                     .Subscribe(s => enemyModelMoverPair.Value.LookRotation(s.LookRotation()));
+                enemyModelMoverPair.Key.Dead
+                    .Where(d => d)
+                    .Subscribe(s => enemyModelMoverPair.Value.Kill());
             }
         }
 
-        private void OnPlayerCoordinateChanged(SquareModel position)
+        private void OnPreselected(SquareModel position)
         {
-            board.UpdateStates();
             board.UpdateState(position, SquareState.SquareStates.Selected);
+            playerMover.LookAt(GetSquarePosition(position));
+        }
+
+        private void OnPlayerCoordinateChanged(Tuple<SquareModel, int> positionIndex)
+        {
+            var dyingEnemies = enemyModelMovers.Keys.Where(m => m.CurrentSquare.Value == positionIndex.Item1);
+            foreach (var dyingEnemy in dyingEnemies)
+            {
+                dyingEnemy.Kill();
+            }
+
+            MovePlayer(positionIndex.Item1, dyingEnemies.Any());
+            MoveEnemies(positionIndex.Item2);
+        }
+
+        private void MovePlayer(SquareModel position, bool killing)
+        {
+            board.UpdateState(position, SquareState.SquareStates.Selected);
+            board.UpdateStatesExcept(new []{ position });
             playerMover.MoveTo(GetSquarePosition(position), UpdateStates);
+        }
+
+        private void MoveEnemies(int index)
+        {
+            foreach (var enemyModel in enemyModelMovers.Keys)
+            {
+                enemyModel.Move(index);
+            }
         }
 
         private Vector3 GetSquarePosition(SquareModel squareModel)
@@ -85,9 +111,13 @@ namespace NeoC.Game
 
         private void UpdateStates()
         {
-            board.UpdateStates();
-            board.UpdateStates(OccupiedSquares(playerModel), SquareState.SquareStates.Selectable);
-            board.UpdateStates(OccupiedSquares(enemyModelMovers.Keys), SquareState.SquareStates.Occupied);
+            var playerOccupied = OccupiedSquares(playerModel);
+            var enemyOccupied = OccupiedSquares(enemyModelMovers.Keys);
+            board.UpdateStates(playerOccupied, SquareState.SquareStates.Selectable);
+            board.UpdateStates(enemyOccupied, SquareState.SquareStates.Occupied);
+            var intersected = playerOccupied.Intersect(enemyOccupied);
+            board.UpdateStates(intersected, SquareState.SquareStates.Intersected);
+            board.UpdateStatesExcept(playerOccupied.Union(enemyOccupied));
         }
 
         private IEnumerable<SquareModel> OccupiedSquares(IEnumerable<PieceModelBase> pieceModels)
@@ -100,14 +130,6 @@ namespace NeoC.Game
         private IEnumerable<SquareModel> OccupiedSquares(PieceModelBase pieceModel)
         {
             return boardModel.IntersectedSquares(pieceModel.OccupiedSquares());
-        }
-
-        private void MoveEnemies(int index)
-        {
-            foreach (var enemyModel in enemyModelMovers.Keys)
-            {
-                enemyModel.Move(index);
-            }
         }
     }
 }

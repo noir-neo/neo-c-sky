@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using NeoC.Game.Model;
 using UniRx;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace NeoC.Game.Board
 {
@@ -21,9 +19,6 @@ namespace NeoC.Game.Board
 
         [SerializeField] private Renderer _renderer;
         [SerializeField] private SquarePointerEventHandler pointerEventHandler;
-
-        private Dictionary<EventTriggerType, Subject<SquareModel>> eventSubjects;
-        private Dictionary<EventTriggerType, IObservable<SquareModel>> eventAsObservables;
 
         public Vector2 Position()
         {

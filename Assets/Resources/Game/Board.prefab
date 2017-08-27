@@ -61,6 +61,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 537d8093611cf4b4a8a0df65cba4fb98, type: 2}
   - {fileID: 11400000, guid: 8656118d38e444b439e4c7048ae9ca01, type: 2}
   - {fileID: 11400000, guid: e2175b79cdd67417487e8bf80a3668f9, type: 2}
+  - {fileID: 11400000, guid: fa922be7bc7944d3ab921b6e0a0d47f6, type: 2}
   goalPrefab: {fileID: 1260019213999956, guid: 5825f50c37810462093d5b72c21aee16, type: 2}
 --- !u!114 &114831261940288946
 MonoBehaviour:

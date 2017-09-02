@@ -10,7 +10,7 @@ namespace NeoC.UI
         {
             var titleWindow = Open<TitleWindow>();
             titleWindow.OnCloseAsObservable()
-                .Subscribe(_ => Debug.Log(""));
+                .Subscribe(_ => Open<LevelSelectWindow>());
         }
     }
 }

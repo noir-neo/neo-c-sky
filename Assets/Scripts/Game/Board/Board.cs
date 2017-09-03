@@ -18,7 +18,8 @@ namespace NeoC.Game.Board
 
         public void CreateSquares(List<SquareModel> models)
         {
-            foreach (var model in models)
+            var squareModels = squares.Select(s => s.Model);
+            foreach (var model in models.Where(m => !squareModels.Contains(m)))
             {
                 squares.Add(InstanciateSquare(squarePrefab, model, squaresInterval, transform));
             }

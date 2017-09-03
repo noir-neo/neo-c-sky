@@ -16,7 +16,7 @@ public class MasterLevel : ScriptableObject
     public List<SquareModel> enemyInitialSquares;
     public List<SquareModel> enemyInitialRotation;
 
-    public BoardMedel BoardMedel(Func<SquareModel, Vector3> getSquarePositionFunc)
+    public BoardMedel BoardModel(Func<SquareModel, Vector3> getSquarePositionFunc)
     {
         return new BoardMedel(boardSize, goalSquare);
     }

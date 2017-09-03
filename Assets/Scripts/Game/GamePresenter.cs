@@ -28,7 +28,7 @@ namespace NeoC.Game
 
         private void InitBoard()
         {
-            boardModel = level.BoardMedel(GetSquarePosition);
+            boardModel = level.BoardModel(GetSquarePosition);
             board.CreateSquares(boardModel.SquareModels);
             board.CreateGoal(boardModel.GoalSquare);
         }

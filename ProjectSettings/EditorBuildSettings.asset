@@ -11,3 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ModelViewer.unity
     guid: 41ffb9ebd2ba94630bc84182676fd038
+  - enabled: 1
+    path: Assets/Scenes/Level/LevelSelect.unity
+    guid: 0954497bcff894c25bf122cfebe39895
+  - enabled: 1
+    path: Assets/Scenes/Level/Level_001.unity
+    guid: 3b34d727fadaa42a0be90a4331cff28f

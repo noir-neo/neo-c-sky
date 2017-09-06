@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114602233586931370}
   - component: {fileID: 114920443934570742}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: FullScreenDragHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

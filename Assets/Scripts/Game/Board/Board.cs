@@ -27,7 +27,7 @@ namespace NeoC.Game.Board
 
         public void CreateGoal(SquareModel model)
         {
-            Instantiate(goalPrefab, GetSquarePosition(model), Quaternion.identity);
+            Instantiate(goalPrefab, GetSquarePosition(model), Quaternion.identity, transform);
         }
 
         public IObservable<SquareModel> OnClickSquaresAsObservable()

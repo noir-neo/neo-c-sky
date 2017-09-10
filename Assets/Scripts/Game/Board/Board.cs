@@ -18,7 +18,8 @@ namespace NeoC.Game.Board
 
         public void CreateSquares(List<SquareModel> models)
         {
-            foreach (var model in models)
+            var squareModels = squares.Select(s => s.Model);
+            foreach (var model in models.Where(m => !squareModels.Contains(m)))
             {
                 squares.Add(InstanciateSquare(squarePrefab, model, squaresInterval, transform));
             }
@@ -26,7 +27,15 @@ namespace NeoC.Game.Board
 
         public void CreateGoal(SquareModel model)
         {
-            Instantiate(goalPrefab, GetSquarePosition(model), Quaternion.identity);
+            Instantiate(goalPrefab, GetSquarePosition(model), Quaternion.identity, transform);
+        }
+
+        public PieceMover Instantiate(PieceMover prefab, EnemyModel enemyModel)
+        {
+            return Instantiate(prefab,
+                GetSquarePosition(enemyModel.CurrentSquare.Value),
+                enemyModel.CurrentRotation.Value,
+                transform);
         }
 
         public IObservable<SquareModel> OnClickSquaresAsObservable()

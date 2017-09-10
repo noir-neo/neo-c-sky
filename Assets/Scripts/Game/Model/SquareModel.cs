@@ -61,6 +61,16 @@ namespace NeoC.Game.Model
             return new Vector2(val.X, val.Y);
         }
 
+        public static implicit operator Vector3(SquareModel val)
+        {
+            return new Vector3(val.X, 0, val.Y);
+        }
+
+        public static implicit operator Quaternion(SquareModel val)
+        {
+            return Quaternion.Euler(val);
+        }
+
         public static SquareModel zero => new SquareModel(0, 0);
         public static SquareModel up => new SquareModel(0, 1);
         public static SquareModel upRight => new SquareModel(1, 1);

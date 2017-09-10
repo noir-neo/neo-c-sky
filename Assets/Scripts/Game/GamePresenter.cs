@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NeoC.Game.Board;
 using NeoC.Game.Model;
+using NeoC.UI;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -15,6 +17,7 @@ namespace NeoC.Game
 
         [Inject] private PieceMover playerMover;
         [Inject] private Board.Board board;
+        [Inject] private UIPresenter uiPresenter;
 
         [SerializeField] private MasterLevel level;
 
@@ -28,7 +31,7 @@ namespace NeoC.Game
 
         private void InitBoard()
         {
-            boardModel = level.BoardMedel(GetSquarePosition);
+            boardModel = level.BoardModel();
             board.CreateSquares(boardModel.SquareModels);
             board.CreateGoal(boardModel.GoalSquare);
         }
@@ -40,34 +43,55 @@ namespace NeoC.Game
 
         private void InitEnemies()
         {
-            enemyModelMovers = level.EnemyModelMovers(GetSquarePosition);
+            enemyModelMovers = level.EnemyModels()
+                .ToDictionary(
+                    x => x.Item1,
+                    x => board.Instantiate(x.Item2, x.Item1));
         }
 
         private void InitObserver()
         {
             board.OnClickSquaresAsObservable()
                 .Where(s => OccupiedSquares(playerModel).Contains(s))
-                .Subscribe(playerModel.MoveTo);
+                .Subscribe(playerModel.MoveTo)
+                .AddTo(this);
+
+            board.OnClickSquaresAsObservable()
+                .First()
+                .Subscribe(_ => uiPresenter.Close<LevelSelectWindow>())
+                .AddTo(this);
 
             board.OnDownSquaresAsObservable()
                 .Where(s => OccupiedSquares(playerModel).Contains(s))
-                .Subscribe(OnPreselected);
+                .Subscribe(OnPreselected)
+                .AddTo(this);
 
             board.OnExitSquaresAsObservable()
-                .Subscribe(_ => UpdateStates());
+                .Subscribe(_ => UpdateStates())
+                .AddTo(this);
 
             playerModel.OnMoveAsObservable()
-                .Subscribe(OnPlayerCoordinateChanged);
+                .First()
+                .Select(x => x.Item1)
+                .Subscribe(InitialPlayer)
+                .AddTo(this);
+            playerModel.OnMoveAsObservable()
+                .Skip(1)
+                .Subscribe(OnPlayerCoordinateChanged)
+                .AddTo(this);
 
             foreach (var enemyModelMoverPair in enemyModelMovers)
             {
                 enemyModelMoverPair.Key.CurrentSquare
-                    .Subscribe(s => enemyModelMoverPair.Value.MoveTo(GetSquarePosition(s)));
+                    .Subscribe(s => enemyModelMoverPair.Value.MoveTo(GetSquarePosition(s)))
+                    .AddTo(this);
                 enemyModelMoverPair.Key.CurrentRotation
-                    .Subscribe(s => enemyModelMoverPair.Value.LookRotation(s.LookRotation()));
+                    .Subscribe(s => enemyModelMoverPair.Value.LookRotation(s.LookRotation()))
+                    .AddTo(this);
                 enemyModelMoverPair.Key.Dead
                     .Where(d => d)
-                    .Subscribe(s => enemyModelMoverPair.Value.Kill());
+                    .Subscribe(s => enemyModelMoverPair.Value.Kill())
+                    .AddTo(this);
             }
         }
 
@@ -87,6 +111,12 @@ namespace NeoC.Game
 
             MovePlayer(positionIndex.Item1, dyingEnemies.Any());
             MoveEnemies(positionIndex.Item2);
+        }
+
+        private void InitialPlayer(SquareModel position)
+        {
+            playerMover.PositionTo(GetSquarePosition(position));
+            UpdateStates();
         }
 
         private void MovePlayer(SquareModel position, bool killing)

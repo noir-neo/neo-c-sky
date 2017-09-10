@@ -28,7 +28,7 @@ namespace NeoC.Game
 
         private void InitBoard()
         {
-            boardModel = level.BoardModel(GetSquarePosition);
+            boardModel = level.BoardModel();
             board.CreateSquares(boardModel.SquareModels);
             board.CreateGoal(boardModel.GoalSquare);
         }
@@ -40,7 +40,10 @@ namespace NeoC.Game
 
         private void InitEnemies()
         {
-            enemyModelMovers = level.EnemyModelMovers(GetSquarePosition);
+            enemyModelMovers = level.EnemyModels()
+                .ToDictionary(
+                    x => x.Item1,
+                    x => board.Instantiate(x.Item2, x.Item1));
         }
 
         private void InitObserver()

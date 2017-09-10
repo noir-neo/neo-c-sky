@@ -30,6 +30,14 @@ namespace NeoC.Game.Board
             Instantiate(goalPrefab, GetSquarePosition(model), Quaternion.identity, transform);
         }
 
+        public PieceMover Instantiate(PieceMover prefab, EnemyModel enemyModel)
+        {
+            return Instantiate(prefab,
+                GetSquarePosition(enemyModel.CurrentSquare.Value),
+                enemyModel.CurrentRotation.Value,
+                transform);
+        }
+
         public IObservable<SquareModel> OnClickSquaresAsObservable()
         {
             return squares.Select(s => s.OnClickAsObservable()).Merge();

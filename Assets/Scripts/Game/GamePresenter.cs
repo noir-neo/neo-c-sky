@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NeoC.Game.Board;
 using NeoC.Game.Model;
 using NeoC.UI;
 using UniRx;
@@ -70,6 +71,12 @@ namespace NeoC.Game
                 .AddTo(this);
 
             playerModel.OnMoveAsObservable()
+                .First()
+                .Select(x => x.Item1)
+                .Subscribe(InitialPlayer)
+                .AddTo(this);
+            playerModel.OnMoveAsObservable()
+                .Skip(1)
                 .Subscribe(OnPlayerCoordinateChanged)
                 .AddTo(this);
 
@@ -104,6 +111,12 @@ namespace NeoC.Game
 
             MovePlayer(positionIndex.Item1, dyingEnemies.Any());
             MoveEnemies(positionIndex.Item2);
+        }
+
+        private void InitialPlayer(SquareModel position)
+        {
+            playerMover.PositionTo(GetSquarePosition(position));
+            UpdateStates();
         }
 
         private void MovePlayer(SquareModel position, bool killing)

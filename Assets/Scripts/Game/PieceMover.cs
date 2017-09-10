@@ -33,6 +33,11 @@ namespace NeoC.Game
                     });
         }
 
+        public void PositionTo(Vector3 targetPos)
+        {
+            transform.position = targetPos;
+        }
+
         public void LookAt(Vector2 target)
         {
             LookAt(target.X0Y());

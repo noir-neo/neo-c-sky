@@ -503,6 +503,7 @@ MonoBehaviour:
   windowPrefabs:
   - {fileID: 114913266476824440, guid: 3c664f63a54cf497e9d4539f8ceb0d97, type: 2}
   - {fileID: 114206441366504460, guid: 45dc6f240a51148f0ab80e9e5c99aaf0, type: 2}
+  - {fileID: 114412488352204556, guid: b0179db42ebae43e296327a908f0064e, type: 2}
 --- !u!114 &2032377072
 MonoBehaviour:
   m_ObjectHideFlags: 0

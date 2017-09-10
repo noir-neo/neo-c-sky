@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using NeoC.Game.Model;
+using NeoC.UI;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -15,6 +16,7 @@ namespace NeoC.Game
 
         [Inject] private PieceMover playerMover;
         [Inject] private Board.Board board;
+        [Inject] private UIPresenter uiPresenter;
 
         [SerializeField] private MasterLevel level;
 
@@ -51,6 +53,10 @@ namespace NeoC.Game
             board.OnClickSquaresAsObservable()
                 .Where(s => OccupiedSquares(playerModel).Contains(s))
                 .Subscribe(playerModel.MoveTo);
+
+            board.OnClickSquaresAsObservable()
+                .First()
+                .Subscribe(_ => uiPresenter.Close<LevelSelectWindow>());
 
             board.OnDownSquaresAsObservable()
                 .Where(s => OccupiedSquares(playerModel).Contains(s))

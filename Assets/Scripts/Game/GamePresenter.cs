@@ -52,31 +52,39 @@ namespace NeoC.Game
         {
             board.OnClickSquaresAsObservable()
                 .Where(s => OccupiedSquares(playerModel).Contains(s))
-                .Subscribe(playerModel.MoveTo);
+                .Subscribe(playerModel.MoveTo)
+                .AddTo(this);
 
             board.OnClickSquaresAsObservable()
                 .First()
-                .Subscribe(_ => uiPresenter.Close<LevelSelectWindow>());
+                .Subscribe(_ => uiPresenter.Close<LevelSelectWindow>())
+                .AddTo(this);
 
             board.OnDownSquaresAsObservable()
                 .Where(s => OccupiedSquares(playerModel).Contains(s))
-                .Subscribe(OnPreselected);
+                .Subscribe(OnPreselected)
+                .AddTo(this);
 
             board.OnExitSquaresAsObservable()
-                .Subscribe(_ => UpdateStates());
+                .Subscribe(_ => UpdateStates())
+                .AddTo(this);
 
             playerModel.OnMoveAsObservable()
-                .Subscribe(OnPlayerCoordinateChanged);
+                .Subscribe(OnPlayerCoordinateChanged)
+                .AddTo(this);
 
             foreach (var enemyModelMoverPair in enemyModelMovers)
             {
                 enemyModelMoverPair.Key.CurrentSquare
-                    .Subscribe(s => enemyModelMoverPair.Value.MoveTo(GetSquarePosition(s)));
+                    .Subscribe(s => enemyModelMoverPair.Value.MoveTo(GetSquarePosition(s)))
+                    .AddTo(this);
                 enemyModelMoverPair.Key.CurrentRotation
-                    .Subscribe(s => enemyModelMoverPair.Value.LookRotation(s.LookRotation()));
+                    .Subscribe(s => enemyModelMoverPair.Value.LookRotation(s.LookRotation()))
+                    .AddTo(this);
                 enemyModelMoverPair.Key.Dead
                     .Where(d => d)
-                    .Subscribe(s => enemyModelMoverPair.Value.Kill());
+                    .Subscribe(s => enemyModelMoverPair.Value.Kill())
+                    .AddTo(this);
             }
         }
 

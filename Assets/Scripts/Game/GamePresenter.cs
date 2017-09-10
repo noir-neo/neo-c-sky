@@ -101,6 +101,7 @@ namespace NeoC.Game
             playerMover.LookAt(GetSquarePosition(position));
         }
 
+        // TODO: to Observable
         private void OnPlayerCoordinateChanged(Tuple<SquareModel, int> positionIndex)
         {
             var dyingEnemies = enemyModelMovers.Keys.Where(m => m.CurrentSquare.Value == positionIndex.Item1);
@@ -124,6 +125,12 @@ namespace NeoC.Game
             board.UpdateState(position, SquareState.SquareStates.Selected);
             board.UpdateStatesExcept(new []{ position });
             playerMover.MoveTo(GetSquarePosition(position), UpdateStates);
+
+            if (boardModel.IsGoal(playerModel.CurrentSquare.Value))
+            {
+                board.UpdateStates();
+                uiPresenter.OpenResult(true);
+            }
         }
 
         private void MoveEnemies(int index)
@@ -131,6 +138,13 @@ namespace NeoC.Game
             foreach (var enemyModel in enemyModelMovers.Keys)
             {
                 enemyModel.Move(index);
+            }
+
+            var enemyOccupied = OccupiedSquares(enemyModelMovers.Keys);
+            if (enemyOccupied.Contains(playerModel.CurrentSquare.Value))
+            {
+                board.UpdateStates();
+                uiPresenter.OpenResult(false);
             }
         }
 
@@ -143,6 +157,7 @@ namespace NeoC.Game
         {
             var playerOccupied = OccupiedSquares(playerModel);
             var enemyOccupied = OccupiedSquares(enemyModelMovers.Keys);
+
             board.UpdateStates(playerOccupied, SquareState.SquareStates.Selectable);
             board.UpdateStates(enemyOccupied, SquareState.SquareStates.Occupied);
             var intersected = playerOccupied.Intersect(enemyOccupied);

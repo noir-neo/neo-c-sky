@@ -12,16 +12,15 @@ namespace NeoC.UI
 
         void Start()
         {
-            // FIXME: このクラス UI なのか presenter よくわからん
             OnLevelSelected()
-                .StartWith(0)
                 .DistinctUntilChanged()
-                .SelectMany(x => LevelLoader.LoadLevelAsObservable(x)
-                    .Select(_ => x))
-                .Pairwise()
-                .SelectMany(x => LevelLoader.UnloadLevelAsObservable(x.Previous))
-                .Subscribe()
+                .Subscribe(x => LevelLoader.LoadLevel(x))
                 .AddTo(this);
+        }
+
+        public override void Open()
+        {
+            LevelLoader.LoadLevel(0);
         }
 
         private IObservable<int> OnLevelSelected()

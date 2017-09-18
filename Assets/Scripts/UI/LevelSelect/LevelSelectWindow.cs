@@ -10,20 +10,7 @@ namespace NeoC.UI
     {
         [SerializeField] private Button[] buttons;
 
-        void Start()
-        {
-            OnLevelSelected()
-                .DistinctUntilChanged()
-                .Subscribe(x => LevelLoader.LoadLevel(x))
-                .AddTo(this);
-        }
-
-        public override void Open()
-        {
-            LevelLoader.LoadLevel(0);
-        }
-
-        private IObservable<int> OnLevelSelected()
+        public IObservable<int> OnLevelSelected()
         {
             return buttons.Select((b, i) => b.OnClickAsObservable()
                     .Select(_ => i))

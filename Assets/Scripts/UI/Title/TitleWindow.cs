@@ -15,7 +15,6 @@ namespace NeoC.UI
                 .Delay(TimeSpan.FromMilliseconds(displayTimeMillseconds))
                 .Subscribe(_ => Close())
                 .AddTo(this);
-            LevelLoader.LoadLevel(0);
         }
     }
 }

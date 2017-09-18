@@ -15,8 +15,18 @@ namespace NeoC.UI
         {
             var titleWindow = Open<TitleWindow>();
             titleWindow.OnCloseAsObservable()
-                .Subscribe(_ => Open<LevelSelectWindow>());
+                .Subscribe(_ => OpenLevelSelect());
+            LevelLoader.LoadLevel(0);
             return titleWindow;
+        }
+
+        public LevelSelectWindow OpenLevelSelect()
+        {
+            var levelSelectWindow = Open<LevelSelectWindow>();
+            levelSelectWindow.OnLevelSelected()
+                .Subscribe(x => LevelLoader.LoadLevel(x))
+                .AddTo(this);
+            return levelSelectWindow;
         }
 
         public ResultWindow OpenResult(bool clear)
@@ -29,6 +39,12 @@ namespace NeoC.UI
                     OpenTitle();
                 })
                 .AddTo(this);
+            resultWindow.OnRetryAsObservable()
+                .Subscribe(_ =>
+                {
+                    Close<ResultWindow>();
+                    LevelLoader.ReloadLevel();
+                });
             return resultWindow;
         }
     }

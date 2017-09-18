@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public static partial class LevelLoader
 {
     private static ISubject<int> loadLevelSubject;
+    private static int currentLevel;
 
     public static ISubject<int> LoadLevel(int level)
     {
@@ -20,7 +21,13 @@ public static partial class LevelLoader
         }
 
         loadLevelSubject.OnNext(level);
+        currentLevel = level;
         return loadLevelSubject;
+    }
+
+    public static ISubject<int> ReloadLevel()
+    {
+        return LoadLevel(currentLevel);
     }
 
     public static IObservable<AsyncOperation> LoadLevelAsObservable(int level)
@@ -43,5 +50,3 @@ public static partial class LevelLoader
         return SceneManager.UnloadSceneAsync(sceneBuildIndex).AsObservable();
     }
 }
-
-

@@ -31,7 +31,8 @@ namespace NeoC.UI
 
         public ResultWindow OpenResult(bool clear)
         {
-            var resultWindow = Open<ResultWindow, Tuple<bool, int>>(new Tuple<bool, int>(clear, 0));
+            bool existsNextLevel = LevelLoader.ExistsNextLevel();
+            var resultWindow = Open<ResultWindow, Tuple<bool, int>>(new Tuple<bool, int>(clear && existsNextLevel, 0));
             resultWindow.OnTitleAsObservable()
                 .Subscribe(_ =>
                 {
@@ -45,6 +46,13 @@ namespace NeoC.UI
                     Close<ResultWindow>();
                     LevelLoader.ReloadLevel();
                 });
+            resultWindow.OnNextAsObservable()
+                .Subscribe(_ =>
+                {
+                    Close<ResultWindow>();
+                    LevelLoader.LoadNextLevel();
+                })
+                .AddTo(this);
             return resultWindow;
         }
     }

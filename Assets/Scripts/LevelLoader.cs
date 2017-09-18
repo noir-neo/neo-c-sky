@@ -30,6 +30,16 @@ public static partial class LevelLoader
         return LoadLevel(currentLevel);
     }
 
+    public static ISubject<int> LoadNextLevel()
+    {
+        return LoadLevel(currentLevel + 1);
+    }
+
+    public static bool ExistsNextLevel()
+    {
+        return levelSceneBuildIndex.ContainsKey(currentLevel + 1);
+    }
+
     public static IObservable<AsyncOperation> LoadLevelAsObservable(int level)
     {
         return LoadSceneAsObservable(levelSceneBuildIndex[level], LoadSceneMode.Additive);

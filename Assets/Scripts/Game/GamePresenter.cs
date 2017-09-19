@@ -110,8 +110,14 @@ namespace NeoC.Game
                 dyingEnemy.Kill();
             }
 
-            MovePlayer(positionIndex.Item1, dyingEnemies.Any());
-            MoveEnemies(positionIndex.Item2);
+            if (MovePlayer(positionIndex.Item1, dyingEnemies.Any()))
+            {
+                uiPresenter.OpenResult(true);
+            }
+            else if (MoveEnemies(positionIndex.Item2))
+            {
+                uiPresenter.OpenResult(false);
+            }
         }
 
         private void InitialPlayer(SquareModel position)
@@ -120,20 +126,16 @@ namespace NeoC.Game
             UpdateStates();
         }
 
-        private void MovePlayer(SquareModel position, bool killing)
+        private bool MovePlayer(SquareModel position, bool killing)
         {
             board.UpdateState(position, SquareState.SquareStates.Selected);
             board.UpdateStatesExcept(new []{ position });
             playerMover.MoveTo(GetSquarePosition(position), UpdateStates);
 
-            if (boardModel.IsGoal(playerModel.CurrentSquare.Value))
-            {
-                board.UpdateStates();
-                uiPresenter.OpenResult(true);
-            }
+            return boardModel.IsGoal(playerModel.CurrentSquare.Value);
         }
 
-        private void MoveEnemies(int index)
+        private bool MoveEnemies(int index)
         {
             foreach (var enemyModel in enemyModelMovers.Keys)
             {
@@ -141,11 +143,7 @@ namespace NeoC.Game
             }
 
             var enemyOccupied = OccupiedSquares(enemyModelMovers.Keys);
-            if (enemyOccupied.Contains(playerModel.CurrentSquare.Value))
-            {
-                board.UpdateStates();
-                uiPresenter.OpenResult(false);
-            }
+            return enemyOccupied.Contains(playerModel.CurrentSquare.Value);
         }
 
         private Vector3 GetSquarePosition(SquareModel squareModel)

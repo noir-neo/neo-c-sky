@@ -6,5 +6,6 @@ public static partial class LevelLoader
 	{
 		{ 0, 2 },
 		{ 1, 3 },
+		{ 2, 4 },
 	};
 }

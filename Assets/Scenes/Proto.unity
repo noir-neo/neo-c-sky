@@ -284,7 +284,7 @@ MonoBehaviour:
   yRotateRoot: {fileID: 1218962442}
   speed: -0.1
   minXAngle: 0
-  maxXAngle: 45
+  maxXAngle: 60
 --- !u!1 &1279687453
 GameObject:
   m_ObjectHideFlags: 0
@@ -647,7 +647,7 @@ MonoBehaviour:
   ignoreAngleThreshold: 45
   _camera: {fileID: 2091375921}
   speed: 0.1
-  minFieldOfView: 20
+  minFieldOfView: 30
   maxFieldOfView: 60
 --- !u!114 &2091375917
 MonoBehaviour:
@@ -701,7 +701,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 50
+  far clip plane: 80
   field of view: 60
   orthographic: 0
   orthographic size: 8
@@ -727,7 +727,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2091375914}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -16.68}
+  m_LocalPosition: {x: 0, y: 0, z: -30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1279687454}

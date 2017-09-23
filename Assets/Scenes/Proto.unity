@@ -614,6 +614,7 @@ GameObject:
   - component: {fileID: 2091375915}
   - component: {fileID: 2091375916}
   - component: {fileID: 2091375917}
+  - component: {fileID: 2091375923}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -641,11 +642,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2091375914}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ea5b15454ff74425a90077699d07e51, type: 3}
+  m_Script: {fileID: 11500000, guid: e5bdc58ef7b714997a152c2ff168811b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ignoreAngleThreshold: 45
-  _camera: {fileID: 2091375921}
+  _camera: {fileID: 2091375923}
   speed: 0.1
   minFieldOfView: 30
   maxFieldOfView: 60
@@ -733,3 +734,16 @@ Transform:
   m_Father: {fileID: 1279687454}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2091375923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2091375914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18b0408eb703e4e12a82b562133ecab0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _camera: {fileID: 2091375921}
+  fieldOfView: 60

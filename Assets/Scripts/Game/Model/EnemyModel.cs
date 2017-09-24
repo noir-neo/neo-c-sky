@@ -16,6 +16,26 @@ namespace NeoC.Game.Model
             CurrentRotation = new ReactiveProperty<SquareModel>(initialRotation);
         }
 
+        public IObservable<Pair<Tuple<SquareModel, SquareModel>>> OnSquareRotationChangedPairAsObservable()
+        {
+            return OnSquareRotationChangedAsObservable()
+                .First()
+                .Merge(OnSquareRotationChangedAsObservable())
+                .Pairwise();
+        }
+
+        public IObservable<Tuple<SquareModel, SquareModel>> OnSquareRotationChangedAsObservable()
+        {
+            return CurrentSquare.CombineLatest(CurrentRotation,
+                (square, rotation) => new Tuple<SquareModel, SquareModel>(square, rotation));
+        }
+
+        public IObservable<SquareModel> OnDeadAsObservable()
+        {
+            return Dead.Where(x => x)
+                .Select(_ => CurrentSquare.Value);
+        }
+
         public void Move(int index)
         {
             if (Dead.Value)

@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using FixFOVOrientation;
+using UnityEngine;
 
 namespace ModelViewer.Observer
 {
-    public sealed class CameraZoom : PinchObserverBase
+    public sealed class CameraZoomFixFieldOfViewOrientation : PinchObserverBase
     {
-        [SerializeField] private Camera _camera;
+        [SerializeField] private FixFieldOfViewOrientation _camera;
         [SerializeField] private float speed;
         [SerializeField] private float minFieldOfView;
         [SerializeField] private float maxFieldOfView;

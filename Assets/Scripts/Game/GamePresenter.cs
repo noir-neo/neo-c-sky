@@ -13,7 +13,7 @@ namespace NeoC.Game
     {
         private PlayerModel playerModel;
         private IReadOnlyDictionary<EnemyModel, PieceMover> enemyModelMovers;
-        private BoardMedel boardModel;
+        private BoardModel boardModel;
 
         [Inject] private PieceMover playerMover;
         [Inject] private Board.Board board;

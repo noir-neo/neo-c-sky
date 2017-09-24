@@ -17,18 +17,25 @@ public class BoardEditor : Editor
     {
         DrawDefaultInspector();
         serializedObject.Update();
-        string serializeSquaresInChildrenText = "SerializeSquaresInChildren";
+        const string serializeSquaresInChildrenText = "SerializeSquaresInChildren";
         if(GUILayout.Button(serializeSquaresInChildrenText))
         {
             Undo.RecordObject(board, serializeSquaresInChildrenText);
             board.SerializeSquaresInChildren();
         }
 
-        string calculateBoardsCoordinateText = "CalculateBoardsCoordinate";
+        const string calculateBoardsCoordinateText = "CalculateBoardsCoordinate";
         if(GUILayout.Button(calculateBoardsCoordinateText))
         {
             Undo.RecordObject(board, calculateBoardsCoordinateText);
             board.CalculateBoardsCoordinate();
+        }
+
+        const string generateBoardFromMasterText = "GenerateBoardFromMaster";
+        if(GUILayout.Button(generateBoardFromMasterText))
+        {
+            Undo.RecordObject(board, generateBoardFromMasterText);
+            board.GenerateBoardFromMaster();
         }
         serializedObject.ApplyModifiedProperties();
     }

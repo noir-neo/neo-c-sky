@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using NeoC.Game.Model;
 using UniRx;
+using UnityEditor;
 using UnityEngine;
 
 namespace NeoC.Game.Board
@@ -11,20 +12,26 @@ namespace NeoC.Game.Board
     public class Board : MonoBehaviour
     {
         [SerializeField] private List<Square> squares;
+        [SerializeField] private GameObject goal;
         [SerializeField] private BoardResources resources;
 
-        public void CreateSquares(List<SquareModel> models)
+        public void CreateSquares(IEnumerable<SquareModel> models)
         {
-            var squareModels = squares.Select(s => s.Model);
-            foreach (var model in models.Where(m => !squareModels.Contains(m)))
+            if (squares.Any())
             {
-                squares.Add(InstanciateSquare(resources.squarePrefab, model, resources.squaresInterval, transform));
+                return;
             }
+            squares = models.Select(m => InstantiateSquare(resources.squarePrefab, m, resources.squaresInterval, transform))
+                .ToList();
         }
 
         public void CreateGoal(SquareModel model)
         {
-            Instantiate(resources.goalPrefab, GetSquarePosition(model), Quaternion.identity, transform);
+            if (goal != null)
+            {
+                return;
+            }
+            goal = Instantiate(resources.goalPrefab, GetSquarePosition(model), Quaternion.identity, transform);
         }
 
         public PieceMover Instantiate(PieceMover prefab, EnemyModel enemyModel)
@@ -128,11 +135,39 @@ namespace NeoC.Game.Board
             }
         }
 
-        private static Square InstanciateSquare(Square prefab, SquareModel model, Vector2 interval, Transform transform)
+        private static Square InstantiateSquare(Square prefab, SquareModel model, Vector2 interval, Transform transform)
         {
             var square = Instantiate(prefab, Vector2.Scale(interval, model).X0Y(), Quaternion.identity, transform);
             square.Model = model;
             return square;
+        }
+
+        private new static T Instantiate<T>(T prefab, Vector3 position, Quaternion rotation, Transform parent) where T : Component
+        {
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+            {
+                var instance = PrefabUtility.InstantiatePrefab(prefab) as T;
+                instance.gameObject.transform.parent = parent;
+                instance.gameObject.transform.SetPositionAndRotation(position, rotation);
+                return instance;
+            }
+#endif
+            return GameObject.Instantiate(prefab, position, rotation, parent);
+        }
+
+        private static GameObject Instantiate(GameObject prefab, Vector3 position, Quaternion rotation, Transform parent)
+        {
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+            {
+                var instance = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
+                instance.transform.parent = parent;
+                instance.transform.SetPositionAndRotation(position, rotation);
+                return instance;
+            }
+#endif
+            return GameObject.Instantiate(prefab, position, rotation, parent);
         }
 
         [Conditional("UNITY_EDITOR")]
@@ -152,6 +187,18 @@ namespace NeoC.Game.Board
                     square.v.UpdateCoordinate(square.i, zList.i);
                 }
             }
+        }
+
+        [Conditional("UNITY_EDITOR")]
+        public void GenerateBoardFromMaster()
+        {
+            squares.Clear();
+            goal = null;
+            foreach (Transform child in transform.Cast<Transform>().ToList())
+            {
+                DestroyImmediate(child.gameObject);
+            }
+            SceneManagerUtils.GetComponentInRoot<GamePresenter>().GenerateBoardFromMaster(this);
         }
     }
 }

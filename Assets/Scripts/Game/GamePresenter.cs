@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using NeoC.Game.Board;
 using NeoC.Game.Model;
 using NeoC.UI;
 using UniRx;
@@ -23,22 +23,18 @@ namespace NeoC.Game
 
         void Start()
         {
-            InitBoard();
-            InitPlayer();
+            boardModel = InitBoard(board, level);
+            playerModel = level.PlayerModel();
             InitEnemies();
             InitObserver();
         }
 
-        private void InitBoard()
+        private static BoardModel InitBoard(Board.Board board, MasterLevel level)
         {
-            boardModel = level.BoardModel();
+            var boardModel = level.BoardModel();
             board.CreateSquares(boardModel.SquareModels);
             board.CreateGoal(boardModel.GoalSquare);
-        }
-
-        private void InitPlayer()
-        {
-            playerModel = level.PlayerModel();
+            return boardModel;
         }
 
         private void InitEnemies()
@@ -173,6 +169,12 @@ namespace NeoC.Game
         private IEnumerable<SquareModel> OccupiedSquares(PieceModelBase pieceModel)
         {
             return boardModel.IntersectedSquares(pieceModel.OccupiedSquares());
+        }
+
+        [Conditional("UNITY_EDITOR")]
+        public void GenerateBoardFromMaster(Board.Board board)
+        {
+            InitBoard(board, level);
         }
     }
 }

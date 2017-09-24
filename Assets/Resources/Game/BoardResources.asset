@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7ec80d9f84aa4cc6b335de8656aaa5c, type: 3}
+  m_Name: BoardResources
+  m_EditorClassIdentifier: 
+  squarePrefab: {fileID: 114017289414923740, guid: fc035e913ceeb4b96889091eca2a24c5,
+    type: 2}
+  squaresInterval: {x: 3, y: 3}
+  squareStates:
+  - {fileID: 11400000, guid: 45b27e22f74e34c23bec1935a5dfeefe, type: 2}
+  - {fileID: 11400000, guid: fa922be7bc7944d3ab921b6e0a0d47f6, type: 2}
+  - {fileID: 11400000, guid: e2175b79cdd67417487e8bf80a3668f9, type: 2}
+  - {fileID: 11400000, guid: 537d8093611cf4b4a8a0df65cba4fb98, type: 2}
+  - {fileID: 11400000, guid: 8656118d38e444b439e4c7048ae9ca01, type: 2}
+  goalPrefab: {fileID: 1260019213999956, guid: 5825f50c37810462093d5b72c21aee16, type: 2}

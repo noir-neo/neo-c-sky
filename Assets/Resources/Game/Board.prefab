@@ -52,17 +52,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db47c683810bb4818af55d8cddbd205b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  squarePrefab: {fileID: 1846575292928384, guid: fc035e913ceeb4b96889091eca2a24c5,
-    type: 2}
-  squaresInterval: {x: 3, y: 3}
   squares: []
-  squareStates:
-  - {fileID: 11400000, guid: 45b27e22f74e34c23bec1935a5dfeefe, type: 2}
-  - {fileID: 11400000, guid: 537d8093611cf4b4a8a0df65cba4fb98, type: 2}
-  - {fileID: 11400000, guid: 8656118d38e444b439e4c7048ae9ca01, type: 2}
-  - {fileID: 11400000, guid: e2175b79cdd67417487e8bf80a3668f9, type: 2}
-  - {fileID: 11400000, guid: fa922be7bc7944d3ab921b6e0a0d47f6, type: 2}
-  goalPrefab: {fileID: 1260019213999956, guid: 5825f50c37810462093d5b72c21aee16, type: 2}
+  resources: {fileID: 11400000, guid: cc8cdf3dd5d3f40f890ed4e599247bf1, type: 2}
 --- !u!114 &114831261940288946
 MonoBehaviour:
   m_ObjectHideFlags: 1

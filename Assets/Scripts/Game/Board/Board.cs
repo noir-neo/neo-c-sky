@@ -10,24 +10,21 @@ namespace NeoC.Game.Board
     [ExecuteInEditMode]
     public class Board : MonoBehaviour
     {
-        [SerializeField] private GameObject squarePrefab;
-        [SerializeField] private Vector2 squaresInterval;
         [SerializeField] private List<Square> squares;
-        [SerializeField] private List<SquareState> squareStates;
-        [SerializeField] private GameObject goalPrefab;
+        [SerializeField] private BoardResources resources;
 
         public void CreateSquares(List<SquareModel> models)
         {
             var squareModels = squares.Select(s => s.Model);
             foreach (var model in models.Where(m => !squareModels.Contains(m)))
             {
-                squares.Add(InstanciateSquare(squarePrefab, model, squaresInterval, transform));
+                squares.Add(InstanciateSquare(resources.squarePrefab, model, resources.squaresInterval, transform));
             }
         }
 
         public void CreateGoal(SquareModel model)
         {
-            Instantiate(goalPrefab, GetSquarePosition(model), Quaternion.identity, transform);
+            Instantiate(resources.goalPrefab, GetSquarePosition(model), Quaternion.identity, transform);
         }
 
         public PieceMover Instantiate(PieceMover prefab, EnemyModel enemyModel)
@@ -119,11 +116,7 @@ namespace NeoC.Game.Board
 
         public void UpdateState(Square square, SquareState.SquareStates state)
         {
-            var squareState = squareStates.SingleOrDefault(s => s.State == state);
-            if (squareState != null)
-            {
-                squareState.UpdateState(square);
-            }
+            resources.SquareState(state).UpdateState(square);
         }
 
         public void UpdateState(SquareModel squareModel, SquareState.SquareStates state)
@@ -135,10 +128,9 @@ namespace NeoC.Game.Board
             }
         }
 
-        private static Square InstanciateSquare(GameObject prefab, SquareModel model, Vector2 interval, Transform transform)
+        private static Square InstanciateSquare(Square prefab, SquareModel model, Vector2 interval, Transform transform)
         {
-            var gameObject = Instantiate(prefab, Vector2.Scale(interval, model).X0Y(), Quaternion.identity, transform);
-            var square = gameObject.GetComponent<Square>();
+            var square = Instantiate(prefab, Vector2.Scale(interval, model).X0Y(), Quaternion.identity, transform);
             square.Model = model;
             return square;
         }

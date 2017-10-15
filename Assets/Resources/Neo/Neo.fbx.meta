@@ -1,0 +1,167 @@
+fileFormatVersion: 2
+guid: c53d1bab417324546b0e644e207c3f9b
+timeCreated: 1508085389
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Body
+    100002: Cap
+    100004: Cloak
+    100006: Glasses
+    100008: Head
+    100010: LeftArm
+    100012: LeftHairTail0
+    100014: LeftHairTail1
+    100016: LeftLeg
+    100018: //RootNode
+    100020: RightArm
+    100022: RightHairTail0
+    100024: RightHairTail1
+    100026: RightLeg
+    100028: Head_part
+    100030: Face
+    400000: Body
+    400002: Cap
+    400004: Cloak
+    400006: Glasses
+    400008: Head
+    400010: LeftArm
+    400012: LeftHairTail0
+    400014: LeftHairTail1
+    400016: LeftLeg
+    400018: //RootNode
+    400020: RightArm
+    400022: RightHairTail0
+    400024: RightHairTail1
+    400026: RightLeg
+    400028: Head_part
+    400030: Face
+    2300000: Body
+    2300002: Cap
+    2300004: Cloak
+    2300006: Glasses
+    2300008: Head
+    2300010: LeftArm
+    2300012: LeftHairTail0
+    2300014: LeftHairTail1
+    2300016: LeftLeg
+    2300018: RightArm
+    2300020: RightHairTail0
+    2300022: RightHairTail1
+    2300024: RightLeg
+    2300026: Head_part
+    2300028: Face
+    3300000: Body
+    3300002: Cap
+    3300004: Cloak
+    3300006: Glasses
+    3300008: Head
+    3300010: LeftArm
+    3300012: LeftHairTail0
+    3300014: LeftHairTail1
+    3300016: LeftLeg
+    3300018: RightArm
+    3300020: RightHairTail0
+    3300022: RightHairTail1
+    3300024: RightLeg
+    3300026: Head_part
+    3300028: Face
+    4300000: Body
+    4300002: Cap
+    4300004: Glasses
+    4300006: Cloak
+    4300008: Head
+    4300010: LeftArm
+    4300012: RightArm
+    4300014: LeftHairTail1
+    4300016: LeftHairTail0
+    4300018: RightHairTail0
+    4300020: RightHairTail1
+    4300022: LeftLeg
+    4300024: RightLeg
+    4300026: Head_part
+    4300028: Face
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Neo_material
+    second: {fileID: 2100000, guid: ad9b55adb086f41809d31ff8fde72ac6, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 1
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

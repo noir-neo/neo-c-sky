@@ -14,9 +14,9 @@ public class MasterLevel : ScriptableObject
     public SquareModel playerInitialSquare;
     public InitialEnemy[] enemies;
 
-    public BoardMedel BoardModel()
+    public BoardModel BoardModel()
     {
-        return new BoardMedel(boardSize, goalSquare);
+        return new BoardModel(boardSize, goalSquare);
     }
 
     public PlayerModel PlayerModel()

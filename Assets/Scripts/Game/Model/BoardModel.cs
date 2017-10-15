@@ -3,19 +3,19 @@ using System.Linq;
 
 namespace NeoC.Game.Model
 {
-    public class BoardMedel
+    public class BoardModel
     {
         private readonly List<SquareModel> squareModels;
         public List<SquareModel> SquareModels => squareModels;
         private readonly SquareModel goalSquare;
         public SquareModel GoalSquare => goalSquare;
 
-        public BoardMedel(SquareModel boardSize, SquareModel goalSquare) : this(boardSize.X, boardSize.Y)
+        public BoardModel(SquareModel boardSize, SquareModel goalSquare) : this(boardSize.X, boardSize.Y)
         {
             this.goalSquare = goalSquare;
         }
 
-        public BoardMedel(int x, int y)
+        public BoardModel(int x, int y)
         {
             squareModels = new List<SquareModel>();
             for (int iy = 0; iy < y; iy++)

@@ -10,6 +10,12 @@ namespace NeoC.Game
         [SerializeField] private Animator _animator;
         [SerializeField] private float speed;
 
+        public void MoveAndLookTo(Vector3 targetPos, Quaternion targetRotation)
+        {
+            MoveTo(targetPos);
+            LookRotation(targetRotation);
+        }
+
         public void MoveTo(Vector3 targetPos, Action onCompleted = null)
         {
             MoveTo(targetPos, speed, onCompleted);

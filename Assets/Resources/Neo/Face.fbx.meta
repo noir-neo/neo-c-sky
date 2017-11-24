@@ -1,49 +1,21 @@
 fileFormatVersion: 2
-guid: e193ebf21748344589a742af2db28db1
-timeCreated: 1483948807
+guid: 82f457c2d5b504ce9850c4f7738c8ba8
+timeCreated: 1508160495
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: Matrix
-    100002: Matrix_part
-    100004: Matrix_part_1
-    100006: Matrix_part_2
-    100008: Matrix_part_2_part
-    100010: //RootNode
-    400000: Matrix
-    400002: Matrix_part
-    400004: Matrix_part_1
-    400006: Matrix_part_2
-    400008: Matrix_part_2_part
-    400010: //RootNode
-    2300000: Matrix
-    2300002: Matrix_part
-    2300004: Matrix_part_1
-    2300006: Matrix_part_2
-    2300008: Matrix_part_2_part
-    3300000: Matrix
-    3300002: Matrix_part
-    3300004: Matrix_part_1
-    3300006: Matrix_part_2
-    3300008: Matrix_part_2_part
-    4300000: Matrix
-    4300002: Matrix_part
-    4300004: Matrix_part_1
-    4300006: Matrix_part_2
-    4300008: Matrix_part_2_part
-    6400000: Matrix
-    6400002: Matrix_part
-    6400004: Matrix_part_1
-    6400006: Matrix_part_2
-    6400008: Matrix_part_2_part
-    9500000: //RootNode
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Face
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Saboten-material
-    second: {fileID: 2100000, guid: 206fcacc147d846b3afa838faf7137bc, type: 2}
+      name: Face_material
+    second: {fileID: 2100000, guid: 5a2a87ad9ea0b4953a21750bc16a1ecb, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -73,13 +45,13 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.1
+    globalScale: 1
     meshCompression: 0
-    addColliders: 1
-    importVisibility: 0
+    addColliders: 0
+    importVisibility: 1
     importBlendShapes: 1
-    importCameras: 0
-    importLights: 0
+    importCameras: 1
+    importLights: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -95,7 +67,7 @@ ModelImporter:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
-    normalCalculationMode: 0
+    normalCalculationMode: 4
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
@@ -115,7 +87,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

@@ -1,7 +1,7 @@
 ﻿using CameraSubjectSize;
 using UnityEngine;
 
-namespace ModelViewer.Observer
+namespace ModelViewer.Behaviour
 {
     public sealed class CameraZoomFixFieldOfViewOrientation : PinchObserverBase
     {

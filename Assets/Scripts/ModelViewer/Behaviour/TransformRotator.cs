@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ModelViewer.Observer
+namespace ModelViewer.Behaviour
 {
     public sealed class TransformRotator : DragObserverBase
     {

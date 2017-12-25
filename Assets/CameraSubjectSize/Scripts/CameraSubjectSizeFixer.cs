@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
-namespace FixFOVOrientation
+namespace CameraSubjectSize
 {
     [RequireComponent(typeof(Camera)), ExecuteInEditMode]
-    public class FixFieldOfViewOrientation : MonoBehaviour
+    public class CameraSubjectSizeFixer : MonoBehaviour
     {
         [SerializeField, HideInInspector] private Camera _camera;
         [Range(1, 179)] public float fieldOfView;

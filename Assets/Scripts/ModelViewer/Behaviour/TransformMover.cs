@@ -1,14 +1,15 @@
-﻿using UnityEngine;
+﻿using ModelViewer.Interface;
+using UnityEngine;
 
 namespace ModelViewer.Behaviour
 {
-    public sealed class TransformMover : DragObserverBase
+    public sealed class TransformMover : MonoBehaviour, IDragBehaviour
     {
         [SerializeField] Transform moveRoot;
         [SerializeField] private float speed;
         [SerializeField] private Vector4 movableRage;
 
-        protected override void OnDrag(Vector2 delta)
+        void IDragBehaviour.OnDrag(Vector2 delta)
         {
             moveRoot.Move(delta * speed);
             moveRoot.position = moveRoot.position.Clamp(movableRage);

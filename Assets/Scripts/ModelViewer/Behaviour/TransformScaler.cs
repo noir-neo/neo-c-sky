@@ -1,15 +1,16 @@
-﻿using UnityEngine;
+﻿using ModelViewer.Interface;
+using UnityEngine;
 
 namespace ModelViewer.Behaviour
 {
-    public sealed class TransformScaler : PinchObserverBase
+    public sealed class TransformScaler : MonoBehaviour, IPinchBehaviour
     {
         [SerializeField] Transform scaleRoot;
         [SerializeField] private float speed;
         [SerializeField] private float minScale;
         [SerializeField] private float maxScale;
 
-        protected override void OnPinch(float magnitude)
+        void IPinchBehaviour.OnPinch(float magnitude)
         {
             scaleRoot.Scale(magnitude * speed, minScale, maxScale);
         }

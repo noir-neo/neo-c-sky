@@ -229,6 +229,7 @@ GameObject:
   - component: {fileID: 1218962442}
   - component: {fileID: 1218962443}
   - component: {fileID: 1218962444}
+  - component: {fileID: 1218962445}
   m_Layer: 0
   m_Name: CameraRootY
   m_TagString: Untagged
@@ -274,12 +275,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 379e59e8ba59648d6a1ddf2d3d0350d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointerCount: 1
   xRotateRoot: {fileID: 1279687454}
   yRotateRoot: {fileID: 1218962442}
   speed: -0.1
   minXAngle: 0
   maxXAngle: 60
+--- !u!114 &1218962445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1218962441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d0d725e655734153a7176d799cc7216, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointerCount: 1
 --- !u!1 &1279687453
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,6 +627,7 @@ GameObject:
   - component: {fileID: 2091375916}
   - component: {fileID: 2091375917}
   - component: {fileID: 2091375923}
+  - component: {fileID: 2091375924}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -645,7 +658,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5bdc58ef7b714997a152c2ff168811b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ignoreAngleThreshold: 45
   _camera: {fileID: 2091375923}
   speed: 0.1
   minFieldOfView: 30
@@ -749,3 +761,15 @@ MonoBehaviour:
   _camera: {fileID: 2091375921}
   fieldOfView: 60
   orthographicSize: 4
+--- !u!114 &2091375924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2091375914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f244480915db143558ea76a85447b81c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ignoreAngleThreshold: 45

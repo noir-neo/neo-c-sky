@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ModelViewer.Behaviour
 {
-    public sealed class CameraZoomFixFieldOfViewOrientation : MonoBehaviour, IPinchBehaviour
+    public sealed class CameraZoomFieldOfViewWithSubjectSizeFixer : MonoBehaviour, IPinchBehaviour
     {
         [SerializeField] private CameraSubjectSizeFixer _camera;
         [SerializeField] private float speed;

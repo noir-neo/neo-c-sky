@@ -10,6 +10,9 @@ namespace ModelViewer.Behaviour
         [SerializeField] private float speed;
         [SerializeField] private float minXAngle;
         [SerializeField] private float maxXAngle;
+        [SerializeField] private int pointerCount;
+
+        public int PointerCount => pointerCount;
 
         void IDragBehaviour.OnDrag(Vector2 delta)
         {

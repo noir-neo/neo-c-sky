@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using ModelViewer.Interface;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -9,62 +10,34 @@ using UnityEngine.UI;
 namespace ModelViewer.Publisher
 {
     [RequireComponent(typeof(Button))]
-    public class UIDragHandler : MonoBehaviour
+    public class UIDragHandler : MonoBehaviour, IDragPublisher, IPinchPublisher
     {
         [SerializeField] private Button button;
 
-        public IObservable<PointerEventData> OnBeginDragAsObservable()
-        {
-            return button.OnBeginDragAsObservable();
-        }
-
-        public IObservable<PointerEventData> OnDragAsObservable()
+        private IObservable<PointerEventData> OnDragAsObservable()
         {
             return button.OnDragAsObservable();
         }
 
-        public IObservable<PointerEventData> OnEndDragAsObservable()
-        {
-            return button.OnEndDragAsObservable();
-        }
-
-        public IObservable<IEnumerable<PointerEventData>> OnDragsAsObservable(int pointerCount)
+        private IObservable<IEnumerable<PointerEventData>> OnDragsAsObservableInternal()
         {
             return OnDragAsObservable()
+                .TakeUntilDestroy(this)
                 .BatchFrame()
                 .Select(x => x.GroupBy(p => p.pointerId)
-                    .Select(g => g.First()))
-                .Where(x => x.Count() == pointerCount)
-                .TakeUntil(OnEndDragAsObservable())
-                .RepeatUntilDestroy(this);
+                    .Select(g => g.First()));
         }
 
-        public IObservable<IEnumerable<Vector2>> OnDragsVector2AsObservable(int pointerCount)
+        IObservable<IEnumerable<Vector2>> IDragPublisher.OnDragsAsObservable()
         {
-            return OnDragsAsObservable(pointerCount)
+            return OnDragsAsObservableInternal()
                 .Select(x => x.Select(p => p.delta));
         }
 
-        public IObservable<Vector2> OnDragDeltaAsObservable()
+        IObservable<float> IPinchPublisher.OnPinchAsObservable(float ignoreAngleThreshold)
         {
-            return OnDragsVector2AsObservable(1)
-                .Select(x => x.Single());
-        }
-
-        public IObservable<Vector2> OnDragsDeltaAsObservable(int pointerCount)
-        {
-            if (pointerCount == 1)
-            {
-                return OnDragDeltaAsObservable();
-            }
-
-            return OnDragsVector2AsObservable(pointerCount)
-                .Select(x => x.Aggregate((n, next) => Vector2.Lerp(n, next, 0.5f)));
-        }
-
-        public IObservable<float> OnPinchAsObservable(float ignoreAngleThreshold)
-        {
-            return OnDragsAsObservable(2)
+            return OnDragsAsObservableInternal()
+                .Where(x => x.Count() == 2)
                 .Where(x => IsDeltasAngleBiggerThan(x.First(), x.Last(), ignoreAngleThreshold))
                 .Select(x => DeltaMagnitudeDiff(x.First(), x.Last()));
         }

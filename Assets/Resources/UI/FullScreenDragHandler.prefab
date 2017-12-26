@@ -138,7 +138,7 @@ MonoBehaviour:
   - {fileID: 114331739764829814}
   _identifier: 
   _context: {fileID: 0}
-  _bindType: 0
+  _bindType: 1
 --- !u!114 &114894992941565922
 MonoBehaviour:
   m_ObjectHideFlags: 1

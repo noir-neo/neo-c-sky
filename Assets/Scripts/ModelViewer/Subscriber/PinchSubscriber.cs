@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using ModelViewer.Interface;
-using ModelViewer.Publisher;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -11,12 +10,12 @@ namespace ModelViewer.Subscriber
     {
         [SerializeField] private float ignoreAngleThreshold;
 
-        [Inject] private UIDragHandler dragHandler;
+        [Inject] private IPinchPublisher pinchPublisher;
         [Inject] private List<IPinchBehaviour> behaviours;
 
         void Start()
         {
-            dragHandler.OnPinchAsObservable(ignoreAngleThreshold)
+            pinchPublisher.OnPinchAsObservable(ignoreAngleThreshold)
                 .Subscribe(OnPinch)
                 .AddTo(this);
         }

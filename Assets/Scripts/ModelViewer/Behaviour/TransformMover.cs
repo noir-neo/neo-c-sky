@@ -8,6 +8,9 @@ namespace ModelViewer.Behaviour
         [SerializeField] Transform moveRoot;
         [SerializeField] private float speed;
         [SerializeField] private Vector4 movableRage;
+        [SerializeField] private int pointerCount;
+
+        public int PointerCount => pointerCount;
 
         void IDragBehaviour.OnDrag(Vector2 delta)
         {

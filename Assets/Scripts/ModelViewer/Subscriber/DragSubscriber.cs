@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using ModelViewer.EventData;
 using ModelViewer.Interface;
 using UniRx;
 using UnityEngine;
@@ -19,16 +19,13 @@ namespace ModelViewer.Subscriber
                 .AddTo(this);
         }
 
-        private void OnDrag(IEnumerable<Vector2> deltas)
+        private void OnDrag(DragEventData dragEventData)
         {
-            var pointerCount = deltas.Count();
-            var delta = deltas.Aggregate((n, next) => Vector2.Lerp(n, next, 0.5f));
-
             foreach (var behaviour in behaviours)
             {
-                if (behaviour.PointerCount == pointerCount)
+                if (behaviour.PointerCount == dragEventData.PointerCount)
                 {
-                    behaviour.OnDrag(delta);
+                    behaviour.OnDrag(dragEventData.Delta);
                 }
             }
         }

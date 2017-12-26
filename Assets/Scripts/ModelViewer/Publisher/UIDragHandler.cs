@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using ModelViewer.EventData;
 using ModelViewer.Interface;
 using UniRx;
 using UniRx.Triggers;
@@ -28,10 +29,11 @@ namespace ModelViewer.Publisher
                     .Select(g => g.First()));
         }
 
-        IObservable<IEnumerable<Vector2>> IDragPublisher.OnDragsAsObservable()
+        IObservable<DragEventData> IDragPublisher.OnDragsAsObservable()
         {
             return OnDragsAsObservableInternal()
-                .Select(x => x.Select(p => p.delta));
+                .Select(x => x.Select(p => p.delta))
+                .Select(x => new DragEventData(x));
         }
 
         IObservable<float> IPinchPublisher.OnPinchAsObservable(float ignoreAngleThreshold)

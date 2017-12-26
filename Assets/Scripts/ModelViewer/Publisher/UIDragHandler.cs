@@ -14,6 +14,7 @@ namespace ModelViewer.Publisher
     public class UIDragHandler : MonoBehaviour, IDragPublisher, IPinchPublisher
     {
         [SerializeField] private Button button;
+        [SerializeField] private float ignoreAngleThreshold;
 
         private IObservable<PointerEventData> OnDragAsObservable()
         {
@@ -36,18 +37,12 @@ namespace ModelViewer.Publisher
                 .Select(x => new DragEventData(x));
         }
 
-        IObservable<float> IPinchPublisher.OnPinchAsObservable(float ignoreAngleThreshold)
+        IObservable<float> IPinchPublisher.OnPinchAsObservable()
         {
             return OnDragsAsObservableInternal()
                 .Where(x => x.Count() == 2)
-                .Where(x => IsDeltasAngleBiggerThan(x.First(), x.Last(), ignoreAngleThreshold))
+                .Where(x => Vector2.Angle(x.First().delta, x.Last().delta) > ignoreAngleThreshold)
                 .Select(x => DeltaMagnitudeDiff(x.First(), x.Last()));
-        }
-
-        private static bool IsDeltasAngleBiggerThan(PointerEventData pointerEventZero, PointerEventData pointerEventOne,
-            float angle)
-        {
-            return Vector2.Angle(pointerEventZero.delta, pointerEventOne.delta) > angle;
         }
 
         private static float DeltaMagnitudeDiff(PointerEventData pointerEventZero, PointerEventData pointerEventOne)

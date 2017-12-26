@@ -247,7 +247,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f244480915db143558ea76a85447b81c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ignoreAngleThreshold: 45
 --- !u!114 &1174098317
 MonoBehaviour:
   m_ObjectHideFlags: 0

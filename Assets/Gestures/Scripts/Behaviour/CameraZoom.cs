@@ -1,7 +1,7 @@
-﻿using ModelViewer.Interface;
+﻿using Gestures.Interface;
 using UnityEngine;
 
-namespace ModelViewer.Behaviour
+namespace Gestures.Behaviour
 {
     public sealed class CameraZoom : MonoBehaviour, IPinchBehaviour
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ModelViewer.Interface
+namespace Gestures.Interface
 {
     public interface IDragBehaviour
     {

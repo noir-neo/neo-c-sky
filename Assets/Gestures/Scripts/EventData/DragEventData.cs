@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace ModelViewer.EventData
+namespace Gestures.EventData
 {
     public struct DragEventData
     {

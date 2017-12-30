@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ModelViewer.Interface;
+using Gestures.Interface;
 using UniRx;
 using UnityEngine;
 using Zenject;
 
-namespace ModelViewer.Subscriber
+namespace Gestures.Subscriber
 {
     public class PinchSubscriber : MonoBehaviour
     {

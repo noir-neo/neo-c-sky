@@ -1,6 +1,6 @@
 ﻿using UniRx;
 
-namespace ModelViewer.Interface
+namespace Gestures.Interface
 {
     public interface IPinchPublisher
     {

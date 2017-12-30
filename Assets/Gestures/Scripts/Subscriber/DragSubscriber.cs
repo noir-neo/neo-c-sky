@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ModelViewer.EventData;
-using ModelViewer.Interface;
+using Gestures.EventData;
+using Gestures.Interface;
 using UniRx;
 using UnityEngine;
 using Zenject;
 
-namespace ModelViewer.Subscriber
+namespace Gestures.Subscriber
 {
     public class DragSubscriber : MonoBehaviour
     {

@@ -1,4 +1,4 @@
-﻿namespace ModelViewer.Interface
+﻿namespace Gestures.Interface
 {
     public interface IPinchBehaviour
     {

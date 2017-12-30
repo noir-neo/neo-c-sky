@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ModelViewer.EventData;
-using ModelViewer.Interface;
+using Gestures.EventData;
+using Gestures.Interface;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace ModelViewer.Publisher
+namespace Gestures.Publisher
 {
     [RequireComponent(typeof(Button))]
     public class UIDragHandler : MonoBehaviour, IDragPublisher, IPinchPublisher

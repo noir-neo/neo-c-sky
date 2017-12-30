@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using ModelViewer.EventData;
 using ModelViewer.Interface;
 using UniRx;
@@ -9,17 +10,16 @@ namespace ModelViewer.Subscriber
 {
     public class DragSubscriber : MonoBehaviour
     {
-        [Inject] private IDragPublisher dragPublisher;
-        [Inject] private List<IDragBehaviour> behaviours;
-
-        void Start()
+        [Inject]
+        public void Init(List<IDragPublisher> publishers, List<IDragBehaviour> behaviours)
         {
-            dragPublisher.OnDragsAsObservable()
-                .Subscribe(OnDrag)
+            publishers.Select(p => p.OnDragsAsObservable())
+                .Merge()
+                .Subscribe(d => OnDrag(d, behaviours))
                 .AddTo(this);
         }
 
-        private void OnDrag(DragEventData dragEventData)
+        private static void OnDrag(DragEventData dragEventData, IEnumerable<IDragBehaviour> behaviours)
         {
             foreach (var behaviour in behaviours)
             {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using ModelViewer.Interface;
 using UniRx;
 using UnityEngine;
@@ -8,17 +9,16 @@ namespace ModelViewer.Subscriber
 {
     public class PinchSubscriber : MonoBehaviour
     {
-        [Inject] private IPinchPublisher pinchPublisher;
-        [Inject] private List<IPinchBehaviour> behaviours;
-
-        void Start()
+        [Inject]
+        public void Init(List<IPinchPublisher> publishers, List<IPinchBehaviour> behaviours)
         {
-            pinchPublisher.OnPinchAsObservable()
-                .Subscribe(OnPinch)
+            publishers.Select(p => p.OnPinchAsObservable())
+                .Merge()
+                .Subscribe(d => OnPinch(d, behaviours))
                 .AddTo(this);
         }
 
-        private void OnPinch(float magnitude)
+        private static void OnPinch(float magnitude, IEnumerable<IPinchBehaviour> behaviours)
         {
             foreach (var behaviour in behaviours)
             {

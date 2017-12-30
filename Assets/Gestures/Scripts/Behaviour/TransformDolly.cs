@@ -1,15 +1,16 @@
-﻿using UnityEngine;
+﻿using Gestures.Interface;
+using UnityEngine;
 
-namespace ModelViewer.Observer
+namespace Gestures.Behaviour
 {
-    public sealed class TransformDolly : PinchObserverBase
+    public sealed class TransformDolly : MonoBehaviour, IPinchBehaviour
     {
         [SerializeField] Transform dollyRoot;
         [SerializeField] private Vector3 axis;
         [SerializeField] private Vector3 minPosition;
         [SerializeField] private Vector3 maxPosition;
 
-        protected override void OnPinch(float magnitude)
+        void IPinchBehaviour.OnPinch(float magnitude)
         {
             var pos = dollyRoot.localPosition;
             pos += axis * magnitude;

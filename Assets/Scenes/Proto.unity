@@ -89,6 +89,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaDirect: 0.5
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
+    m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 112000006, guid: 2bbb6cd27d3a54cb791832546b5b505f,
     type: 2}
   m_UseShadowmask: 0
@@ -151,7 +152,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4190858586230192, guid: ec84855bc267f4be1bc306ca0f501f2b, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ec84855bc267f4be1bc306ca0f501f2b, type: 2}
@@ -218,6 +219,58 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1174098315
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1174098318}
+  - component: {fileID: 1174098317}
+  - component: {fileID: 1174098316}
+  m_Layer: 0
+  m_Name: GestureSubscriber
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1174098316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1174098315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f244480915db143558ea76a85447b81c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1174098317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1174098315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d0d725e655734153a7176d799cc7216, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1174098318
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1174098315}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.24000001, y: 0.62, z: -0.009999998}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1218962441
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,6 +281,7 @@ GameObject:
   - component: {fileID: 1218962442}
   - component: {fileID: 1218962443}
   - component: {fileID: 1218962444}
+  - component: {fileID: 1218962445}
   m_Layer: 0
   m_Name: CameraRootY
   m_TagString: Untagged
@@ -273,12 +327,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 379e59e8ba59648d6a1ddf2d3d0350d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointerCount: 1
   xRotateRoot: {fileID: 1279687454}
   yRotateRoot: {fileID: 1218962442}
   speed: -0.1
   minXAngle: 0
   maxXAngle: 60
+  pointerCount: 2
+--- !u!114 &1218962445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1218962441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0166d8ff8d905b048b2448179e1f5d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _components:
+  - {fileID: 1218962444}
+  _identifier: 
+  _context: {fileID: 0}
+  _bindType: 1
 --- !u!1 &1279687453
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,12 +388,12 @@ Prefab:
     - target: {fileID: 224416263303529930, guid: e07af28ec992b48beba1f442934ff09d,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: -20.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224416263303529930, guid: e07af28ec992b48beba1f442934ff09d,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: -28.241383
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224416263303529930, guid: e07af28ec992b48beba1f442934ff09d,
         type: 2}
@@ -571,11 +641,11 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2032377070}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 308.5, y: 548, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -614,6 +684,7 @@ GameObject:
   - component: {fileID: 2091375916}
   - component: {fileID: 2091375917}
   - component: {fileID: 2091375923}
+  - component: {fileID: 2091375925}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -641,14 +712,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2091375914}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5bdc58ef7b714997a152c2ff168811b, type: 3}
+  m_Script: {fileID: 11500000, guid: ade2c67008474117892db1a1a1c42e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ignoreAngleThreshold: 45
   _camera: {fileID: 2091375923}
-  speed: 0.1
-  minFieldOfView: 30
-  maxFieldOfView: 60
+  speed: 0.01
+  minSize: 1
+  maxSize: 5
 --- !u!114 &2091375917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -704,8 +774,8 @@ Camera:
   near clip plane: 0.3
   far clip plane: 80
   field of view: 60
-  orthographic: 0
-  orthographic size: 8
+  orthographic: 1
+  orthographic size: 4
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -716,6 +786,7 @@ Camera:
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -746,3 +817,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 2091375921}
   fieldOfView: 60
+  orthographicSize: 4
+--- !u!114 &2091375925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2091375914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0166d8ff8d905b048b2448179e1f5d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _components:
+  - {fileID: 2091375916}
+  _identifier: 
+  _context: {fileID: 0}
+  _bindType: 1

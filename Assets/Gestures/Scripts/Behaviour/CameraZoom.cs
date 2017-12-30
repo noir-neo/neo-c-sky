@@ -1,16 +1,16 @@
-﻿using FixFOVOrientation;
+﻿using Gestures.Interface;
 using UnityEngine;
 
-namespace ModelViewer.Observer
+namespace Gestures.Behaviour
 {
-    public sealed class CameraZoomFixFieldOfViewOrientation : PinchObserverBase
+    public sealed class CameraZoom : MonoBehaviour, IPinchBehaviour
     {
-        [SerializeField] private FixFieldOfViewOrientation _camera;
+        [SerializeField] private Camera _camera;
         [SerializeField] private float speed;
         [SerializeField] private float minFieldOfView;
         [SerializeField] private float maxFieldOfView;
 
-        protected override void OnPinch(float magnitude)
+        void IPinchBehaviour.OnPinch(float magnitude)
         {
             float fieldOfView = _camera.fieldOfView;
             fieldOfView += magnitude * -speed;

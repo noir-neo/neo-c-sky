@@ -1,5 +1,4 @@
-﻿using System;
-using UniRx;
+﻿using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 
@@ -10,27 +9,39 @@ namespace NeoC.Game
         [SerializeField] private Animator _animator;
         [SerializeField] private float speed;
 
-        public void MoveTo(Vector3 targetPos, Action onCompleted = null)
+        public IObservable<Unit> MoveToAsObservable(Vector3 targetPos)
         {
-            MoveTo(targetPos, speed, onCompleted);
+            return MoveToAsObservable(targetPos, speed);
         }
 
-        private void MoveTo(Vector3 targetPos, float smooth, Action onCompleted = null)
+        private IObservable<Unit> MoveToAsObservable(Vector3 targetPos, float smooth)
         {
             var startPos = transform.position;
             float startTime = Time.time;
-            float journeyLength = Vector3.Distance(startPos, targetPos);
 
             LookAt(targetPos);
-            this.UpdateAsObservable()
-                .RepeatUntilDestroy(gameObject)
-                .TakeWhile(_ => Vector3.Distance(transform.position, targetPos) > 0.01f)
-                .Subscribe(
-                    _ => transform.UpdatePositionLerp(startTime, smooth, journeyLength, startPos, targetPos),
-                    () =>
-                    {
-                        onCompleted?.Invoke();
-                    });
+
+            return this.UpdateAsObservable()
+                .TakeUntilDestroy(gameObject)
+                .Do(_ => transform.UpdatePositionLerp(startTime, smooth, startPos, targetPos))
+                .First(_ => Vector3.Distance(transform.position, targetPos) < 0.01f);
+        }
+
+        public IObservable<Unit> LookRotationAsObservable(Quaternion targetRotation)
+        {
+            return LookRotationAsObservable(targetRotation, speed * 100);
+        }
+
+        private IObservable<Unit> LookRotationAsObservable(Quaternion targetRotation, float smooth)
+        {
+            var startRotation = transform.rotation;
+            float startTime = Time.time;
+            float journeyAngle = Quaternion.Angle(startRotation, targetRotation);
+
+            return this.UpdateAsObservable()
+                .TakeUntilDestroy(this)
+                .Do(_ => transform.UpdateRotationLerp(startTime, smooth, journeyAngle, startRotation, targetRotation))
+                .First(_ => Quaternion.Angle(transform.rotation, targetRotation) < 0.01f);
         }
 
         public void PositionTo(Vector3 targetPos)
@@ -38,36 +49,9 @@ namespace NeoC.Game
             transform.position = targetPos;
         }
 
-        public void LookAt(Vector2 target)
-        {
-            LookAt(target.X0Y());
-        }
-
         public void LookAt(Vector3 target)
         {
             transform.LookAt(target);
-        }
-
-        public void LookRotation(Quaternion targetRotation, Action onCompleted = null)
-        {
-            LookRotation(targetRotation, speed * 100, onCompleted);
-        }
-
-        private void LookRotation(Quaternion targetRotation, float smooth, Action onCompleted = null)
-        {
-            var startRotation = transform.rotation;
-            float startTime = Time.time;
-            float journeyAngle = Quaternion.Angle(startRotation, targetRotation);
-
-            this.UpdateAsObservable()
-                .RepeatUntilDestroy(gameObject)
-                .TakeWhile(_ => Quaternion.Angle(transform.rotation, targetRotation) > 0.01f)
-                .Subscribe(
-                    _ => transform.UpdateRotationLerp(startTime, smooth, journeyAngle, startRotation, targetRotation),
-                    () =>
-                    {
-                        onCompleted?.Invoke();
-                    });
         }
 
         public void Kill()

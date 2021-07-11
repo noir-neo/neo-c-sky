@@ -94,8 +94,14 @@ public static class TransformExtensions
         transform.position = Vector3.Lerp(transform.position, target, t);
     }
 
-    public static void UpdatePositionLerp(this Transform transform, float startTime, float speed, float journeyLength, Vector3 startPos, Vector3 endPos)
+    public static void UpdatePositionLerp(this Transform transform, float startTime, float speed, Vector3 startPos, Vector3 endPos)
     {
+        float journeyLength = Vector3.Distance(startPos, endPos);
+        if (journeyLength == 0)
+        {
+            transform.position = endPos;
+            return;
+        }
         float distCovered = (Time.time - startTime) * speed;
         float fracJourney = distCovered / journeyLength;
         transform.position = Vector3.Lerp(startPos, endPos, fracJourney);
